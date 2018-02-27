@@ -1,16 +1,21 @@
 {
-  "name": "react-prisma-graphql-shopping-cart",
+  "name": "react-prisma-graphql-shopping-cart-api",
   "scripts": {
     "start": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
     "dev": "npm-run-all --parallel start playground",
     "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "playground": "graphql playground",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "deploy:api": "prisma deploy && graphql prepare",
+    "deploy:app": "dotenv -- now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
+    "deploy": "yarn deploy:api && yarn deploy:app",
+    "alias": "now alias"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
     "graphql-yoga": "1.4.2",
     "jsonwebtoken": "8.1.1",
+    "now": "^9.3.3",
     "prisma-binding": "1.5.13"
   },
   "devDependencies": {
@@ -23,5 +28,11 @@
     "rimraf": "2.6.2",
     "ts-node": "4.1.0",
     "typescript": "2.7.2"
+  },
+  "now": {
+    "alias": [
+      "react-prisma-graphql-shopping-cart-api.kattcorp.co.uk",
+      "react-prisma-graphql-shopping-cart-api.kattcorp.com"
+    ]
   }
 }
