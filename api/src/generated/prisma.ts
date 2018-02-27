@@ -9,6 +9,21 @@ export const typeDefs = `
 # Model Types
 #
 
+type Brand implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+type Cart implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  products(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartProduct!]
+  user(where: UserWhereInput): User
+}
+
 type Post implements Node {
   id: ID!
   createdAt: DateTime!
@@ -17,6 +32,15 @@ type Post implements Node {
   title: String!
   text: String!
   author(where: UserWhereInput): User!
+}
+
+type Product implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  price: Int!
+  brand(where: BrandWhereInput): Brand!
+  name: String!
 }
 
 type User implements Node {
@@ -32,7 +56,23 @@ type User implements Node {
 # Other Types
 #
 
+type AggregateBrand {
+  count: Int!
+}
+
+type AggregateCart {
+  count: Int!
+}
+
+type AggregateCartProduct {
+  count: Int!
+}
+
 type AggregatePost {
+  count: Int!
+}
+
+type AggregateProduct {
   count: Int!
 }
 
@@ -47,6 +87,708 @@ type BatchPayload {
   count: Long!
 }
 
+"""
+A connection to a list of items.
+"""
+type BrandConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [BrandEdge]!
+  aggregate: AggregateBrand!
+}
+
+input BrandCreateInput {
+  name: String!
+}
+
+input BrandCreateOneInput {
+  create: BrandCreateInput
+  connect: BrandWhereUniqueInput
+}
+
+"""
+An edge in a connection.
+"""
+type BrandEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Brand!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum BrandOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type BrandPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+type BrandSubscriptionPayload {
+  mutation: MutationType!
+  node: Brand
+  updatedFields: [String!]
+  previousValues: BrandPreviousValues
+}
+
+input BrandSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [BrandSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [BrandSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BrandWhereInput
+}
+
+input BrandUpdateDataInput {
+  name: String
+}
+
+input BrandUpdateInput {
+  name: String
+}
+
+input BrandUpdateNestedInput {
+  where: BrandWhereUniqueInput!
+  data: BrandUpdateDataInput!
+}
+
+input BrandUpdateOneInput {
+  create: BrandCreateInput
+  connect: BrandWhereUniqueInput
+  disconnect: BrandWhereUniqueInput
+  delete: BrandWhereUniqueInput
+  update: BrandUpdateNestedInput
+  upsert: BrandUpsertNestedInput
+}
+
+input BrandUpsertNestedInput {
+  where: BrandWhereUniqueInput!
+  update: BrandUpdateDataInput!
+  create: BrandCreateInput!
+}
+
+input BrandWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [BrandWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [BrandWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+}
+
+input BrandWhereUniqueInput {
+  id: ID
+}
+
+"""
+A connection to a list of items.
+"""
+type CartConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [CartEdge]!
+  aggregate: AggregateCart!
+}
+
+input CartCreateInput {
+  products: CartProductCreateManyWithoutCartInput
+  user: UserCreateOneInput
+}
+
+input CartCreateOneWithoutProductsInput {
+  create: CartCreateWithoutProductsInput
+  connect: CartWhereUniqueInput
+}
+
+input CartCreateWithoutProductsInput {
+  user: UserCreateOneInput
+}
+
+"""
+An edge in a connection.
+"""
+type CartEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Cart!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum CartOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CartPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CartProduct {
+  quantity: Int!
+  product(where: ProductWhereInput): Product!
+  cart(where: CartWhereInput): Cart!
+}
+
+"""
+A connection to a list of items.
+"""
+type CartProductConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [CartProductEdge]!
+  aggregate: AggregateCartProduct!
+}
+
+input CartProductCreateInput {
+  quantity: Int
+  product: ProductCreateOneInput!
+  cart: CartCreateOneWithoutProductsInput!
+}
+
+input CartProductCreateManyWithoutCartInput {
+  create: [CartProductCreateWithoutCartInput!]
+}
+
+input CartProductCreateWithoutCartInput {
+  quantity: Int
+  product: ProductCreateOneInput!
+}
+
+"""
+An edge in a connection.
+"""
+type CartProductEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: CartProduct!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum CartProductOrderByInput {
+  quantity_ASC
+  quantity_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CartProductPreviousValues {
+  quantity: Int!
+}
+
+type CartProductSubscriptionPayload {
+  mutation: MutationType!
+  node: CartProduct
+  updatedFields: [String!]
+  previousValues: CartProductPreviousValues
+}
+
+input CartProductSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CartProductSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CartProductSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CartProductWhereInput
+}
+
+input CartProductUpdateInput {
+  quantity: Int
+  product: ProductUpdateOneInput
+  cart: CartUpdateOneWithoutProductsInput
+}
+
+input CartProductUpdateManyWithoutCartInput {
+  create: [CartProductCreateWithoutCartInput!]
+}
+
+input CartProductWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CartProductWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CartProductWhereInput!]
+  quantity: Int
+  """
+  All values that are not equal to given value.
+  """
+  quantity_not: Int
+  """
+  All values that are contained in given list.
+  """
+  quantity_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  quantity_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  quantity_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  quantity_lte: Int
+  """
+  All values greater than the given value.
+  """
+  quantity_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  quantity_gte: Int
+  product: ProductWhereInput
+  cart: CartWhereInput
+}
+
+type CartSubscriptionPayload {
+  mutation: MutationType!
+  node: Cart
+  updatedFields: [String!]
+  previousValues: CartPreviousValues
+}
+
+input CartSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CartSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CartSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CartWhereInput
+}
+
+input CartUpdateInput {
+  products: CartProductUpdateManyWithoutCartInput
+  user: UserUpdateOneInput
+}
+
+input CartUpdateOneWithoutProductsInput {
+  create: CartCreateWithoutProductsInput
+  connect: CartWhereUniqueInput
+  disconnect: CartWhereUniqueInput
+  delete: CartWhereUniqueInput
+  update: CartUpdateWithoutProductsInput
+  upsert: CartUpsertWithoutProductsInput
+}
+
+input CartUpdateWithoutProductsDataInput {
+  user: UserUpdateOneInput
+}
+
+input CartUpdateWithoutProductsInput {
+  where: CartWhereUniqueInput!
+  data: CartUpdateWithoutProductsDataInput!
+}
+
+input CartUpsertWithoutProductsInput {
+  where: CartWhereUniqueInput!
+  update: CartUpdateWithoutProductsDataInput!
+  create: CartCreateWithoutProductsInput!
+}
+
+input CartWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CartWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CartWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  products_every: CartProductWhereInput
+  products_some: CartProductWhereInput
+  products_none: CartProductWhereInput
+  user: UserWhereInput
+}
+
+input CartWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 """
@@ -58,16 +800,37 @@ scalar Long
 type Mutation {
   createPost(data: PostCreateInput!): Post!
   createUser(data: UserCreateInput!): User!
+  createBrand(data: BrandCreateInput!): Brand!
+  createProduct(data: ProductCreateInput!): Product!
+  createCart(data: CartCreateInput!): Cart!
+  createCartProduct(data: CartProductCreateInput!): CartProduct!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteBrand(where: BrandWhereUniqueInput!): Brand
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteCart(where: CartWhereUniqueInput!): Cart
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
+  upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
+  upsertCart(where: CartWhereUniqueInput!, create: CartCreateInput!, update: CartUpdateInput!): Cart!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
+  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
+  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
+  updateManyCarts(data: CartUpdateInput!, where: CartWhereInput!): BatchPayload!
+  updateManyCartProducts(data: CartProductUpdateInput!, where: CartProductWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
+  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
+  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
+  deleteManyCarts(where: CartWhereInput!): BatchPayload!
+  deleteManyCartProducts(where: CartProductWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -485,13 +1248,361 @@ input PostWhereUniqueInput {
   id: ID
 }
 
+"""
+A connection to a list of items.
+"""
+type ProductConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [ProductEdge]!
+  aggregate: AggregateProduct!
+}
+
+input ProductCreateInput {
+  price: Int!
+  name: String!
+  brand: BrandCreateOneInput!
+}
+
+input ProductCreateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+}
+
+"""
+An edge in a connection.
+"""
+type ProductEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Product!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum ProductOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  price_ASC
+  price_DESC
+  name_ASC
+  name_DESC
+}
+
+type ProductPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  price: Int!
+  name: String!
+}
+
+type ProductSubscriptionPayload {
+  mutation: MutationType!
+  node: Product
+  updatedFields: [String!]
+  previousValues: ProductPreviousValues
+}
+
+input ProductSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ProductSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ProductSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ProductWhereInput
+}
+
+input ProductUpdateDataInput {
+  price: Int
+  name: String
+  brand: BrandUpdateOneInput
+}
+
+input ProductUpdateInput {
+  price: Int
+  name: String
+  brand: BrandUpdateOneInput
+}
+
+input ProductUpdateNestedInput {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateDataInput!
+}
+
+input ProductUpdateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+  disconnect: ProductWhereUniqueInput
+  delete: ProductWhereUniqueInput
+  update: ProductUpdateNestedInput
+  upsert: ProductUpsertNestedInput
+}
+
+input ProductUpsertNestedInput {
+  where: ProductWhereUniqueInput!
+  update: ProductUpdateDataInput!
+  create: ProductCreateInput!
+}
+
+input ProductWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ProductWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ProductWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  price: Int
+  """
+  All values that are not equal to given value.
+  """
+  price_not: Int
+  """
+  All values that are contained in given list.
+  """
+  price_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  price_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  price_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  price_lte: Int
+  """
+  All values greater than the given value.
+  """
+  price_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  price_gte: Int
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  brand: BrandWhereInput
+}
+
+input ProductWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
+  carts(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cart]!
+  cartProducts(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartProduct]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
+  brand(where: BrandWhereUniqueInput!): Brand
+  product(where: ProductWhereUniqueInput!): Product
+  cart(where: CartWhereUniqueInput!): Cart
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
+  productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
+  cartsConnection(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartConnection!
+  cartProductsConnection(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartProductConnection!
   """
   Fetches an object given its ID
   """
@@ -504,6 +1615,10 @@ type Query {
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
+  product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
+  cart(where: CartSubscriptionWhereInput): CartSubscriptionPayload
+  cartProduct(where: CartProductSubscriptionWhereInput): CartProductSubscriptionPayload
 }
 
 """
@@ -526,6 +1641,11 @@ input UserCreateInput {
   password: String!
   name: String!
   posts: PostCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPostsInput {
@@ -610,11 +1730,32 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  email: String
+  password: String
+  name: String
+  posts: PostUpdateManyWithoutAuthorInput
+}
+
 input UserUpdateInput {
   email: String
   password: String
   name: String
   posts: PostUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  delete: UserWhereUniqueInput
+  update: UserUpdateNestedInput
+  upsert: UserUpsertNestedInput
 }
 
 input UserUpdateOneWithoutPostsInput {
@@ -635,6 +1776,12 @@ input UserUpdateWithoutPostsDataInput {
 input UserUpdateWithoutPostsInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutPostsDataInput!
+}
+
+input UserUpsertNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutPostsInput {
@@ -875,20 +2022,6 @@ input UserWhereUniqueInput {
 }
 `
 
-export type PostOrderByInput = 
-  'id_ASC' |
-  'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'isPublished_ASC' |
-  'isPublished_DESC' |
-  'title_ASC' |
-  'title_DESC' |
-  'text_ASC' |
-  'text_DESC'
-
 export type UserOrderByInput = 
   'id_ASC' |
   'id_DESC' |
@@ -903,15 +2036,67 @@ export type UserOrderByInput =
   'createdAt_ASC' |
   'createdAt_DESC'
 
+export type BrandOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'name_ASC' |
+  'name_DESC'
+
+export type PostOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'isPublished_ASC' |
+  'isPublished_DESC' |
+  'title_ASC' |
+  'title_DESC' |
+  'text_ASC' |
+  'text_DESC'
+
+export type ProductOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'price_ASC' |
+  'price_DESC' |
+  'name_ASC' |
+  'name_DESC'
+
+export type CartOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC'
+
+export type CartProductOrderByInput = 
+  'quantity_ASC' |
+  'quantity_DESC' |
+  'id_ASC' |
+  'id_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
 export type MutationType = 
   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export interface UserCreateWithoutPostsInput {
-  email: String
-  password: String
-  name: String
+export interface CartProductCreateManyWithoutCartInput {
+  create?: CartProductCreateWithoutCartInput[] | CartProductCreateWithoutCartInput
 }
 
 export interface PostWhereInput {
@@ -980,9 +2165,102 @@ export interface PostWhereInput {
   author?: UserWhereInput
 }
 
-export interface PostCreateManyWithoutAuthorInput {
-  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+export interface CartUpdateInput {
+  products?: CartProductUpdateManyWithoutCartInput
+  user?: UserUpdateOneInput
+}
+
+export interface PostUpdateWithoutAuthorInput {
+  where: PostWhereUniqueInput
+  data: PostUpdateWithoutAuthorDataInput
+}
+
+export interface BrandUpsertNestedInput {
+  where: BrandWhereUniqueInput
+  update: BrandUpdateDataInput
+  create: BrandCreateInput
+}
+
+export interface CartCreateOneWithoutProductsInput {
+  create?: CartCreateWithoutProductsInput
+  connect?: CartWhereUniqueInput
+}
+
+export interface BrandUpdateDataInput {
+  name?: String
+}
+
+export interface BrandWhereInput {
+  AND?: BrandWhereInput[] | BrandWhereInput
+  OR?: BrandWhereInput[] | BrandWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+}
+
+export interface BrandUpdateNestedInput {
+  where: BrandWhereUniqueInput
+  data: BrandUpdateDataInput
+}
+
+export interface ProductSubscriptionWhereInput {
+  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ProductWhereInput
+}
+
+export interface BrandUpdateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+  disconnect?: BrandWhereUniqueInput
+  delete?: BrandWhereUniqueInput
+  update?: BrandUpdateNestedInput
+  upsert?: BrandUpsertNestedInput
 }
 
 export interface UserWhereInput {
@@ -1049,39 +2327,53 @@ export interface UserWhereInput {
   posts_none?: PostWhereInput
 }
 
-export interface PostUpdateManyWithoutAuthorInput {
-  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
-  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput
-  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput
-  update?: PostUpdateWithoutAuthorInput[] | PostUpdateWithoutAuthorInput
-  upsert?: PostUpsertWithoutAuthorInput[] | PostUpsertWithoutAuthorInput
-}
-
-export interface PostUpdateInput {
-  isPublished?: Boolean
-  title?: String
-  text?: String
-  author?: UserUpdateOneWithoutPostsInput
-}
-
-export interface UserUpdateInput {
-  email?: String
-  password?: String
+export interface ProductUpdateInput {
+  price?: Int
   name?: String
-  posts?: PostUpdateManyWithoutAuthorInput
+  brand?: BrandUpdateOneInput
 }
 
-export interface PostCreateWithoutAuthorInput {
-  isPublished?: Boolean
-  title: String
-  text: String
+export interface CartWhereInput {
+  AND?: CartWhereInput[] | CartWhereInput
+  OR?: CartWhereInput[] | CartWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  products_every?: CartProductWhereInput
+  products_some?: CartProductWhereInput
+  products_none?: CartProductWhereInput
+  user?: UserWhereInput
 }
 
-export interface UserUpsertWithoutPostsInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutPostsDataInput
-  create: UserCreateWithoutPostsInput
+export interface BrandUpdateInput {
+  name?: String
 }
 
 export interface UserSubscriptionWhereInput {
@@ -1094,16 +2386,6 @@ export interface UserSubscriptionWhereInput {
   node?: UserWhereInput
 }
 
-export interface UserUpdateWithoutPostsDataInput {
-  email?: String
-  password?: String
-  name?: String
-}
-
-export interface PostWhereUniqueInput {
-  id?: ID_Input
-}
-
 export interface PostCreateInput {
   isPublished?: Boolean
   title: String
@@ -1111,24 +2393,29 @@ export interface PostCreateInput {
   author: UserCreateOneWithoutPostsInput
 }
 
-export interface PostUpsertWithoutAuthorInput {
-  where: PostWhereUniqueInput
-  update: PostUpdateWithoutAuthorDataInput
-  create: PostCreateWithoutAuthorInput
+export interface CartUpsertWithoutProductsInput {
+  where: CartWhereUniqueInput
+  update: CartUpdateWithoutProductsDataInput
+  create: CartCreateWithoutProductsInput
 }
 
-export interface PostUpdateWithoutAuthorInput {
-  where: PostWhereUniqueInput
-  data: PostUpdateWithoutAuthorDataInput
-}
-
-export interface UserUpdateOneWithoutPostsInput {
+export interface UserCreateOneWithoutPostsInput {
   create?: UserCreateWithoutPostsInput
   connect?: UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput
-  delete?: UserWhereUniqueInput
-  update?: UserUpdateWithoutPostsInput
-  upsert?: UserUpsertWithoutPostsInput
+}
+
+export interface PostWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateWithoutPostsInput {
+  email: String
+  password: String
+  name: String
+}
+
+export interface BrandWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface UserCreateInput {
@@ -1138,25 +2425,114 @@ export interface UserCreateInput {
   posts?: PostCreateManyWithoutAuthorInput
 }
 
-export interface UserUpdateWithoutPostsInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutPostsDataInput
-}
-
-export interface UserCreateOneWithoutPostsInput {
-  create?: UserCreateWithoutPostsInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface PostUpdateWithoutAuthorDataInput {
-  isPublished?: Boolean
-  title?: String
-  text?: String
-}
-
-export interface UserWhereUniqueInput {
+export interface CartWhereUniqueInput {
   id?: ID_Input
-  email?: String
+}
+
+export interface PostCreateManyWithoutAuthorInput {
+  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+}
+
+export interface CartUpdateOneWithoutProductsInput {
+  create?: CartCreateWithoutProductsInput
+  connect?: CartWhereUniqueInput
+  disconnect?: CartWhereUniqueInput
+  delete?: CartWhereUniqueInput
+  update?: CartUpdateWithoutProductsInput
+  upsert?: CartUpsertWithoutProductsInput
+}
+
+export interface PostCreateWithoutAuthorInput {
+  isPublished?: Boolean
+  title: String
+  text: String
+}
+
+export interface ProductUpdateDataInput {
+  price?: Int
+  name?: String
+  brand?: BrandUpdateOneInput
+}
+
+export interface BrandCreateInput {
+  name: String
+}
+
+export interface ProductUpdateOneInput {
+  create?: ProductCreateInput
+  connect?: ProductWhereUniqueInput
+  disconnect?: ProductWhereUniqueInput
+  delete?: ProductWhereUniqueInput
+  update?: ProductUpdateNestedInput
+  upsert?: ProductUpsertNestedInput
+}
+
+export interface ProductCreateInput {
+  price: Int
+  name: String
+  brand: BrandCreateOneInput
+}
+
+export interface UserUpsertNestedInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  create: UserCreateInput
+}
+
+export interface BrandCreateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+}
+
+export interface UserUpdateNestedInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateDataInput
+}
+
+export interface CartCreateInput {
+  products?: CartProductCreateManyWithoutCartInput
+  user?: UserCreateOneInput
+}
+
+export interface CartProductUpdateManyWithoutCartInput {
+  create?: CartProductCreateWithoutCartInput[] | CartProductCreateWithoutCartInput
+}
+
+export interface PostUpsertWithoutAuthorInput {
+  where: PostWhereUniqueInput
+  update: PostUpdateWithoutAuthorDataInput
+  create: PostCreateWithoutAuthorInput
+}
+
+export interface CartSubscriptionWhereInput {
+  AND?: CartSubscriptionWhereInput[] | CartSubscriptionWhereInput
+  OR?: CartSubscriptionWhereInput[] | CartSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CartWhereInput
+}
+
+export interface CartProductCreateWithoutCartInput {
+  quantity?: Int
+  product: ProductCreateOneInput
+}
+
+export interface BrandSubscriptionWhereInput {
+  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BrandWhereInput
+}
+
+export interface ProductCreateOneInput {
+  create?: ProductCreateInput
+  connect?: ProductWhereUniqueInput
 }
 
 export interface PostSubscriptionWhereInput {
@@ -1169,19 +2545,216 @@ export interface PostSubscriptionWhereInput {
   node?: PostWhereInput
 }
 
+export interface UserCreateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface CartProductCreateInput {
+  quantity?: Int
+  product: ProductCreateOneInput
+  cart: CartCreateOneWithoutProductsInput
+}
+
+export interface CartUpdateWithoutProductsInput {
+  where: CartWhereUniqueInput
+  data: CartUpdateWithoutProductsDataInput
+}
+
+export interface PostUpdateWithoutAuthorDataInput {
+  isPublished?: Boolean
+  title?: String
+  text?: String
+}
+
+export interface ProductUpdateNestedInput {
+  where: ProductWhereUniqueInput
+  data: ProductUpdateDataInput
+}
+
+export interface CartCreateWithoutProductsInput {
+  user?: UserCreateOneInput
+}
+
+export interface UserUpdateDataInput {
+  email?: String
+  password?: String
+  name?: String
+  posts?: PostUpdateManyWithoutAuthorInput
+}
+
+export interface PostUpdateInput {
+  isPublished?: Boolean
+  title?: String
+  text?: String
+  author?: UserUpdateOneWithoutPostsInput
+}
+
+export interface CartProductSubscriptionWhereInput {
+  AND?: CartProductSubscriptionWhereInput[] | CartProductSubscriptionWhereInput
+  OR?: CartProductSubscriptionWhereInput[] | CartProductSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CartProductWhereInput
+}
+
+export interface UserUpdateOneWithoutPostsInput {
+  create?: UserCreateWithoutPostsInput
+  connect?: UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput
+  delete?: UserWhereUniqueInput
+  update?: UserUpdateWithoutPostsInput
+  upsert?: UserUpsertWithoutPostsInput
+}
+
+export interface CartProductWhereInput {
+  AND?: CartProductWhereInput[] | CartProductWhereInput
+  OR?: CartProductWhereInput[] | CartProductWhereInput
+  quantity?: Int
+  quantity_not?: Int
+  quantity_in?: Int[] | Int
+  quantity_not_in?: Int[] | Int
+  quantity_lt?: Int
+  quantity_lte?: Int
+  quantity_gt?: Int
+  quantity_gte?: Int
+  product?: ProductWhereInput
+  cart?: CartWhereInput
+}
+
+export interface UserUpdateWithoutPostsInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutPostsDataInput
+}
+
+export interface ProductWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface CartProductUpdateInput {
+  quantity?: Int
+  product?: ProductUpdateOneInput
+  cart?: CartUpdateOneWithoutProductsInput
+}
+
+export interface PostUpdateManyWithoutAuthorInput {
+  create?: PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput
+  update?: PostUpdateWithoutAuthorInput[] | PostUpdateWithoutAuthorInput
+  upsert?: PostUpsertWithoutAuthorInput[] | PostUpsertWithoutAuthorInput
+}
+
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  name?: String
+  posts?: PostUpdateManyWithoutAuthorInput
+}
+
+export interface UserUpsertWithoutPostsInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutPostsDataInput
+  create: UserCreateWithoutPostsInput
+}
+
+export interface UserUpdateWithoutPostsDataInput {
+  email?: String
+  password?: String
+  name?: String
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput
+  delete?: UserWhereUniqueInput
+  update?: UserUpdateNestedInput
+  upsert?: UserUpsertNestedInput
+}
+
+export interface ProductUpsertNestedInput {
+  where: ProductWhereUniqueInput
+  update: ProductUpdateDataInput
+  create: ProductCreateInput
+}
+
+export interface CartUpdateWithoutProductsDataInput {
+  user?: UserUpdateOneInput
+}
+
+export interface ProductWhereInput {
+  AND?: ProductWhereInput[] | ProductWhereInput
+  OR?: ProductWhereInput[] | ProductWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  price?: Int
+  price_not?: Int
+  price_in?: Int[] | Int
+  price_not_in?: Int[] | Int
+  price_lt?: Int
+  price_lte?: Int
+  price_gt?: Int
+  price_gte?: Int
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  brand?: BrandWhereInput
+}
+
 /*
  * An object with an ID
 
  */
 export interface Node {
   id: ID_Output
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  email: String
-  password: String
-  name: String
 }
 
 /*
@@ -1194,14 +2767,157 @@ export interface PostConnection {
   aggregate: AggregatePost
 }
 
-export interface Post extends Node {
+export interface CartProductPreviousValues {
+  quantity: Int
+}
+
+export interface CartProduct {
+  quantity: Int
+  product: Product
+  cart: Cart
+}
+
+export interface User extends Node {
+  id: ID_Output
+  email: String
+  password: String
+  name: String
+  posts?: Post[]
+}
+
+export interface AggregateCartProduct {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CartProductConnection {
+  pageInfo: PageInfo
+  edges: CartProductEdge[]
+  aggregate: AggregateCartProduct
+}
+
+export interface Cart extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  products?: CartProduct[]
+  user?: User
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface CartEdge {
+  node: Cart
+  cursor: String
+}
+
+export interface AggregateCart {
+  count: Int
+}
+
+export interface CartSubscriptionPayload {
+  mutation: MutationType
+  node?: Cart
+  updatedFields?: String[]
+  previousValues?: CartPreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CartConnection {
+  pageInfo: PageInfo
+  edges: CartEdge[]
+  aggregate: AggregateCart
+}
+
+export interface AggregateProduct {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ProductEdge {
+  node: Product
+  cursor: String
+}
+
+export interface AggregateBrand {
+  count: Int
+}
+
+export interface PostSubscriptionPayload {
+  mutation: MutationType
+  node?: Post
+  updatedFields?: String[]
+  previousValues?: PostPreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface BrandConnection {
+  pageInfo: PageInfo
+  edges: BrandEdge[]
+  aggregate: AggregateBrand
+}
+
+export interface PostPreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
   isPublished: Boolean
   title: String
   text: String
-  author: User
+}
+
+export interface CartProductSubscriptionPayload {
+  mutation: MutationType
+  node?: CartProduct
+  updatedFields?: String[]
+  previousValues?: CartProductPreviousValues
+}
+
+export interface CartPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
+export interface AggregatePost {
+  count: Int
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  email: String
+  password: String
+  name: String
 }
 
 /*
@@ -1215,65 +2931,71 @@ export interface PageInfo {
   endCursor?: String
 }
 
-export interface PostSubscriptionPayload {
-  mutation: MutationType
-  node?: Post
-  updatedFields?: String[]
-  previousValues?: PostPreviousValues
-}
-
-export interface BatchPayload {
-  count: Long
-}
-
-export interface PostPreviousValues {
+export interface Product extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  isPublished: Boolean
-  title: String
-  text: String
+  price: Int
+  brand: Brand
+  name: String
 }
 
-export interface User extends Node {
-  id: ID_Output
-  email: String
-  password: String
-  name: String
-  posts?: Post[]
+/*
+ * An edge in a connection.
+
+ */
+export interface CartProductEdge {
+  node: CartProduct
+  cursor: String
+}
+
+export interface BrandSubscriptionPayload {
+  mutation: MutationType
+  node?: Brand
+  updatedFields?: String[]
+  previousValues?: BrandPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface BrandEdge {
+  node: Brand
+  cursor: String
 }
 
 export interface AggregateUser {
   count: Int
 }
 
-export interface UserSubscriptionPayload {
+export interface ProductPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  price: Int
+  name: String
+}
+
+export interface ProductSubscriptionPayload {
   mutation: MutationType
-  node?: User
+  node?: Product
   updatedFields?: String[]
-  previousValues?: UserPreviousValues
+  previousValues?: ProductPreviousValues
 }
 
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
+export interface Brand extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  name: String
 }
 
-/*
- * An edge in a connection.
-
- */
-export interface PostEdge {
-  node: Post
-  cursor: String
-}
-
-export interface AggregatePost {
-  count: Int
+export interface BrandPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  name: String
 }
 
 /*
@@ -1286,10 +3008,51 @@ export interface UserConnection {
   aggregate: AggregateUser
 }
 
+export interface BatchPayload {
+  count: Long
+}
+
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+ * A connection to a list of items.
+
+ */
+export interface ProductConnection {
+  pageInfo: PageInfo
+  edges: ProductEdge[]
+  aggregate: AggregateProduct
+}
+
+export interface Post extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  isPublished: Boolean
+  title: String
+  text: String
+  author: User
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface PostEdge {
+  node: Post
+  cursor: String
+}
+
+export type DateTime = string
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Int = number
+export type Boolean = boolean
+
+/*
+The 'Long' scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+*/
+export type Long = string
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -1303,17 +3066,9 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string
 
 /*
-The 'Long' scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
-export type Long = string
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean
-
-export type DateTime = string
+export type Int = number
 
 export interface Schema {
   query: Query
@@ -1324,31 +3079,67 @@ export interface Schema {
 export type Query = {
   posts: (args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Post[]>
   users: (args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<User[]>
+  brands: (args: { where?: BrandWhereInput, orderBy?: BrandOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Brand[]>
+  products: (args: { where?: ProductWhereInput, orderBy?: ProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Product[]>
+  carts: (args: { where?: CartWhereInput, orderBy?: CartOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Cart[]>
+  cartProducts: (args: { where?: CartProductWhereInput, orderBy?: CartProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<CartProduct[]>
   post: (args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Post | null>
   user: (args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
+  brand: (args: { where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
+  product: (args: { where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
+  cart: (args: { where: CartWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Cart | null>
   postsConnection: (args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<PostConnection>
   usersConnection: (args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<UserConnection>
+  brandsConnection: (args: { where?: BrandWhereInput, orderBy?: BrandOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<BrandConnection>
+  productsConnection: (args: { where?: ProductWhereInput, orderBy?: ProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<ProductConnection>
+  cartsConnection: (args: { where?: CartWhereInput, orderBy?: CartOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<CartConnection>
+  cartProductsConnection: (args: { where?: CartProductWhereInput, orderBy?: CartProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<CartProductConnection>
   node: (args: { id: ID_Output }, info?: GraphQLResolveInfo | string) => Promise<Node | null>
 }
 
 export type Mutation = {
   createPost: (args: { data: PostCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Post>
   createUser: (args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string) => Promise<User>
+  createBrand: (args: { data: BrandCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Brand>
+  createProduct: (args: { data: ProductCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Product>
+  createCart: (args: { data: CartCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Cart>
+  createCartProduct: (args: { data: CartProductCreateInput }, info?: GraphQLResolveInfo | string) => Promise<CartProduct>
   updatePost: (args: { data: PostUpdateInput, where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Post | null>
   updateUser: (args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
+  updateBrand: (args: { data: BrandUpdateInput, where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
+  updateProduct: (args: { data: ProductUpdateInput, where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
+  updateCart: (args: { data: CartUpdateInput, where: CartWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Cart | null>
   deletePost: (args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Post | null>
   deleteUser: (args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
+  deleteBrand: (args: { where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
+  deleteProduct: (args: { where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
+  deleteCart: (args: { where: CartWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Cart | null>
   upsertPost: (args: { where: PostWhereUniqueInput, create: PostCreateInput, update: PostUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Post>
   upsertUser: (args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<User>
+  upsertBrand: (args: { where: BrandWhereUniqueInput, create: BrandCreateInput, update: BrandUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Brand>
+  upsertProduct: (args: { where: ProductWhereUniqueInput, create: ProductCreateInput, update: ProductUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Product>
+  upsertCart: (args: { where: CartWhereUniqueInput, create: CartCreateInput, update: CartUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Cart>
   updateManyPosts: (args: { data: PostUpdateInput, where: PostWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyUsers: (args: { data: UserUpdateInput, where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyBrands: (args: { data: BrandUpdateInput, where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyProducts: (args: { data: ProductUpdateInput, where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyCarts: (args: { data: CartUpdateInput, where: CartWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyCartProducts: (args: { data: CartProductUpdateInput, where: CartProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyPosts: (args: { where: PostWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyUsers: (args: { where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyBrands: (args: { where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyProducts: (args: { where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyCarts: (args: { where: CartWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyCartProducts: (args: { where: CartProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
 }
 
 export type Subscription = {
   post: (args: { where?: PostSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<PostSubscriptionPayload>>
   user: (args: { where?: UserSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<UserSubscriptionPayload>>
+  brand: (args: { where?: BrandSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<BrandSubscriptionPayload>>
+  product: (args: { where?: ProductSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<ProductSubscriptionPayload>>
+  cart: (args: { where?: CartSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<CartSubscriptionPayload>>
+  cartProduct: (args: { where?: CartProductSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<CartProductSubscriptionPayload>>
 }
 
 export class Prisma extends BasePrisma {
@@ -1359,36 +3150,76 @@ export class Prisma extends BasePrisma {
 
   exists = {
     Post: (where: PostWhereInput): Promise<boolean> => super.existsDelegate('query', 'posts', { where }, {}, '{ id }'),
-    User: (where: UserWhereInput): Promise<boolean> => super.existsDelegate('query', 'users', { where }, {}, '{ id }')
+    User: (where: UserWhereInput): Promise<boolean> => super.existsDelegate('query', 'users', { where }, {}, '{ id }'),
+    Brand: (where: BrandWhereInput): Promise<boolean> => super.existsDelegate('query', 'brands', { where }, {}, '{ id }'),
+    Product: (where: ProductWhereInput): Promise<boolean> => super.existsDelegate('query', 'products', { where }, {}, '{ id }'),
+    Cart: (where: CartWhereInput): Promise<boolean> => super.existsDelegate('query', 'carts', { where }, {}, '{ id }'),
+    CartProduct: (where: CartProductWhereInput): Promise<boolean> => super.existsDelegate('query', 'cartProducts', { where }, {}, '{ id }')
   }
 
   query: Query = {
     posts: (args, info): Promise<Post[]> => super.delegate('query', 'posts', args, {}, info),
     users: (args, info): Promise<User[]> => super.delegate('query', 'users', args, {}, info),
+    brands: (args, info): Promise<Brand[]> => super.delegate('query', 'brands', args, {}, info),
+    products: (args, info): Promise<Product[]> => super.delegate('query', 'products', args, {}, info),
+    carts: (args, info): Promise<Cart[]> => super.delegate('query', 'carts', args, {}, info),
+    cartProducts: (args, info): Promise<CartProduct[]> => super.delegate('query', 'cartProducts', args, {}, info),
     post: (args, info): Promise<Post | null> => super.delegate('query', 'post', args, {}, info),
     user: (args, info): Promise<User | null> => super.delegate('query', 'user', args, {}, info),
+    brand: (args, info): Promise<Brand | null> => super.delegate('query', 'brand', args, {}, info),
+    product: (args, info): Promise<Product | null> => super.delegate('query', 'product', args, {}, info),
+    cart: (args, info): Promise<Cart | null> => super.delegate('query', 'cart', args, {}, info),
     postsConnection: (args, info): Promise<PostConnection> => super.delegate('query', 'postsConnection', args, {}, info),
     usersConnection: (args, info): Promise<UserConnection> => super.delegate('query', 'usersConnection', args, {}, info),
+    brandsConnection: (args, info): Promise<BrandConnection> => super.delegate('query', 'brandsConnection', args, {}, info),
+    productsConnection: (args, info): Promise<ProductConnection> => super.delegate('query', 'productsConnection', args, {}, info),
+    cartsConnection: (args, info): Promise<CartConnection> => super.delegate('query', 'cartsConnection', args, {}, info),
+    cartProductsConnection: (args, info): Promise<CartProductConnection> => super.delegate('query', 'cartProductsConnection', args, {}, info),
     node: (args, info): Promise<Node | null> => super.delegate('query', 'node', args, {}, info)
   }
 
   mutation: Mutation = {
     createPost: (args, info): Promise<Post> => super.delegate('mutation', 'createPost', args, {}, info),
     createUser: (args, info): Promise<User> => super.delegate('mutation', 'createUser', args, {}, info),
+    createBrand: (args, info): Promise<Brand> => super.delegate('mutation', 'createBrand', args, {}, info),
+    createProduct: (args, info): Promise<Product> => super.delegate('mutation', 'createProduct', args, {}, info),
+    createCart: (args, info): Promise<Cart> => super.delegate('mutation', 'createCart', args, {}, info),
+    createCartProduct: (args, info): Promise<CartProduct> => super.delegate('mutation', 'createCartProduct', args, {}, info),
     updatePost: (args, info): Promise<Post | null> => super.delegate('mutation', 'updatePost', args, {}, info),
     updateUser: (args, info): Promise<User | null> => super.delegate('mutation', 'updateUser', args, {}, info),
+    updateBrand: (args, info): Promise<Brand | null> => super.delegate('mutation', 'updateBrand', args, {}, info),
+    updateProduct: (args, info): Promise<Product | null> => super.delegate('mutation', 'updateProduct', args, {}, info),
+    updateCart: (args, info): Promise<Cart | null> => super.delegate('mutation', 'updateCart', args, {}, info),
     deletePost: (args, info): Promise<Post | null> => super.delegate('mutation', 'deletePost', args, {}, info),
     deleteUser: (args, info): Promise<User | null> => super.delegate('mutation', 'deleteUser', args, {}, info),
+    deleteBrand: (args, info): Promise<Brand | null> => super.delegate('mutation', 'deleteBrand', args, {}, info),
+    deleteProduct: (args, info): Promise<Product | null> => super.delegate('mutation', 'deleteProduct', args, {}, info),
+    deleteCart: (args, info): Promise<Cart | null> => super.delegate('mutation', 'deleteCart', args, {}, info),
     upsertPost: (args, info): Promise<Post> => super.delegate('mutation', 'upsertPost', args, {}, info),
     upsertUser: (args, info): Promise<User> => super.delegate('mutation', 'upsertUser', args, {}, info),
+    upsertBrand: (args, info): Promise<Brand> => super.delegate('mutation', 'upsertBrand', args, {}, info),
+    upsertProduct: (args, info): Promise<Product> => super.delegate('mutation', 'upsertProduct', args, {}, info),
+    upsertCart: (args, info): Promise<Cart> => super.delegate('mutation', 'upsertCart', args, {}, info),
     updateManyPosts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyPosts', args, {}, info),
     updateManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyUsers', args, {}, info),
+    updateManyBrands: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyBrands', args, {}, info),
+    updateManyProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyProducts', args, {}, info),
+    updateManyCarts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyCarts', args, {}, info),
+    updateManyCartProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyCartProducts', args, {}, info),
     deleteManyPosts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyPosts', args, {}, info),
-    deleteManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyUsers', args, {}, info)
+    deleteManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyUsers', args, {}, info),
+    deleteManyBrands: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyBrands', args, {}, info),
+    deleteManyProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyProducts', args, {}, info),
+    deleteManyCarts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyCarts', args, {}, info),
+    deleteManyCartProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyCartProducts', args, {}, info)
   }
 
   subscription: Subscription = {
     post: (args, infoOrQuery): Promise<AsyncIterator<PostSubscriptionPayload>> => super.delegateSubscription('post', args, {}, infoOrQuery),
-    user: (args, infoOrQuery): Promise<AsyncIterator<UserSubscriptionPayload>> => super.delegateSubscription('user', args, {}, infoOrQuery)
+    user: (args, infoOrQuery): Promise<AsyncIterator<UserSubscriptionPayload>> => super.delegateSubscription('user', args, {}, infoOrQuery),
+    brand: (args, infoOrQuery): Promise<AsyncIterator<BrandSubscriptionPayload>> => super.delegateSubscription('brand', args, {}, infoOrQuery),
+    product: (args, infoOrQuery): Promise<AsyncIterator<ProductSubscriptionPayload>> => super.delegateSubscription('product', args, {}, infoOrQuery),
+    cart: (args, infoOrQuery): Promise<AsyncIterator<CartSubscriptionPayload>> => super.delegateSubscription('cart', args, {}, infoOrQuery),
+    cartProduct: (args, infoOrQuery): Promise<AsyncIterator<CartProductSubscriptionPayload>> => super.delegateSubscription('cartProduct', args, {}, infoOrQuery)
   }
 }

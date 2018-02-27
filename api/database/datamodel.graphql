@@ -15,3 +15,37 @@ type User {
   name: String!
   posts: [Post!]!
 }
+
+type Brand {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  name: String!
+}
+
+type Product {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  
+  # price in pennies
+  price: Int!
+  brand: Brand!
+  name: String!
+}
+
+type Cart {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  products: [CartProduct!]! @relation(name: "CartOnProduct")
+  user: User
+}
+
+type CartProduct {
+  quantity: Int! @default(value: "1")
+  product: Product!
+  cart: Cart! @relation(name: "CartOnProduct")
+}
