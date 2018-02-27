@@ -5,6 +5,21 @@
 # Model Types
 #
 
+type Brand implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+type Cart implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  products(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartProduct!]
+  user(where: UserWhereInput): User
+}
+
 type Post implements Node {
   id: ID!
   createdAt: DateTime!
@@ -13,6 +28,15 @@ type Post implements Node {
   title: String!
   text: String!
   author(where: UserWhereInput): User!
+}
+
+type Product implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  price: Int!
+  brand(where: BrandWhereInput): Brand!
+  name: String!
 }
 
 type User implements Node {
@@ -28,7 +52,23 @@ type User implements Node {
 # Other Types
 #
 
+type AggregateBrand {
+  count: Int!
+}
+
+type AggregateCart {
+  count: Int!
+}
+
+type AggregateCartProduct {
+  count: Int!
+}
+
 type AggregatePost {
+  count: Int!
+}
+
+type AggregateProduct {
   count: Int!
 }
 
@@ -37,33 +77,401 @@ type AggregateUser {
 }
 
 type BatchPayload {
-  """
-  The number of nodes that have been affected by the Batch operation.
-  """
   count: Long!
+}
+
+type BrandConnection {
+  pageInfo: PageInfo!
+  edges: [BrandEdge]!
+  aggregate: AggregateBrand!
+}
+
+input BrandCreateInput {
+  name: String!
+}
+
+input BrandCreateOneInput {
+  create: BrandCreateInput
+  connect: BrandWhereUniqueInput
+}
+
+type BrandEdge {
+  node: Brand!
+  cursor: String!
+}
+
+enum BrandOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type BrandPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+type BrandSubscriptionPayload {
+  mutation: MutationType!
+  node: Brand
+  updatedFields: [String!]
+  previousValues: BrandPreviousValues
+}
+
+input BrandSubscriptionWhereInput {
+  AND: [BrandSubscriptionWhereInput!]
+  OR: [BrandSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BrandWhereInput
+}
+
+input BrandUpdateDataInput {
+  name: String
+}
+
+input BrandUpdateInput {
+  name: String
+}
+
+input BrandUpdateNestedInput {
+  where: BrandWhereUniqueInput!
+  data: BrandUpdateDataInput!
+}
+
+input BrandUpdateOneInput {
+  create: BrandCreateInput
+  connect: BrandWhereUniqueInput
+  disconnect: BrandWhereUniqueInput
+  delete: BrandWhereUniqueInput
+  update: BrandUpdateNestedInput
+  upsert: BrandUpsertNestedInput
+}
+
+input BrandUpsertNestedInput {
+  where: BrandWhereUniqueInput!
+  update: BrandUpdateDataInput!
+  create: BrandCreateInput!
+}
+
+input BrandWhereInput {
+  AND: [BrandWhereInput!]
+  OR: [BrandWhereInput!]
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+}
+
+input BrandWhereUniqueInput {
+  id: ID
+}
+
+type CartConnection {
+  pageInfo: PageInfo!
+  edges: [CartEdge]!
+  aggregate: AggregateCart!
+}
+
+input CartCreateInput {
+  products: CartProductCreateManyWithoutCartInput
+  user: UserCreateOneInput
+}
+
+input CartCreateOneWithoutProductsInput {
+  create: CartCreateWithoutProductsInput
+  connect: CartWhereUniqueInput
+}
+
+input CartCreateWithoutProductsInput {
+  user: UserCreateOneInput
+}
+
+type CartEdge {
+  node: Cart!
+  cursor: String!
+}
+
+enum CartOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CartPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type CartProduct {
+  quantity: Int!
+  product(where: ProductWhereInput): Product!
+  cart(where: CartWhereInput): Cart!
+}
+
+type CartProductConnection {
+  pageInfo: PageInfo!
+  edges: [CartProductEdge]!
+  aggregate: AggregateCartProduct!
+}
+
+input CartProductCreateInput {
+  quantity: Int
+  product: ProductCreateOneInput!
+  cart: CartCreateOneWithoutProductsInput!
+}
+
+input CartProductCreateManyWithoutCartInput {
+  create: [CartProductCreateWithoutCartInput!]
+}
+
+input CartProductCreateWithoutCartInput {
+  quantity: Int
+  product: ProductCreateOneInput!
+}
+
+type CartProductEdge {
+  node: CartProduct!
+  cursor: String!
+}
+
+enum CartProductOrderByInput {
+  quantity_ASC
+  quantity_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CartProductPreviousValues {
+  quantity: Int!
+}
+
+type CartProductSubscriptionPayload {
+  mutation: MutationType!
+  node: CartProduct
+  updatedFields: [String!]
+  previousValues: CartProductPreviousValues
+}
+
+input CartProductSubscriptionWhereInput {
+  AND: [CartProductSubscriptionWhereInput!]
+  OR: [CartProductSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CartProductWhereInput
+}
+
+input CartProductUpdateInput {
+  quantity: Int
+  product: ProductUpdateOneInput
+  cart: CartUpdateOneWithoutProductsInput
+}
+
+input CartProductUpdateManyWithoutCartInput {
+  create: [CartProductCreateWithoutCartInput!]
+}
+
+input CartProductWhereInput {
+  AND: [CartProductWhereInput!]
+  OR: [CartProductWhereInput!]
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  product: ProductWhereInput
+  cart: CartWhereInput
+}
+
+type CartSubscriptionPayload {
+  mutation: MutationType!
+  node: Cart
+  updatedFields: [String!]
+  previousValues: CartPreviousValues
+}
+
+input CartSubscriptionWhereInput {
+  AND: [CartSubscriptionWhereInput!]
+  OR: [CartSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CartWhereInput
+}
+
+input CartUpdateInput {
+  products: CartProductUpdateManyWithoutCartInput
+  user: UserUpdateOneInput
+}
+
+input CartUpdateOneWithoutProductsInput {
+  create: CartCreateWithoutProductsInput
+  connect: CartWhereUniqueInput
+  disconnect: CartWhereUniqueInput
+  delete: CartWhereUniqueInput
+  update: CartUpdateWithoutProductsInput
+  upsert: CartUpsertWithoutProductsInput
+}
+
+input CartUpdateWithoutProductsDataInput {
+  user: UserUpdateOneInput
+}
+
+input CartUpdateWithoutProductsInput {
+  where: CartWhereUniqueInput!
+  data: CartUpdateWithoutProductsDataInput!
+}
+
+input CartUpsertWithoutProductsInput {
+  where: CartWhereUniqueInput!
+  update: CartUpdateWithoutProductsDataInput!
+  create: CartCreateWithoutProductsInput!
+}
+
+input CartWhereInput {
+  AND: [CartWhereInput!]
+  OR: [CartWhereInput!]
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  products_every: CartProductWhereInput
+  products_some: CartProductWhereInput
+  products_none: CartProductWhereInput
+  user: UserWhereInput
+}
+
+input CartWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
 
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
 scalar Long
 
 type Mutation {
   createPost(data: PostCreateInput!): Post!
   createUser(data: UserCreateInput!): User!
+  createBrand(data: BrandCreateInput!): Brand!
+  createProduct(data: ProductCreateInput!): Product!
+  createCart(data: CartCreateInput!): Cart!
+  createCartProduct(data: CartProductCreateInput!): CartProduct!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteBrand(where: BrandWhereUniqueInput!): Brand
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteCart(where: CartWhereUniqueInput!): Cart
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
+  upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
+  upsertCart(where: CartWhereUniqueInput!, create: CartCreateInput!, update: CartUpdateInput!): Cart!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
+  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
+  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
+  updateManyCarts(data: CartUpdateInput!, where: CartWhereInput!): BatchPayload!
+  updateManyCartProducts(data: CartProductUpdateInput!, where: CartProductWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
+  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
+  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
+  deleteManyCarts(where: CartWhereInput!): BatchPayload!
+  deleteManyCartProducts(where: CartProductWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -72,49 +480,19 @@ enum MutationType {
   DELETED
 }
 
-"""
-An object with an ID
-"""
 interface Node {
-  """
-  The id of the object.
-  """
   id: ID!
 }
 
-"""
-Information about pagination in a connection.
-"""
 type PageInfo {
-  """
-  When paginating forwards, are there more items?
-  """
   hasNextPage: Boolean!
-  """
-  When paginating backwards, are there more items?
-  """
   hasPreviousPage: Boolean!
-  """
-  When paginating backwards, the cursor to continue.
-  """
   startCursor: String
-  """
-  When paginating forwards, the cursor to continue.
-  """
   endCursor: String
 }
 
-"""
-A connection to a list of items.
-"""
 type PostConnection {
-  """
-  Information to aid in pagination.
-  """
   pageInfo: PageInfo!
-  """
-  A list of edges.
-  """
   edges: [PostEdge]!
   aggregate: AggregatePost!
 }
@@ -137,17 +515,8 @@ input PostCreateWithoutAuthorInput {
   text: String!
 }
 
-"""
-An edge in a connection.
-"""
 type PostEdge {
-  """
-  The item at the end of the edge.
-  """
   node: Post!
-  """
-  A cursor for use in pagination.
-  """
   cursor: String!
 }
 
@@ -183,29 +552,11 @@ type PostSubscriptionPayload {
 }
 
 input PostSubscriptionWhereInput {
-  """
-  Logical AND on all given filters.
-  """
   AND: [PostSubscriptionWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
   OR: [PostSubscriptionWhereInput!]
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
   mutation_in: [MutationType!]
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
   updatedFields_contains: String
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
   updatedFields_contains_every: [String!]
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
   updatedFields_contains_some: [String!]
   node: PostWhereInput
 }
@@ -244,235 +595,67 @@ input PostUpsertWithoutAuthorInput {
 }
 
 input PostWhereInput {
-  """
-  Logical AND on all given filters.
-  """
   AND: [PostWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
   OR: [PostWhereInput!]
   id: ID
-  """
-  All values that are not equal to given value.
-  """
   id_not: ID
-  """
-  All values that are contained in given list.
-  """
   id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
   id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
   id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
   id_lte: ID
-  """
-  All values greater than the given value.
-  """
   id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
   id_gte: ID
-  """
-  All values containing the given string.
-  """
   id_contains: ID
-  """
-  All values not containing the given string.
-  """
   id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
   id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
   id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
   id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
   id_not_ends_with: ID
   createdAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
   createdAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
   createdAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
   createdAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
   createdAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
   createdAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
   createdAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
   createdAt_gte: DateTime
   updatedAt: DateTime
-  """
-  All values that are not equal to given value.
-  """
   updatedAt_not: DateTime
-  """
-  All values that are contained in given list.
-  """
   updatedAt_in: [DateTime!]
-  """
-  All values that are not contained in given list.
-  """
   updatedAt_not_in: [DateTime!]
-  """
-  All values less than the given value.
-  """
   updatedAt_lt: DateTime
-  """
-  All values less than or equal the given value.
-  """
   updatedAt_lte: DateTime
-  """
-  All values greater than the given value.
-  """
   updatedAt_gt: DateTime
-  """
-  All values greater than or equal the given value.
-  """
   updatedAt_gte: DateTime
   isPublished: Boolean
-  """
-  All values that are not equal to given value.
-  """
   isPublished_not: Boolean
   title: String
-  """
-  All values that are not equal to given value.
-  """
   title_not: String
-  """
-  All values that are contained in given list.
-  """
   title_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
   title_not_in: [String!]
-  """
-  All values less than the given value.
-  """
   title_lt: String
-  """
-  All values less than or equal the given value.
-  """
   title_lte: String
-  """
-  All values greater than the given value.
-  """
   title_gt: String
-  """
-  All values greater than or equal the given value.
-  """
   title_gte: String
-  """
-  All values containing the given string.
-  """
   title_contains: String
-  """
-  All values not containing the given string.
-  """
   title_not_contains: String
-  """
-  All values starting with the given string.
-  """
   title_starts_with: String
-  """
-  All values not starting with the given string.
-  """
   title_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
   title_ends_with: String
-  """
-  All values not ending with the given string.
-  """
   title_not_ends_with: String
   text: String
-  """
-  All values that are not equal to given value.
-  """
   text_not: String
-  """
-  All values that are contained in given list.
-  """
   text_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
   text_not_in: [String!]
-  """
-  All values less than the given value.
-  """
   text_lt: String
-  """
-  All values less than or equal the given value.
-  """
   text_lte: String
-  """
-  All values greater than the given value.
-  """
   text_gt: String
-  """
-  All values greater than or equal the given value.
-  """
   text_gte: String
-  """
-  All values containing the given string.
-  """
   text_contains: String
-  """
-  All values not containing the given string.
-  """
   text_not_contains: String
-  """
-  All values starting with the given string.
-  """
   text_starts_with: String
-  """
-  All values not starting with the given string.
-  """
   text_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
   text_ends_with: String
-  """
-  All values not ending with the given string.
-  """
   text_not_ends_with: String
   author: UserWhereInput
 }
@@ -481,38 +664,192 @@ input PostWhereUniqueInput {
   id: ID
 }
 
+type ProductConnection {
+  pageInfo: PageInfo!
+  edges: [ProductEdge]!
+  aggregate: AggregateProduct!
+}
+
+input ProductCreateInput {
+  price: Int!
+  name: String!
+  brand: BrandCreateOneInput!
+}
+
+input ProductCreateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+}
+
+type ProductEdge {
+  node: Product!
+  cursor: String!
+}
+
+enum ProductOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  price_ASC
+  price_DESC
+  name_ASC
+  name_DESC
+}
+
+type ProductPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  price: Int!
+  name: String!
+}
+
+type ProductSubscriptionPayload {
+  mutation: MutationType!
+  node: Product
+  updatedFields: [String!]
+  previousValues: ProductPreviousValues
+}
+
+input ProductSubscriptionWhereInput {
+  AND: [ProductSubscriptionWhereInput!]
+  OR: [ProductSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProductWhereInput
+}
+
+input ProductUpdateDataInput {
+  price: Int
+  name: String
+  brand: BrandUpdateOneInput
+}
+
+input ProductUpdateInput {
+  price: Int
+  name: String
+  brand: BrandUpdateOneInput
+}
+
+input ProductUpdateNestedInput {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateDataInput!
+}
+
+input ProductUpdateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+  disconnect: ProductWhereUniqueInput
+  delete: ProductWhereUniqueInput
+  update: ProductUpdateNestedInput
+  upsert: ProductUpsertNestedInput
+}
+
+input ProductUpsertNestedInput {
+  where: ProductWhereUniqueInput!
+  update: ProductUpdateDataInput!
+  create: ProductCreateInput!
+}
+
+input ProductWhereInput {
+  AND: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  brand: BrandWhereInput
+}
+
+input ProductWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
+  carts(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cart]!
+  cartProducts(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartProduct]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
+  brand(where: BrandWhereUniqueInput!): Brand
+  product(where: ProductWhereUniqueInput!): Product
+  cart(where: CartWhereUniqueInput!): Cart
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  """
-  Fetches an object given its ID
-  """
-  node("""
-  The ID of an object
-  """
-  id: ID!): Node
+  brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
+  productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
+  cartsConnection(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartConnection!
+  cartProductsConnection(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartProductConnection!
+  node(id: ID!): Node
 }
 
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
+  product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
+  cart(where: CartSubscriptionWhereInput): CartSubscriptionPayload
+  cartProduct(where: CartProductSubscriptionWhereInput): CartProductSubscriptionPayload
 }
 
-"""
-A connection to a list of items.
-"""
 type UserConnection {
-  """
-  Information to aid in pagination.
-  """
   pageInfo: PageInfo!
-  """
-  A list of edges.
-  """
   edges: [UserEdge]!
   aggregate: AggregateUser!
 }
@@ -522,6 +859,11 @@ input UserCreateInput {
   password: String!
   name: String!
   posts: PostCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutPostsInput {
@@ -535,17 +877,8 @@ input UserCreateWithoutPostsInput {
   name: String!
 }
 
-"""
-An edge in a connection.
-"""
 type UserEdge {
-  """
-  The item at the end of the edge.
-  """
   node: User!
-  """
-  A cursor for use in pagination.
-  """
   cursor: String!
 }
 
@@ -579,31 +912,20 @@ type UserSubscriptionPayload {
 }
 
 input UserSubscriptionWhereInput {
-  """
-  Logical AND on all given filters.
-  """
   AND: [UserSubscriptionWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
   OR: [UserSubscriptionWhereInput!]
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
   mutation_in: [MutationType!]
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
   updatedFields_contains: String
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
   updatedFields_contains_every: [String!]
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
   updatedFields_contains_some: [String!]
   node: UserWhereInput
+}
+
+input UserUpdateDataInput {
+  email: String
+  password: String
+  name: String
+  posts: PostUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateInput {
@@ -611,6 +933,20 @@ input UserUpdateInput {
   password: String
   name: String
   posts: PostUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: UserWhereUniqueInput
+  delete: UserWhereUniqueInput
+  update: UserUpdateNestedInput
+  upsert: UserUpsertNestedInput
 }
 
 input UserUpdateOneWithoutPostsInput {
@@ -633,6 +969,12 @@ input UserUpdateWithoutPostsInput {
   data: UserUpdateWithoutPostsDataInput!
 }
 
+input UserUpsertNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
 input UserUpsertWithoutPostsInput {
   where: UserWhereUniqueInput!
   update: UserUpdateWithoutPostsDataInput!
@@ -640,225 +982,63 @@ input UserUpsertWithoutPostsInput {
 }
 
 input UserWhereInput {
-  """
-  Logical AND on all given filters.
-  """
   AND: [UserWhereInput!]
-  """
-  Logical OR on all given filters.
-  """
   OR: [UserWhereInput!]
   id: ID
-  """
-  All values that are not equal to given value.
-  """
   id_not: ID
-  """
-  All values that are contained in given list.
-  """
   id_in: [ID!]
-  """
-  All values that are not contained in given list.
-  """
   id_not_in: [ID!]
-  """
-  All values less than the given value.
-  """
   id_lt: ID
-  """
-  All values less than or equal the given value.
-  """
   id_lte: ID
-  """
-  All values greater than the given value.
-  """
   id_gt: ID
-  """
-  All values greater than or equal the given value.
-  """
   id_gte: ID
-  """
-  All values containing the given string.
-  """
   id_contains: ID
-  """
-  All values not containing the given string.
-  """
   id_not_contains: ID
-  """
-  All values starting with the given string.
-  """
   id_starts_with: ID
-  """
-  All values not starting with the given string.
-  """
   id_not_starts_with: ID
-  """
-  All values ending with the given string.
-  """
   id_ends_with: ID
-  """
-  All values not ending with the given string.
-  """
   id_not_ends_with: ID
   email: String
-  """
-  All values that are not equal to given value.
-  """
   email_not: String
-  """
-  All values that are contained in given list.
-  """
   email_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
   email_not_in: [String!]
-  """
-  All values less than the given value.
-  """
   email_lt: String
-  """
-  All values less than or equal the given value.
-  """
   email_lte: String
-  """
-  All values greater than the given value.
-  """
   email_gt: String
-  """
-  All values greater than or equal the given value.
-  """
   email_gte: String
-  """
-  All values containing the given string.
-  """
   email_contains: String
-  """
-  All values not containing the given string.
-  """
   email_not_contains: String
-  """
-  All values starting with the given string.
-  """
   email_starts_with: String
-  """
-  All values not starting with the given string.
-  """
   email_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
   email_ends_with: String
-  """
-  All values not ending with the given string.
-  """
   email_not_ends_with: String
   password: String
-  """
-  All values that are not equal to given value.
-  """
   password_not: String
-  """
-  All values that are contained in given list.
-  """
   password_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
   password_not_in: [String!]
-  """
-  All values less than the given value.
-  """
   password_lt: String
-  """
-  All values less than or equal the given value.
-  """
   password_lte: String
-  """
-  All values greater than the given value.
-  """
   password_gt: String
-  """
-  All values greater than or equal the given value.
-  """
   password_gte: String
-  """
-  All values containing the given string.
-  """
   password_contains: String
-  """
-  All values not containing the given string.
-  """
   password_not_contains: String
-  """
-  All values starting with the given string.
-  """
   password_starts_with: String
-  """
-  All values not starting with the given string.
-  """
   password_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
   password_ends_with: String
-  """
-  All values not ending with the given string.
-  """
   password_not_ends_with: String
   name: String
-  """
-  All values that are not equal to given value.
-  """
   name_not: String
-  """
-  All values that are contained in given list.
-  """
   name_in: [String!]
-  """
-  All values that are not contained in given list.
-  """
   name_not_in: [String!]
-  """
-  All values less than the given value.
-  """
   name_lt: String
-  """
-  All values less than or equal the given value.
-  """
   name_lte: String
-  """
-  All values greater than the given value.
-  """
   name_gt: String
-  """
-  All values greater than or equal the given value.
-  """
   name_gte: String
-  """
-  All values containing the given string.
-  """
   name_contains: String
-  """
-  All values not containing the given string.
-  """
   name_not_contains: String
-  """
-  All values starting with the given string.
-  """
   name_starts_with: String
-  """
-  All values not starting with the given string.
-  """
   name_not_starts_with: String
-  """
-  All values ending with the given string.
-  """
   name_ends_with: String
-  """
-  All values not ending with the given string.
-  """
   name_not_ends_with: String
   posts_every: PostWhereInput
   posts_some: PostWhereInput
