@@ -4,6 +4,6 @@
   "prettier.semi": true,
   "tslint.autoFixOnSave": true,
   "files.exclude": {
-    "**/*.js": true
+    "**/*(!.config).js": true
   }
 }

@@ -3,5 +3,5 @@ package-lock.json
 node_modules
 .idea
 *.log
-.env*
+.env.production
 .DS_Store
