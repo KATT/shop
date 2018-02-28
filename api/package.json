@@ -11,6 +11,7 @@
     "deploy": "yarn deploy:api && yarn deploy:app",
     "alias": "now alias"
   },
+  "private": true,
   "dependencies": {
     "bcryptjs": "2.4.3",
     "graphql-yoga": "1.4.2",
