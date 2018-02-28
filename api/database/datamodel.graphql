@@ -21,16 +21,22 @@ type Brand {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  name: String!
+  name: String! @unique
+}
+
+enum Currency {
+  GBP
 }
 
 type Product {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  
+
   # price in pennies
   price: Int!
+  currency: Currency!
+
   brand: Brand!
   name: String!
 }
