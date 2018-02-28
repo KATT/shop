@@ -11,7 +11,7 @@ export const Query = {
     const where = {
       isPublished: false,
       author: {
-        id
+        id,
       },
     };
 
@@ -25,5 +25,9 @@ export const Query = {
   me(parent, args, ctx: Context, info) {
     const id = getUserId(ctx);
     return ctx.db.query.user({ where: { id } }, info);
+  },
+
+  products(parent, args, ctx: Context, info) {
+    return ctx.db.query.products(args, info);
   },
 };
