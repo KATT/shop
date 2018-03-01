@@ -1,13 +1,15 @@
 {
   "name": "react-prisma-graphql-shopping-cart-api",
   "scripts": {
-    "start": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "start": "dotenv -- node dist/",
     "dev": "npm-run-all --parallel start playground",
-    "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
+    "debug":
+      "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
     "playground": "graphql playground",
     "build": "rimraf dist && tsc",
     "deploy:api": "prisma deploy -e .env.dev",
-    "deploy:app": "dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
+    "deploy:app":
+      "dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
     "deploy": "yarn deploy:api && yarn deploy:app",
     "alias": "now alias"
   },

@@ -5,7 +5,9 @@
   "author": "KATT",
   "scripts": {
     "precommit": "lint-staged",
-    "postinstall": "cd api && yarn; cd ../web && yarn"
+    "postinstall": "cd api && yarn && && cd ../web && yarn",
+    "start": "./start.sh",
+    "test": "echo Insert some tests here!"
   },
   "private": true,
   "lint-staged": {
