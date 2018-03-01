@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "start": "yarn nightwatch",
+    "test": "yarn start",
+    "selenium": "selenium-server -port 4444"
+  },
+  "devDependencies": {
+    "@types/nightwatch": "^0.9.7",
+    "nightwatch": "^0.9.19",
+    "rimraf": "^2.6.2"
+  }
+}
