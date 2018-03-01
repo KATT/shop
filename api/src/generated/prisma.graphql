@@ -20,6 +20,15 @@ type Cart implements Node {
   user(where: UserWhereInput): User
 }
 
+type CartProduct implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int!
+  product(where: ProductWhereInput): Product!
+  cart(where: CartWhereInput): Cart!
+}
+
 type Post implements Node {
   id: ID!
   createdAt: DateTime!
@@ -441,12 +450,6 @@ type CartPreviousValues {
   updatedAt: DateTime!
 }
 
-type CartProduct {
-  quantity: Int!
-  product(where: ProductWhereInput): Product!
-  cart(where: CartWhereInput): Cart!
-}
-
 """
 A connection to a list of items.
 """
@@ -470,6 +473,7 @@ input CartProductCreateInput {
 
 input CartProductCreateManyWithoutCartInput {
   create: [CartProductCreateWithoutCartInput!]
+  connect: [CartProductWhereUniqueInput!]
 }
 
 input CartProductCreateWithoutCartInput {
@@ -492,17 +496,20 @@ type CartProductEdge {
 }
 
 enum CartProductOrderByInput {
-  quantity_ASC
-  quantity_DESC
   id_ASC
   id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  quantity_ASC
+  quantity_DESC
 }
 
 type CartProductPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   quantity: Int!
 }
 
@@ -549,6 +556,27 @@ input CartProductUpdateInput {
 
 input CartProductUpdateManyWithoutCartInput {
   create: [CartProductCreateWithoutCartInput!]
+  connect: [CartProductWhereUniqueInput!]
+  disconnect: [CartProductWhereUniqueInput!]
+  delete: [CartProductWhereUniqueInput!]
+  update: [CartProductUpdateWithoutCartInput!]
+  upsert: [CartProductUpsertWithoutCartInput!]
+}
+
+input CartProductUpdateWithoutCartDataInput {
+  quantity: Int
+  product: ProductUpdateOneInput
+}
+
+input CartProductUpdateWithoutCartInput {
+  where: CartProductWhereUniqueInput!
+  data: CartProductUpdateWithoutCartDataInput!
+}
+
+input CartProductUpsertWithoutCartInput {
+  where: CartProductWhereUniqueInput!
+  update: CartProductUpdateWithoutCartDataInput!
+  create: CartProductCreateWithoutCartInput!
 }
 
 input CartProductWhereInput {
@@ -560,6 +588,117 @@ input CartProductWhereInput {
   Logical OR on all given filters.
   """
   OR: [CartProductWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
   quantity: Int
   """
   All values that are not equal to given value.
@@ -591,6 +730,10 @@ input CartProductWhereInput {
   quantity_gte: Int
   product: ProductWhereInput
   cart: CartWhereInput
+}
+
+input CartProductWhereUniqueInput {
+  id: ID
 }
 
 type CartSubscriptionPayload {
@@ -811,16 +954,19 @@ type Mutation {
   updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
+  updateCartProduct(data: CartProductUpdateInput!, where: CartProductWhereUniqueInput!): CartProduct
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
   deleteBrand(where: BrandWhereUniqueInput!): Brand
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteCart(where: CartWhereUniqueInput!): Cart
+  deleteCartProduct(where: CartProductWhereUniqueInput!): CartProduct
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   upsertCart(where: CartWhereUniqueInput!, create: CartCreateInput!, update: CartUpdateInput!): Cart!
+  upsertCartProduct(where: CartProductWhereUniqueInput!, create: CartProductCreateInput!, update: CartProductUpdateInput!): CartProduct!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
@@ -1618,6 +1764,7 @@ type Query {
   brand(where: BrandWhereUniqueInput!): Brand
   product(where: ProductWhereUniqueInput!): Product
   cart(where: CartWhereUniqueInput!): Cart
+  cartProduct(where: CartProductWhereUniqueInput!): CartProduct
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!

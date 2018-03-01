@@ -51,6 +51,10 @@ type Cart {
 }
 
 type CartProduct {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
   quantity: Int! @default(value: "1")
   product: Product!
   cart: Cart! @relation(name: "CartOnProduct")
