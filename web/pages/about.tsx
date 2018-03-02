@@ -1,3 +1,5 @@
 import Layout from '../components/Layout';
 
-export default () => <Layout>About us</Layout>;
+export default props => (
+  <Layout {...props}>About us</Layout>
+);

@@ -1,6 +1,11 @@
 import {Component} from 'react';
+import { UrlWithParsedQuery } from 'url';
 
-export abstract class NextJSPage extends Component<any, any> {
+interface NextJSPageProps {
+  url: UrlWithParsedQuery;
+}
+
+export class NextJSPage extends Component<NextJSPageProps, any> {
   public displayName?: string;
   public name?: string;
 

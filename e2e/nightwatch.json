@@ -33,6 +33,12 @@
       }
     },
 
+    "nojs": {
+      "desiredCapabilities": {
+        "javascriptEnabled": false
+      }
+    },
+
     "firefox": {
       "desiredCapabilities": {
         "browserName": "firefox",
