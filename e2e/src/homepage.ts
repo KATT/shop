@@ -3,7 +3,7 @@ import {NightwatchBrowser} from 'nightwatch';
 export = {
   before(client: NightwatchBrowser) {
     client
-      .url('http://localhost:5000')
+      .url(client.launch_url)
       .waitForElementVisible('body', 1000);
   },
 
