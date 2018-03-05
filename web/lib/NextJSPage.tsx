@@ -1,8 +1,19 @@
-import {Component} from 'react';
-import { UrlWithParsedQuery } from 'url';
+import { ApolloClient } from 'apollo-client';
+import { Component } from 'react';
+import {UrlWithParsedQuery} from 'url';
 
-interface NextJSPageProps {
-  url: UrlWithParsedQuery;
+export interface ParsedUrlQuery {
+  [key: string]: string | string[];
+}
+export interface NextJSPageProps {
+  url?: ParsedUrlQuery;
+}
+
+export interface NextJSPageContext {
+  query: ParsedUrlQuery;
+  pathname: string;
+  isServer: boolean;
+  apollo: ApolloClient<any>;
 }
 
 export class NextJSPage extends Component<NextJSPageProps, any> {

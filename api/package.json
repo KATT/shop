@@ -2,10 +2,9 @@
   "name": "react-prisma-graphql-shopping-cart-api",
   "scripts": {
     "start": "dotenv -- node dist/",
-    "dev": "npm-run-all --parallel start playground",
-    "debug":
-      "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
-    "playground": "graphql playground",
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:api": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "dev:playground": "graphql playground",
     "build": "rimraf dist && tsc",
     "deploy": "prisma deploy && graphql prepare",
     "deploy:app":

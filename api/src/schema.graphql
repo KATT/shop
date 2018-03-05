@@ -1,5 +1,6 @@
 # import Post from "./generated/prisma.graphql"
 # import Product from "./generated/prisma.graphql"
+# import type Cart from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
@@ -15,6 +16,7 @@ type Query {
     first: Int
     last: Int
   ): [Product]!
+  cart(where: CartWhereInput): Cart!
 }
 
 type Mutation {
@@ -23,6 +25,7 @@ type Mutation {
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
+  createCart: Cart!
 }
 
 type AuthPayload {

@@ -1,8 +1,8 @@
 import Layout from '../components/Layout';
 import ProductList from '../components/ProductList';
-import withData from '../lib/withData';
+import withCart from '../lib/withCart';
 
-export default withData(props => (
+export default withCart(props => (
   <Layout {...props}>
     Hello World.{' '}
 

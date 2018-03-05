@@ -8,7 +8,7 @@ import {NextJSPage} from './NextJSPage';
 const isBrowser: boolean = !!(process as any).browser;
 
 // Gets the display name of a JSX component for dev tools
-function getComponentDisplayName(Component: NextJSPage) {
+export function getComponentDisplayName(Component: NextJSPage) {
   return Component.displayName || Component.name || 'Unknown';
 }
 
@@ -22,16 +22,20 @@ export default (ComposedComponent: any) => {
     public static async getInitialProps(ctx: any) {
       let serverState = { apollo: {} };
 
+      const apollo = initApollo();
+
       // Evaluate the composed component's getInitialProps()
       let composedInitialProps = {};
       if (ComposedComponent.getInitialProps) {
-        composedInitialProps = await ComposedComponent.getInitialProps(ctx);
+        composedInitialProps = await ComposedComponent.getInitialProps({
+          ...ctx,
+          apollo,
+        });
       }
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
       if (!isBrowser) {
-        const apollo = initApollo();
         // Provide the `url` prop data in case a GraphQL query uses it
         const url = { query: ctx.query, pathname: ctx.pathname};
         try {

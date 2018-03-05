@@ -30,4 +30,8 @@ export const Query = {
   products(parent, args, ctx: Context, info) {
     return ctx.db.query.products(args, info);
   },
+
+  cart(parent, args, ctx: Context, info) {
+    return ctx.db.query.cart(args, info);
+  },
 };
