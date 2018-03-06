@@ -1,5 +1,5 @@
 import { extractFragmentReplacements } from 'prisma-binding';
-import { OrderRow } from '../generated/prisma';
+import { Order, OrderRow } from '../generated/prisma';
 import { AuthPayload } from './AuthPayload';
 import { auth } from './Mutation/auth';
 import order from './Mutation/order';
@@ -19,6 +19,16 @@ export const resolvers = {
       fragment: 'fragment OrderRowFragment on OrderRow { quantity, product { price } }',
       resolve: (source: OrderRow, args, context, info) => {
         return source.quantity * source.product.price;
+      },
+    },
+  },
+  Order: {
+    total: {
+      fragment: 'fragment OrderFragment on Order { rows { quantity, product { price } } }',
+      resolve: (source: Order, args, context, info): number => {
+        return source.rows.reduce((total, product) => (
+          total + product.quantity * product.product.price
+        ), 0);
       },
     },
   },

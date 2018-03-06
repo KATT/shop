@@ -179,26 +179,26 @@ describe('mutation.addProductToOrder', () => {
 
     const order = await createOrder();
 
-    const [firstProduct, secondProduct] = products;
+    const [product1, product2] = products;
 
     await addProductToOrder({
       orderId: order.id,
-      productId: firstProduct.id,
+      productId: product1.id,
     });
     const orderAfter = await addProductToOrder({
       orderId: order.id,
-      productId: secondProduct.id,
+      productId: product2.id,
     });
 
     expect(orderAfter.rows).toHaveLength(2);
 
     expect(orderAfter.rows[0].quantity).toEqual(1);
-    expect(orderAfter.rows[0].product.id).toEqual(firstProduct.id);
-    expect(orderAfter.rows[0].product.name).toEqual(firstProduct.name);
+    expect(orderAfter.rows[0].product.id).toEqual(product1.id);
+    expect(orderAfter.rows[0].product.name).toEqual(product1.name);
 
     expect(orderAfter.rows[1].quantity).toEqual(1);
-    expect(orderAfter.rows[1].product.id).toEqual(secondProduct.id);
-    expect(orderAfter.rows[1].product.name).toEqual(secondProduct.name);
+    expect(orderAfter.rows[1].product.id).toEqual(product2.id);
+    expect(orderAfter.rows[1].product.name).toEqual(product2.name);
   });
 
   it('works to add several of the same product in one query', async () => {
@@ -270,5 +270,24 @@ describe('query.order', () => {
     const cartAfter = await addProductToOrder(opts, fragment);
 
     expect(cartAfter.rows[0].total).toEqual(product.price * quantity);
+  });
+
+  it('returns the total of the whole order', async () => {
+    const order = await createOrder();
+
+    const [product1, product2] = products;
+
+    expect(product1.price).toBeGreaterThan(0);
+    expect(product2.price).toBeGreaterThan(0);
+
+    const opts1 = {
+      productId: product1.id,
+      orderId: order.id,
+    };
+    const fragment =  `total`;
+    await addProductToOrder(opts1, fragment);
+    const cartAfter = await addProductToOrder(opts1, fragment);
+
+    expect(cartAfter.total).toEqual(product1.price + product2.price);
   });
 });

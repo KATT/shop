@@ -43,6 +43,7 @@ type Order implements Node {
     last: Int
   ): [OrderRow!]
   user(where: UserWhereInput): User
+  total: Int!
 }
 
 type OrderRow implements Node {
