@@ -39,3 +39,35 @@ it('query.products()', async () => {
 
   expect(Array.isArray(body.data.products)).toBeTruthy();
 });
+
+it('mutation.createCart', async () => {
+  const query = `
+    mutation {
+      createCart {
+        id
+        products {
+          quantity
+          product {
+            id
+            name
+            brand { name }
+          }
+        }
+      }
+    }
+  `;
+
+  const variables = {};
+  const {body} = await request(app)
+    .post('/')
+    .send({
+      query,
+      variables,
+    });
+  expect(body).not.toHaveProperty('errors');
+  expect(body).toHaveProperty('data');
+
+  const cart: Cart = body.data.createCart;
+
+  expect(Array.isArray(cart.products)).toBeTruthy();
+});
