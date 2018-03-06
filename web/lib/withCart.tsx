@@ -19,6 +19,7 @@ export interface WithCartProps extends NextJSPageProps {
 export interface WithCartContext extends NextJSPageContext {
   cartId: string;
 }
+let cartId;
 
 export default (ComposedComponent: any) => {
   class WithCart extends Component {
@@ -30,12 +31,16 @@ export default (ComposedComponent: any) => {
       // 1. cartId = readFromCookie()
       // 2. getCartByID(cartId)
       // 3. if (!cartExists) -> createCart
-
-      const res: any = await apollo.mutate({
-        mutation: createCart,
-        variables: {},
-      });
-      const cartId = res.data.createCart.id;
+      if (ctx.isBrowser) {
+        cartId = (window as any).__NEXT_DATA__.props.cartId;
+      }
+      if (!cartId) {
+        const res: any = await apollo.mutate({
+          mutation: createCart,
+          variables: {},
+        });
+        cartId = res.data.createCart.id;
+      }
 
       // Evaluate the composed component's getInitialProps()
       let composedInitialProps = {

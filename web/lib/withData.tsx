@@ -30,6 +30,7 @@ export default (ComposedComponent: any) => {
         composedInitialProps = await ComposedComponent.getInitialProps({
           ...ctx,
           apollo,
+          isBrowser,
         });
       }
 

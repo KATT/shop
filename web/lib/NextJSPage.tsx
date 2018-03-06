@@ -12,7 +12,7 @@ export interface NextJSPageProps {
 export interface NextJSPageContext {
   query: ParsedUrlQuery;
   pathname: string;
-  isServer: boolean;
+  isBrowser: boolean;
   apollo: ApolloClient<any>;
 }
 
