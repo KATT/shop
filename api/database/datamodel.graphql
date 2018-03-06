@@ -46,7 +46,7 @@ type Cart {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  products: [CartProduct!]! @relation(name: "CartOnProduct")
+  products: [CartProduct!]! @relation(name: "ProductInCart")
   user: User
 }
 
@@ -57,5 +57,5 @@ type CartProduct {
 
   quantity: Int! @default(value: "1")
   product: Product!
-  cart: Cart! @relation(name: "CartOnProduct")
+  cart: Cart! @relation(name: "ProductInCart")
 }
