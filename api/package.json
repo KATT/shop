@@ -6,9 +6,8 @@
     "dev:api": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
     "dev:playground": "graphql playground",
     "build": "rimraf dist && tsc",
-    "deploy": "prisma deploy && graphql prepare",
-    "deploy:app":
-      "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
+    "deploy:local": "prisma deploy && graphql prepare",
+    "deploy:dev": "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
     "alias": "now alias"
   },
   "private": true,
