@@ -12,21 +12,21 @@ type Brand implements Node {
   name: String!
 }
 
-type Cart implements Node {
+type Order implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  products(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartProduct!]
+  products(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderProduct!]
   user(where: UserWhereInput): User
 }
 
-type CartProduct implements Node {
+type OrderProduct implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int!
   product(where: ProductWhereInput): Product!
-  cart(where: CartWhereInput): Cart!
+  order(where: OrderWhereInput): Order!
 }
 
 type Post implements Node {
@@ -66,11 +66,11 @@ type AggregateBrand {
   count: Int!
 }
 
-type AggregateCart {
+type AggregateOrder {
   count: Int!
 }
 
-type AggregateCartProduct {
+type AggregateOrderProduct {
   count: Int!
 }
 
@@ -392,10 +392,77 @@ input BrandWhereUniqueInput {
   name: String
 }
 
+enum Currency {
+  GBP
+}
+
+scalar DateTime
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createPost(data: PostCreateInput!): Post!
+  createUser(data: UserCreateInput!): User!
+  createBrand(data: BrandCreateInput!): Brand!
+  createProduct(data: ProductCreateInput!): Product!
+  createOrder(data: OrderCreateInput!): Order!
+  createOrderProduct(data: OrderProductCreateInput!): OrderProduct!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
+  updateOrderProduct(data: OrderProductUpdateInput!, where: OrderProductWhereUniqueInput!): OrderProduct
+  deletePost(where: PostWhereUniqueInput!): Post
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteBrand(where: BrandWhereUniqueInput!): Brand
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteOrder(where: OrderWhereUniqueInput!): Order
+  deleteOrderProduct(where: OrderProductWhereUniqueInput!): OrderProduct
+  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
+  upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
+  upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
+  upsertOrderProduct(where: OrderProductWhereUniqueInput!, create: OrderProductCreateInput!, update: OrderProductUpdateInput!): OrderProduct!
+  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
+  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
+  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
+  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
+  updateManyOrderProducts(data: OrderProductUpdateInput!, where: OrderProductWhereInput!): BatchPayload!
+  deleteManyPosts(where: PostWhereInput!): BatchPayload!
+  deleteManyUsers(where: UserWhereInput!): BatchPayload!
+  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
+  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
+  deleteManyOrders(where: OrderWhereInput!): BatchPayload!
+  deleteManyOrderProducts(where: OrderProductWhereInput!): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+}
+
 """
 A connection to a list of items.
 """
-type CartConnection {
+type OrderConnection {
   """
   Information to aid in pagination.
   """
@@ -403,39 +470,39 @@ type CartConnection {
   """
   A list of edges.
   """
-  edges: [CartEdge]!
-  aggregate: AggregateCart!
+  edges: [OrderEdge]!
+  aggregate: AggregateOrder!
 }
 
-input CartCreateInput {
-  products: CartProductCreateManyWithoutCartInput
+input OrderCreateInput {
+  products: OrderProductCreateManyWithoutOrderInput
   user: UserCreateOneInput
 }
 
-input CartCreateOneWithoutProductsInput {
-  create: CartCreateWithoutProductsInput
-  connect: CartWhereUniqueInput
+input OrderCreateOneWithoutProductsInput {
+  create: OrderCreateWithoutProductsInput
+  connect: OrderWhereUniqueInput
 }
 
-input CartCreateWithoutProductsInput {
+input OrderCreateWithoutProductsInput {
   user: UserCreateOneInput
 }
 
 """
 An edge in a connection.
 """
-type CartEdge {
+type OrderEdge {
   """
   The item at the end of the edge.
   """
-  node: Cart!
+  node: Order!
   """
   A cursor for use in pagination.
   """
   cursor: String!
 }
 
-enum CartOrderByInput {
+enum OrderOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -444,7 +511,7 @@ enum CartOrderByInput {
   updatedAt_DESC
 }
 
-type CartPreviousValues {
+type OrderPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -453,7 +520,7 @@ type CartPreviousValues {
 """
 A connection to a list of items.
 """
-type CartProductConnection {
+type OrderProductConnection {
   """
   Information to aid in pagination.
   """
@@ -461,22 +528,22 @@ type CartProductConnection {
   """
   A list of edges.
   """
-  edges: [CartProductEdge]!
-  aggregate: AggregateCartProduct!
+  edges: [OrderProductEdge]!
+  aggregate: AggregateOrderProduct!
 }
 
-input CartProductCreateInput {
+input OrderProductCreateInput {
   quantity: Int
   product: ProductCreateOneInput!
-  cart: CartCreateOneWithoutProductsInput!
+  order: OrderCreateOneWithoutProductsInput!
 }
 
-input CartProductCreateManyWithoutCartInput {
-  create: [CartProductCreateWithoutCartInput!]
-  connect: [CartProductWhereUniqueInput!]
+input OrderProductCreateManyWithoutOrderInput {
+  create: [OrderProductCreateWithoutOrderInput!]
+  connect: [OrderProductWhereUniqueInput!]
 }
 
-input CartProductCreateWithoutCartInput {
+input OrderProductCreateWithoutOrderInput {
   quantity: Int
   product: ProductCreateOneInput!
 }
@@ -484,18 +551,18 @@ input CartProductCreateWithoutCartInput {
 """
 An edge in a connection.
 """
-type CartProductEdge {
+type OrderProductEdge {
   """
   The item at the end of the edge.
   """
-  node: CartProduct!
+  node: OrderProduct!
   """
   A cursor for use in pagination.
   """
   cursor: String!
 }
 
-enum CartProductOrderByInput {
+enum OrderProductOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -506,29 +573,29 @@ enum CartProductOrderByInput {
   quantity_DESC
 }
 
-type CartProductPreviousValues {
+type OrderProductPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int!
 }
 
-type CartProductSubscriptionPayload {
+type OrderProductSubscriptionPayload {
   mutation: MutationType!
-  node: CartProduct
+  node: OrderProduct
   updatedFields: [String!]
-  previousValues: CartProductPreviousValues
+  previousValues: OrderProductPreviousValues
 }
 
-input CartProductSubscriptionWhereInput {
+input OrderProductSubscriptionWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [CartProductSubscriptionWhereInput!]
+  AND: [OrderProductSubscriptionWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [CartProductSubscriptionWhereInput!]
+  OR: [OrderProductSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -545,49 +612,49 @@ input CartProductSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: CartProductWhereInput
+  node: OrderProductWhereInput
 }
 
-input CartProductUpdateInput {
+input OrderProductUpdateInput {
   quantity: Int
   product: ProductUpdateOneInput
-  cart: CartUpdateOneWithoutProductsInput
+  order: OrderUpdateOneWithoutProductsInput
 }
 
-input CartProductUpdateManyWithoutCartInput {
-  create: [CartProductCreateWithoutCartInput!]
-  connect: [CartProductWhereUniqueInput!]
-  disconnect: [CartProductWhereUniqueInput!]
-  delete: [CartProductWhereUniqueInput!]
-  update: [CartProductUpdateWithoutCartInput!]
-  upsert: [CartProductUpsertWithoutCartInput!]
+input OrderProductUpdateManyWithoutOrderInput {
+  create: [OrderProductCreateWithoutOrderInput!]
+  connect: [OrderProductWhereUniqueInput!]
+  disconnect: [OrderProductWhereUniqueInput!]
+  delete: [OrderProductWhereUniqueInput!]
+  update: [OrderProductUpdateWithoutOrderInput!]
+  upsert: [OrderProductUpsertWithoutOrderInput!]
 }
 
-input CartProductUpdateWithoutCartDataInput {
+input OrderProductUpdateWithoutOrderDataInput {
   quantity: Int
   product: ProductUpdateOneInput
 }
 
-input CartProductUpdateWithoutCartInput {
-  where: CartProductWhereUniqueInput!
-  data: CartProductUpdateWithoutCartDataInput!
+input OrderProductUpdateWithoutOrderInput {
+  where: OrderProductWhereUniqueInput!
+  data: OrderProductUpdateWithoutOrderDataInput!
 }
 
-input CartProductUpsertWithoutCartInput {
-  where: CartProductWhereUniqueInput!
-  update: CartProductUpdateWithoutCartDataInput!
-  create: CartProductCreateWithoutCartInput!
+input OrderProductUpsertWithoutOrderInput {
+  where: OrderProductWhereUniqueInput!
+  update: OrderProductUpdateWithoutOrderDataInput!
+  create: OrderProductCreateWithoutOrderInput!
 }
 
-input CartProductWhereInput {
+input OrderProductWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [CartProductWhereInput!]
+  AND: [OrderProductWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [CartProductWhereInput!]
+  OR: [OrderProductWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -729,29 +796,29 @@ input CartProductWhereInput {
   """
   quantity_gte: Int
   product: ProductWhereInput
-  cart: CartWhereInput
+  order: OrderWhereInput
 }
 
-input CartProductWhereUniqueInput {
+input OrderProductWhereUniqueInput {
   id: ID
 }
 
-type CartSubscriptionPayload {
+type OrderSubscriptionPayload {
   mutation: MutationType!
-  node: Cart
+  node: Order
   updatedFields: [String!]
-  previousValues: CartPreviousValues
+  previousValues: OrderPreviousValues
 }
 
-input CartSubscriptionWhereInput {
+input OrderSubscriptionWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [CartSubscriptionWhereInput!]
+  AND: [OrderSubscriptionWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [CartSubscriptionWhereInput!]
+  OR: [OrderSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -768,47 +835,47 @@ input CartSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: CartWhereInput
+  node: OrderWhereInput
 }
 
-input CartUpdateInput {
-  products: CartProductUpdateManyWithoutCartInput
+input OrderUpdateInput {
+  products: OrderProductUpdateManyWithoutOrderInput
   user: UserUpdateOneInput
 }
 
-input CartUpdateOneWithoutProductsInput {
-  create: CartCreateWithoutProductsInput
-  connect: CartWhereUniqueInput
-  disconnect: CartWhereUniqueInput
-  delete: CartWhereUniqueInput
-  update: CartUpdateWithoutProductsInput
-  upsert: CartUpsertWithoutProductsInput
+input OrderUpdateOneWithoutProductsInput {
+  create: OrderCreateWithoutProductsInput
+  connect: OrderWhereUniqueInput
+  disconnect: OrderWhereUniqueInput
+  delete: OrderWhereUniqueInput
+  update: OrderUpdateWithoutProductsInput
+  upsert: OrderUpsertWithoutProductsInput
 }
 
-input CartUpdateWithoutProductsDataInput {
+input OrderUpdateWithoutProductsDataInput {
   user: UserUpdateOneInput
 }
 
-input CartUpdateWithoutProductsInput {
-  where: CartWhereUniqueInput!
-  data: CartUpdateWithoutProductsDataInput!
+input OrderUpdateWithoutProductsInput {
+  where: OrderWhereUniqueInput!
+  data: OrderUpdateWithoutProductsDataInput!
 }
 
-input CartUpsertWithoutProductsInput {
-  where: CartWhereUniqueInput!
-  update: CartUpdateWithoutProductsDataInput!
-  create: CartCreateWithoutProductsInput!
+input OrderUpsertWithoutProductsInput {
+  where: OrderWhereUniqueInput!
+  update: OrderUpdateWithoutProductsDataInput!
+  create: OrderCreateWithoutProductsInput!
 }
 
-input CartWhereInput {
+input OrderWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [CartWhereInput!]
+  AND: [OrderWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [CartWhereInput!]
+  OR: [OrderWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -920,81 +987,14 @@ input CartWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  products_every: CartProductWhereInput
-  products_some: CartProductWhereInput
-  products_none: CartProductWhereInput
+  products_every: OrderProductWhereInput
+  products_some: OrderProductWhereInput
+  products_none: OrderProductWhereInput
   user: UserWhereInput
 }
 
-input CartWhereUniqueInput {
+input OrderWhereUniqueInput {
   id: ID
-}
-
-enum Currency {
-  GBP
-}
-
-scalar DateTime
-
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
-
-type Mutation {
-  createPost(data: PostCreateInput!): Post!
-  createUser(data: UserCreateInput!): User!
-  createBrand(data: BrandCreateInput!): Brand!
-  createProduct(data: ProductCreateInput!): Product!
-  createCart(data: CartCreateInput!): Cart!
-  createCartProduct(data: CartProductCreateInput!): CartProduct!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
-  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
-  updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
-  updateCartProduct(data: CartProductUpdateInput!, where: CartProductWhereUniqueInput!): CartProduct
-  deletePost(where: PostWhereUniqueInput!): Post
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteBrand(where: BrandWhereUniqueInput!): Brand
-  deleteProduct(where: ProductWhereUniqueInput!): Product
-  deleteCart(where: CartWhereUniqueInput!): Cart
-  deleteCartProduct(where: CartProductWhereUniqueInput!): CartProduct
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
-  upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
-  upsertCart(where: CartWhereUniqueInput!, create: CartCreateInput!, update: CartUpdateInput!): Cart!
-  upsertCartProduct(where: CartProductWhereUniqueInput!, create: CartProductCreateInput!, update: CartProductUpdateInput!): CartProduct!
-  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
-  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
-  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
-  updateManyCarts(data: CartUpdateInput!, where: CartWhereInput!): BatchPayload!
-  updateManyCartProducts(data: CartProductUpdateInput!, where: CartProductWhereInput!): BatchPayload!
-  deleteManyPosts(where: PostWhereInput!): BatchPayload!
-  deleteManyUsers(where: UserWhereInput!): BatchPayload!
-  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
-  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
-  deleteManyCarts(where: CartWhereInput!): BatchPayload!
-  deleteManyCartProducts(where: CartProductWhereInput!): BatchPayload!
-}
-
-enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
-}
-
-"""
-An object with an ID
-"""
-interface Node {
-  """
-  The id of the object.
-  """
-  id: ID!
 }
 
 """
@@ -1757,20 +1757,20 @@ type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
-  carts(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cart]!
-  cartProducts(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartProduct]!
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
+  orderProducts(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderProduct]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
   brand(where: BrandWhereUniqueInput!): Brand
   product(where: ProductWhereUniqueInput!): Product
-  cart(where: CartWhereUniqueInput!): Cart
-  cartProduct(where: CartProductWhereUniqueInput!): CartProduct
+  order(where: OrderWhereUniqueInput!): Order
+  orderProduct(where: OrderProductWhereUniqueInput!): OrderProduct
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
-  cartsConnection(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartConnection!
-  cartProductsConnection(where: CartProductWhereInput, orderBy: CartProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartProductConnection!
+  ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
+  orderProductsConnection(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderProductConnection!
   """
   Fetches an object given its ID
   """
@@ -1785,8 +1785,8 @@ type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
-  cart(where: CartSubscriptionWhereInput): CartSubscriptionPayload
-  cartProduct(where: CartProductSubscriptionWhereInput): CartProductSubscriptionPayload
+  order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
+  orderProduct(where: OrderProductSubscriptionWhereInput): OrderProductSubscriptionPayload
 }
 
 """

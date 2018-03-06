@@ -1,9 +1,9 @@
-import { WithCartProps } from 'lib/withCart';
+import { WithOrderProps } from 'lib/withOrder';
 import Link from 'next/link';
 import { Component, Fragment, ReactNode } from 'react';
 import Checkout from './Checkout';
 
-interface LayoutProps extends WithCartProps {
+interface LayoutProps extends WithOrderProps {
   children: ReactNode;
 }
 
@@ -27,10 +27,10 @@ export default class Layout extends Component<LayoutProps> {
         </nav>
         <main>
           {children}
-          <pre>cartId: {JSON.stringify(this.props.cartId)}</pre>
+          <pre>orderId: {JSON.stringify(this.props.orderId)}</pre>
           <pre>url: {JSON.stringify(this.props.url)}</pre>
         </main>
-        {this.isCheckoutOpen() && <Checkout cartId={this.props.cartId} />}
+        {this.isCheckoutOpen() && <Checkout orderId={this.props.orderId} />}
      </Fragment>
     );
   }

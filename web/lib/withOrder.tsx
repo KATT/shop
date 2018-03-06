@@ -1,45 +1,45 @@
 import gql from 'graphql-tag';
 import {Component} from 'react';
 import { NextJSPageContext, NextJSPageProps} from './NextJSPage';
-import { Cart } from './prisma';
+import { Order } from './prisma';
 import withData, { getComponentDisplayName } from './withData';
 
-const createCart = gql`
-  mutation createCart {
-    createCart {
+const createOrder = gql`
+  mutation createOrder {
+    createOrder {
       id
     }
   }
 `;
 
-export interface WithCartProps extends NextJSPageProps {
-  cartId: string;
+export interface WithOrderProps extends NextJSPageProps {
+  orderId: string;
 }
 
-export interface WithCartContext extends NextJSPageContext {
-  cartId: string;
+export interface WithOrderContext extends NextJSPageContext {
+  orderId: string;
 }
-let cartId;
+let orderId;
 
 export default (ComposedComponent: any) => {
-  class WithCart extends Component {
-    public static displayName = `WithCart(${getComponentDisplayName(ComposedComponent)})`;
-    public static async getInitialProps(ctx: NextJSPageContext): Promise<WithCartProps> {
+  class WithOrder extends Component {
+    public static displayName = `WithOrder(${getComponentDisplayName(ComposedComponent)})`;
+    public static async getInitialProps(ctx: NextJSPageContext): Promise<WithOrderProps> {
       const { apollo } = ctx;
 
       // 🚧 TODO:
-      // 1. cartId = readFromCookie()
-      // 2. getCartByID(cartId)
-      // 3. if (!cartExists) -> createCart
+      // 1. orderId = readFromCookie()
+      // 2. getOrderByID(orderId)
+      // 3. if (!orderExists) -> createOrder
       if (ctx.isBrowser) {
-        cartId = (window as any).__NEXT_DATA__.props.cartId;
+        orderId = (window as any).__NEXT_DATA__.props.orderId;
       }
-      if (!cartId) {
+      if (!orderId) {
         const res: any = await apollo.mutate({
-          mutation: createCart,
+          mutation: createOrder,
           variables: {},
         });
-        cartId = res.data.createCart.id;
+        orderId = res.data.createOrder.id;
       }
 
       // Evaluate the composed component's getInitialProps()
@@ -48,12 +48,12 @@ export default (ComposedComponent: any) => {
       if (ComposedComponent.getInitialProps) {
         composedInitialProps = await ComposedComponent.getInitialProps({
           ...ctx,
-          cartId,
+          orderId,
         });
       }
 
       return {
-        cartId,
+        orderId,
         ...composedInitialProps,
       };
     }
@@ -63,5 +63,5 @@ export default (ComposedComponent: any) => {
     }
 
   }
-  return withData(WithCart);
+  return withData(WithOrder);
 };

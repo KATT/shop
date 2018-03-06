@@ -1,9 +1,9 @@
 import Checkout from '../components/Checkout';
 import Layout from '../components/Layout';
-import withCart from '../lib/withCart';
+import withOrder from '../lib/withOrder';
 
-export default withCart(props => (
+export default withOrder(props => (
   <Layout {...props}>
-    <Checkout cartId={props.cartId} />
+    <Checkout orderId={props.orderId} />
   </Layout>
 ));

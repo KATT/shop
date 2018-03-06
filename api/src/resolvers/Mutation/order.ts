@@ -2,16 +2,16 @@ import { GraphQLError } from 'graphql';
 import { Context } from '../../utils';
 
 export default {
-  async createCart(parent, args, ctx: Context, info) {
-    return ctx.db.mutation.createCart(
+  async createOrder(parent, args, ctx: Context, info) {
+    return ctx.db.mutation.createOrder(
       {
         data: {},
       },
       info,
     );
   },
-  async addProductToCart(parent, args, ctx: Context, info) {
-    const {quantity = 1, cartId, productId} = args;
+  async addProductToOrder(parent, args, ctx: Context, info) {
+    const {quantity = 1, orderId, productId} = args;
     if (quantity < 1) {
       throw new GraphQLError('quantity must be greater than 0');
     }
@@ -28,26 +28,26 @@ export default {
       }
     `;
 
-    const cart = await ctx.db.query.cart({
+    const order = await ctx.db.query.order({
       where: {
-        id: args.cartId,
+        id: args.orderId,
       },
     }, fragment);
 
-    const cartProduct = cart.products.find(({product}) => product.id === productId);
+    const orderProduct = order.products.find(({product}) => product.id === productId);
 
-    if (cartProduct) {
-      await ctx.db.mutation.updateCartProduct({
+    if (orderProduct) {
+      await ctx.db.mutation.updateOrderProduct({
         data: {
-          quantity: quantity + cartProduct.quantity,
+          quantity: quantity + orderProduct.quantity,
         },
         where: {
-          id: cartProduct.id,
+          id: orderProduct.id,
         },
       });
 
     } else {
-      await ctx.db.mutation.createCartProduct({
+      await ctx.db.mutation.createOrderProduct({
         data: {
           quantity,
           product: {
@@ -55,15 +55,15 @@ export default {
               id: productId,
             },
           },
-          cart: {
+          order: {
             connect: {
-              id: cartId,
+              id: orderId,
             },
           },
         },
       });
     }
 
-    return ctx.db.query.cart({where: {id: cartId}}, info);
+    return ctx.db.query.order({where: {id: orderId}}, info);
   },
 };

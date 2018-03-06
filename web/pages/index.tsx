@@ -1,11 +1,11 @@
 import Layout from '../components/Layout';
 import ProductList from '../components/ProductList';
-import withCart, { WithCartProps } from '../lib/withCart';
+import withOrder, { WithOrderProps } from '../lib/withOrder';
 
-export default withCart((props: WithCartProps) => (
+export default withOrder((props: WithOrderProps) => (
   <Layout {...props}>
     Hello World.{' '}
 
-    <ProductList cartId={props.cartId} />
+    <ProductList orderId={props.orderId} />
   </Layout>
 ));

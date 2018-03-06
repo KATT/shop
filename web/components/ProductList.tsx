@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
-import { GetCartFragment } from '../queries/GetCartQuery';
+import { GetOrderFragment } from '../queries/GetOrderQuery';
 
 const PRODUCTS_PER_PAGE = 50;
 
 function ProductList(props: any) {
-  const { cartId, data: { loading, error, products }, loadMoreProducts, addProductToCart } = props;
+  const { orderId, data: { loading, error, products }, loadMoreProducts, addProductToOrder } = props;
 
   if (error) { return <div>Error loading Products</div>; }
   if (products && products.length) {
@@ -16,27 +16,27 @@ function ProductList(props: any) {
           {products.map((product: any, index: number) =>
             <li key={product.id}>
               {product.name}: {' '}
-              <button onClick={() => addProductToCart({
+              <button onClick={() => addProductToOrder({
                   variables: {
-                    cartId,
+                    orderId,
                     productId: product.id,
                   },
-                  update: (proxy, { data: { addProductToCart } }) => {
+                  update: (proxy, { data: { addProductToOrder } }) => {
                     proxy.writeFragment({
-                      id: cartId,
+                      id: orderId,
                       fragment: gql`
-                        fragment CartFragment on Cart {
+                        fragment OrderFragment on Order {
                           products
                         }
                       `,
                       data: {
-                        __typename: 'Cart',
-                        products: addProductToCart.products,
+                        __typename: 'Order',
+                        products: addProductToOrder.products,
                       },
                     });
                   },
                 })
-              }>Add to cart</button>
+              }>Add to order</button>
             </li>,
           )}
         </ul>
@@ -88,13 +88,13 @@ function ProductList(props: any) {
   return <div>Loading</div>;
 }
 
-const addProductToCart: any = gql`
-  mutation addProductToCart ($cartId: String! $productId: String! $quantity: Int) {
-    addProductToCart (cartId: $cartId productId: $productId quantity: $quantity) {
-      ...GetCartFragment
+const addProductToOrder: any = gql`
+  mutation addProductToOrder ($orderId: String! $productId: String! $quantity: Int) {
+    addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
+      ...GetOrderFragment
     }
   }
-  ${GetCartFragment}
+  ${GetOrderFragment}
 `;
 
 const productsQuery: any = gql`
@@ -107,7 +107,7 @@ const productsQuery: any = gql`
 `;
 
 interface InputProps {
-  cartId: string;
+  orderId: string;
 }
 
 export default compose(
@@ -138,7 +138,7 @@ export default compose(
       },
     }),
   }),
-  graphql<Response, InputProps>(addProductToCart, {
-    name: 'addProductToCart',
+  graphql<Response, InputProps>(addProductToOrder, {
+    name: 'addProductToOrder',
   }),
 )(ProductList);

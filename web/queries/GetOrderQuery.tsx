@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-export const GetCartFragment = gql`
-  fragment GetCartFragment on Cart {
+export const GetOrderFragment = gql`
+  fragment GetOrderFragment on Order {
     __typename
     id
     products {
@@ -18,11 +18,11 @@ export const GetCartFragment = gql`
   }
 `;
 
-export const GetCartQuery = gql`
-  query GetCartQuery($id: ID!) {
-    cart(id: $id) {
-      ...GetCartFragment
+export const GetOrderQuery = gql`
+  query GetOrderQuery($id: ID!) {
+    order(id: $id) {
+      ...GetOrderFragment
     }
   }
-  ${GetCartFragment}
+  ${GetOrderFragment}
 `;

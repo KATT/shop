@@ -41,21 +41,21 @@ type Product {
   name: String!
 }
 
-type Cart {
+type Order {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  products: [CartProduct!]! @relation(name: "ProductInCart")
+  products: [OrderProduct!]! @relation(name: "ProductInOrder")
   user: User
 }
 
-type CartProduct {
+type OrderProduct {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
   quantity: Int! @default(value: "1")
   product: Product!
-  cart: Cart! @relation(name: "ProductInCart")
+  order: Order! @relation(name: "ProductInOrder")
 }

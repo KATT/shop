@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import { Cart, Product } from './generated/prisma';
+import { Order, Product } from './generated/prisma';
 import server from './server';
 
 const {
@@ -48,10 +48,10 @@ it('query.products()', async () => {
   const products = await getProducts();
 });
 
-async function createCart(): Promise<Cart> {
+async function createOrder(): Promise<Order> {
   const query = `
     mutation {
-      createCart {
+      createOrder {
         id
         products {
           quantity
@@ -74,24 +74,24 @@ async function createCart(): Promise<Cart> {
   expect(body).not.toHaveProperty('errors');
   expect(body).toHaveProperty('data');
 
-  const cart: Cart = body.data.createCart;
-  return cart;
+  const order: Order = body.data.createOrder;
+  return order;
 }
 
-it('mutation.createCart', async () => {
-  const cart = await createCart();
+it('mutation.createOrder', async () => {
+  const order = await createOrder();
 
-  expect(Array.isArray(cart.products)).toBeTruthy();
+  expect(Array.isArray(order.products)).toBeTruthy();
 });
 
 class GraphQLError extends Error {
   public errors: any[];
 }
 
-async function addProductToCart(variables = {}): Promise<Cart> {
+async function addProductToOrder(variables = {}): Promise<Order> {
   const query = `
-    mutation ($cartId: String! $productId: String! $quantity: Int) {
-      addProductToCart (cartId: $cartId productId: $productId quantity: $quantity) {
+    mutation ($orderId: String! $productId: String! $quantity: Int) {
+      addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
         id
         products {
           quantity
@@ -117,11 +117,11 @@ async function addProductToCart(variables = {}): Promise<Cart> {
   }
   expect(body).toHaveProperty('data');
 
-  const cart: Cart = body.data.addProductToCart;
-  return cart;
+  const order: Order = body.data.addProductToOrder;
+  return order;
 }
 
-describe('mutation.addProductToCart', () => {
+describe('mutation.addProductToOrder', () => {
   let products: Product[];
 
   beforeAll(async () => {
@@ -130,94 +130,94 @@ describe('mutation.addProductToCart', () => {
     expect(products.length).toBeGreaterThan(0);
   });
 
-  it('is possible to add a product to cart', async () => {
-    const cart = await createCart();
+  it('is possible to add a product to order', async () => {
+    const order = await createOrder();
 
     const [product] = products;
-    const cartAfter = await addProductToCart({
-      cartId: cart.id,
+    const orderAfter = await addProductToOrder({
+      orderId: order.id,
       productId: product.id,
     });
 
-    expect(cartAfter.id).toEqual(cart.id);
-    expect(cartAfter.products).toHaveLength(1);
+    expect(orderAfter.id).toEqual(order.id);
+    expect(orderAfter.products).toHaveLength(1);
 
-    expect(cartAfter.products[0].quantity).toEqual(1);
-    expect(cartAfter.products[0].product.id).toEqual(product.id);
-    expect(cartAfter.products[0].product.name).toEqual(product.name);
+    expect(orderAfter.products[0].quantity).toEqual(1);
+    expect(orderAfter.products[0].product.id).toEqual(product.id);
+    expect(orderAfter.products[0].product.name).toEqual(product.name);
   });
 
   it('when adding same product several times, it increases quantity', async () => {
-    const cart = await createCart();
+    const order = await createOrder();
 
     const [product] = products;
     const opts = {
-      cartId: cart.id,
+      orderId: order.id,
       productId: product.id,
     };
-    await addProductToCart(opts);
-    await addProductToCart(opts);
-    await addProductToCart(opts);
-    await addProductToCart(opts);
+    await addProductToOrder(opts);
+    await addProductToOrder(opts);
+    await addProductToOrder(opts);
+    await addProductToOrder(opts);
 
-    const cartAfter = await addProductToCart(opts);
+    const orderAfter = await addProductToOrder(opts);
 
-    expect(cartAfter.products).toHaveLength(1);
+    expect(orderAfter.products).toHaveLength(1);
 
-    expect(cartAfter.products[0].quantity).toEqual(5);
-    expect(cartAfter.products[0].product.id).toEqual(product.id);
-    expect(cartAfter.products[0].product.name).toEqual(product.name);
+    expect(orderAfter.products[0].quantity).toEqual(5);
+    expect(orderAfter.products[0].product.id).toEqual(product.id);
+    expect(orderAfter.products[0].product.name).toEqual(product.name);
   });
 
   it('works to add different products', async () => {
     expect(products.length).toBeGreaterThan(1);
 
-    const cart = await createCart();
+    const order = await createOrder();
 
     const [firstProduct, secondProduct] = products;
 
-    await addProductToCart({
-      cartId: cart.id,
+    await addProductToOrder({
+      orderId: order.id,
       productId: firstProduct.id,
     });
-    const cartAfter = await addProductToCart({
-      cartId: cart.id,
+    const orderAfter = await addProductToOrder({
+      orderId: order.id,
       productId: secondProduct.id,
     });
 
-    expect(cartAfter.products).toHaveLength(2);
+    expect(orderAfter.products).toHaveLength(2);
 
-    expect(cartAfter.products[0].quantity).toEqual(1);
-    expect(cartAfter.products[0].product.id).toEqual(firstProduct.id);
-    expect(cartAfter.products[0].product.name).toEqual(firstProduct.name);
+    expect(orderAfter.products[0].quantity).toEqual(1);
+    expect(orderAfter.products[0].product.id).toEqual(firstProduct.id);
+    expect(orderAfter.products[0].product.name).toEqual(firstProduct.name);
 
-    expect(cartAfter.products[1].quantity).toEqual(1);
-    expect(cartAfter.products[1].product.id).toEqual(secondProduct.id);
-    expect(cartAfter.products[1].product.name).toEqual(secondProduct.name);
+    expect(orderAfter.products[1].quantity).toEqual(1);
+    expect(orderAfter.products[1].product.id).toEqual(secondProduct.id);
+    expect(orderAfter.products[1].product.name).toEqual(secondProduct.name);
   });
 
   it('works to add several of the same product in one query', async () => {
-    const cart = await createCart();
+    const order = await createOrder();
 
     const [product] = products;
     const quantity = 20;
 
-    const cartAfter = await addProductToCart({
-      cartId: cart.id,
+    const orderAfter = await addProductToOrder({
+      orderId: order.id,
       productId: product.id,
       quantity,
     });
 
-    expect(cartAfter.id).toEqual(cart.id);
-    expect(cartAfter.products).toHaveLength(1);
+    expect(orderAfter.id).toEqual(order.id);
+    expect(orderAfter.products).toHaveLength(1);
 
-    expect(cartAfter.products[0].quantity).toEqual(quantity);
-    expect(cartAfter.products[0].product.id).toEqual(product.id);
-    expect(cartAfter.products[0].product.name).toEqual(product.name);
+    expect(orderAfter.products[0].quantity).toEqual(quantity);
+    expect(orderAfter.products[0].product.id).toEqual(product.id);
+    expect(orderAfter.products[0].product.name).toEqual(product.name);
   });
 
   it('errors when supplying invalid quantity', async () => {
-    const cart = await createCart();
+    const order = await createOrder();
 
     const [product] = products;
     const quantity = 0;
@@ -225,8 +225,8 @@ describe('mutation.addProductToCart', () => {
     let err: GraphQLError;
 
     try {
-      await addProductToCart({
-        cartId: cart.id,
+      await addProductToOrder({
+        orderId: order.id,
         productId: product.id,
         quantity,
       });

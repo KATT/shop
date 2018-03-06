@@ -31,8 +31,8 @@ export const Query = {
     return ctx.db.query.products(args, info);
   },
 
-  cart(parent, args, ctx: Context, info) {
-    return ctx.db.query.cart({where: {
+  order(parent, args, ctx: Context, info) {
+    return ctx.db.query.order({where: {
       id: args.id,
     }}, info);
   },

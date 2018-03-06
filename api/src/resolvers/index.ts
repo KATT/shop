@@ -1,6 +1,6 @@
 import { AuthPayload } from './AuthPayload';
 import { auth } from './Mutation/auth';
-import cart from './Mutation/cart';
+import order from './Mutation/order';
 import { post } from './Mutation/post';
 import { Query } from './Query';
 
@@ -9,7 +9,7 @@ export default {
   Mutation: {
     ...auth,
     ...post,
-    ...cart,
+    ...order,
   },
   AuthPayload,
 };
