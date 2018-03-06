@@ -26,6 +26,7 @@ type Mutation {
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
   createCart: Cart!
+  addProductToCart(cartId: String!, productId: String!, quantity: Int): Cart!
 }
 
 type AuthPayload {
