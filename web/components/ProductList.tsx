@@ -1,9 +1,14 @@
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
+import { apolloClient } from '../lib/initApollo';
+import { Cart } from '../lib/prisma';
+import { GetCartFragment, GetCartQuery } from '../queries/GetCartQuery';
 
 const PRODUCTS_PER_PAGE = 50;
 
-function ProductList({ data: { loading, error, products }, loadMoreProducts }: any) {
+function ProductList(props: any) {
+  const { cartId, data: { loading, error, products }, loadMoreProducts, addProductToCart } = props;
+
   if (error) { return <div>Error loading Products</div>; }
   if (products && products.length) {
     const areMoreProducts = true;
@@ -12,10 +17,27 @@ function ProductList({ data: { loading, error, products }, loadMoreProducts }: a
         <ul>
           {products.map((product: any, index: number) =>
             <li key={product.id}>
-              <div>
-                <span>{index + 1}. </span>
-                {product.name}
-              </div>
+              {product.name}: {' '}
+              <button onClick={() => addProductToCart({
+                  variables: {
+                    cartId,
+                    productId: product.id,
+                  },
+                  update: (proxy, { data: { addProductToCart } }) => {
+                    // Read the data from our cache for this query.
+                    const data = proxy.readQuery({
+                      query: GetCartQuery,
+                      variables: {
+                        id: cartId,
+                      },
+                    });
+                    data.cart = addProductToCart;
+
+                    // Write our data back to the cache.
+                    proxy.writeQuery({ query: GetCartQuery, data });
+                  },
+                })
+              }>Add to cart</button>
             </li>,
           )}
         </ul>
@@ -67,6 +89,15 @@ function ProductList({ data: { loading, error, products }, loadMoreProducts }: a
   return <div>Loading</div>;
 }
 
+const addProductToCart: any = gql`
+  mutation addProductToCart ($cartId: String! $productId: String! $quantity: Int) {
+    addProductToCart (cartId: $cartId productId: $productId quantity: $quantity) {
+      ...GetCartFragment
+    }
+  }
+  ${GetCartFragment}
+`;
+
 const productsQuery: any = gql`
   query products($first: Int!, $skip: Int!) {
     products(orderBy: createdAt_DESC, first: $first, skip: $skip) {
@@ -76,9 +107,11 @@ const productsQuery: any = gql`
   }
 `;
 
-// The `graphql` wrapper executes a GraphQL query and makes the results
-// available on the `data` prop of the wrapped component (ProductList)
-export default graphql(productsQuery, {
+interface InputProps {
+  cartId: string;
+}
+
+export default compose(graphql<Response, InputProps>(productsQuery, {
   options: {
     variables: {
       skip: 0,
@@ -104,4 +137,6 @@ export default graphql(productsQuery, {
       });
     },
   }),
-})(ProductList);
+}), graphql<Response, InputProps>(addProductToCart, {
+  name: 'addProductToCart',
+}))(ProductList);

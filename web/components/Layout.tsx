@@ -1,12 +1,10 @@
+import { WithCartProps } from 'lib/withCart';
 import Link from 'next/link';
-import Router from 'next/router';
-import {Component, Fragment, ReactNode, SyntheticEvent} from 'react';
-import { UrlWithParsedQuery } from 'url';
+import { Component, Fragment, ReactNode } from 'react';
 import Checkout from './Checkout';
 
-interface LayoutProps {
+interface LayoutProps extends WithCartProps {
   children: ReactNode;
-  url: UrlWithParsedQuery;
 }
 
 export default class Layout extends Component<LayoutProps> {
@@ -29,9 +27,10 @@ export default class Layout extends Component<LayoutProps> {
         </nav>
         <main>
           {children}
-          <pre>{JSON.stringify(this.props.url)}</pre>
+          <pre>cartId: {JSON.stringify(this.props.cartId)}</pre>
+          <pre>url: {JSON.stringify(this.props.url)}</pre>
         </main>
-        {this.isCheckoutOpen() && <Checkout />}
+        {this.isCheckoutOpen() && <Checkout cartId={this.props.cartId} />}
      </Fragment>
     );
   }

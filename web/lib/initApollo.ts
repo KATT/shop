@@ -3,7 +3,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import * as fetch from 'isomorphic-fetch';
 
-let apolloClient: ApolloClient<any> ;
+export let apolloClient: ApolloClient<any> ;
 
 const isBrowser: boolean = !!(process as any).browser;
 

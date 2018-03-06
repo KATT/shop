@@ -6,7 +6,7 @@ export interface ParsedUrlQuery {
   [key: string]: string | string[];
 }
 export interface NextJSPageProps {
-  url?: ParsedUrlQuery;
+  url?: UrlWithParsedQuery;
 }
 
 export interface NextJSPageContext {

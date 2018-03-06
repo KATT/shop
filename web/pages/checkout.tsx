@@ -4,6 +4,6 @@ import withCart from '../lib/withCart';
 
 export default withCart(props => (
   <Layout {...props}>
-    <Checkout />
+    <Checkout cartId={props.cartId} />
   </Layout>
 ));
