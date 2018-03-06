@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export const GetCartFragment = gql`
   fragment GetCartFragment on Cart {
+    __typename
     id
     products {
       quantity

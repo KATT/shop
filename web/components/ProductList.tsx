@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
-import { apolloClient } from '../lib/initApollo';
-import { Cart } from '../lib/prisma';
-import { GetCartFragment, GetCartQuery } from '../queries/GetCartQuery';
+import { GetCartFragment } from '../queries/GetCartQuery';
 
 const PRODUCTS_PER_PAGE = 50;
 
@@ -24,17 +22,18 @@ function ProductList(props: any) {
                     productId: product.id,
                   },
                   update: (proxy, { data: { addProductToCart } }) => {
-                    // Read the data from our cache for this query.
-                    const data = proxy.readQuery({
-                      query: GetCartQuery,
-                      variables: {
-                        id: cartId,
+                    proxy.writeFragment({
+                      id: cartId,
+                      fragment: gql`
+                        fragment CartFragment on Cart {
+                          products
+                        }
+                      `,
+                      data: {
+                        __typename: 'Cart',
+                        products: addProductToCart.products,
                       },
                     });
-                    data.cart = addProductToCart;
-
-                    // Write our data back to the cache.
-                    proxy.writeQuery({ query: GetCartQuery, data });
                   },
                 })
               }>Add to cart</button>
@@ -111,32 +110,35 @@ interface InputProps {
   cartId: string;
 }
 
-export default compose(graphql<Response, InputProps>(productsQuery, {
-  options: {
-    variables: {
-      skip: 0,
-      first: PRODUCTS_PER_PAGE,
+export default compose(
+    graphql<Response, InputProps>(productsQuery, {
+    options: {
+      variables: {
+        skip: 0,
+        first: PRODUCTS_PER_PAGE,
+      },
     },
-  },
-  props: ({ data }: any) => ({
-    data,
-    loadMoreProducts: () => {
-      return data.fetchMore({
-        variables: {
-          skip: data.products.length,
-        },
-        updateQuery: (previousResult: any, { fetchMoreResult }: any) => {
-          if (!fetchMoreResult) {
-            return previousResult;
-          }
-          return Object.assign({}, previousResult, {
-            // Append the new Products results to the old one
-            products: [...previousResult.products, ...fetchMoreResult.products],
-          });
-        },
-      });
-    },
+    props: ({ data }: any) => ({
+      data,
+      loadMoreProducts: () => {
+        return data.fetchMore({
+          variables: {
+            skip: data.products.length,
+          },
+          updateQuery: (previousResult: any, { fetchMoreResult }: any) => {
+            if (!fetchMoreResult) {
+              return previousResult;
+            }
+            return Object.assign({}, previousResult, {
+              // Append the new Products results to the old one
+              products: [...previousResult.products, ...fetchMoreResult.products],
+            });
+          },
+        });
+      },
+    }),
   }),
-}), graphql<Response, InputProps>(addProductToCart, {
-  name: 'addProductToCart',
-}))(ProductList);
+  graphql<Response, InputProps>(addProductToCart, {
+    name: 'addProductToCart',
+  }),
+)(ProductList);
