@@ -13,11 +13,11 @@ type Order implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  products(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderProduct!]
+  rows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow!]
   user(where: UserWhereInput): User
 }
 
-type OrderProduct implements Node {
+type OrderRow implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -62,7 +62,7 @@ type AggregateOrder {
   count: Int!
 }
 
-type AggregateOrderProduct {
+type AggregateOrderRow {
   count: Int!
 }
 
@@ -428,16 +428,16 @@ type OrderConnection {
 }
 
 input OrderCreateInput {
-  products: OrderProductCreateManyWithoutOrderInput
+  rows: OrderRowCreateManyWithoutOrderInput
   user: UserCreateOneInput
 }
 
-input OrderCreateOneWithoutProductsInput {
-  create: OrderCreateWithoutProductsInput
+input OrderCreateOneWithoutRowsInput {
+  create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
 }
 
-input OrderCreateWithoutProductsInput {
+input OrderCreateWithoutRowsInput {
   user: UserCreateOneInput
 }
 
@@ -473,7 +473,7 @@ type OrderPreviousValues {
 """
 A connection to a list of items.
 """
-type OrderProductConnection {
+type OrderRowConnection {
   """
   Information to aid in pagination.
   """
@@ -481,22 +481,22 @@ type OrderProductConnection {
   """
   A list of edges.
   """
-  edges: [OrderProductEdge]!
-  aggregate: AggregateOrderProduct!
+  edges: [OrderRowEdge]!
+  aggregate: AggregateOrderRow!
 }
 
-input OrderProductCreateInput {
+input OrderRowCreateInput {
   quantity: Int
   product: ProductCreateOneInput!
-  order: OrderCreateOneWithoutProductsInput!
+  order: OrderCreateOneWithoutRowsInput!
 }
 
-input OrderProductCreateManyWithoutOrderInput {
-  create: [OrderProductCreateWithoutOrderInput!]
-  connect: [OrderProductWhereUniqueInput!]
+input OrderRowCreateManyWithoutOrderInput {
+  create: [OrderRowCreateWithoutOrderInput!]
+  connect: [OrderRowWhereUniqueInput!]
 }
 
-input OrderProductCreateWithoutOrderInput {
+input OrderRowCreateWithoutOrderInput {
   quantity: Int
   product: ProductCreateOneInput!
 }
@@ -504,18 +504,18 @@ input OrderProductCreateWithoutOrderInput {
 """
 An edge in a connection.
 """
-type OrderProductEdge {
+type OrderRowEdge {
   """
   The item at the end of the edge.
   """
-  node: OrderProduct!
+  node: OrderRow!
   """
   A cursor for use in pagination.
   """
   cursor: String!
 }
 
-enum OrderProductOrderByInput {
+enum OrderRowOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -526,29 +526,29 @@ enum OrderProductOrderByInput {
   quantity_DESC
 }
 
-type OrderProductPreviousValues {
+type OrderRowPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int!
 }
 
-type OrderProductSubscriptionPayload {
+type OrderRowSubscriptionPayload {
   mutation: MutationType!
-  node: OrderProduct
+  node: OrderRow
   updatedFields: [String!]
-  previousValues: OrderProductPreviousValues
+  previousValues: OrderRowPreviousValues
 }
 
-input OrderProductSubscriptionWhereInput {
+input OrderRowSubscriptionWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [OrderProductSubscriptionWhereInput!]
+  AND: [OrderRowSubscriptionWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [OrderProductSubscriptionWhereInput!]
+  OR: [OrderRowSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -565,49 +565,49 @@ input OrderProductSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: OrderProductWhereInput
+  node: OrderRowWhereInput
 }
 
-input OrderProductUpdateInput {
+input OrderRowUpdateInput {
   quantity: Int
   product: ProductUpdateOneInput
-  order: OrderUpdateOneWithoutProductsInput
+  order: OrderUpdateOneWithoutRowsInput
 }
 
-input OrderProductUpdateManyWithoutOrderInput {
-  create: [OrderProductCreateWithoutOrderInput!]
-  connect: [OrderProductWhereUniqueInput!]
-  disconnect: [OrderProductWhereUniqueInput!]
-  delete: [OrderProductWhereUniqueInput!]
-  update: [OrderProductUpdateWithoutOrderInput!]
-  upsert: [OrderProductUpsertWithoutOrderInput!]
+input OrderRowUpdateManyWithoutOrderInput {
+  create: [OrderRowCreateWithoutOrderInput!]
+  connect: [OrderRowWhereUniqueInput!]
+  disconnect: [OrderRowWhereUniqueInput!]
+  delete: [OrderRowWhereUniqueInput!]
+  update: [OrderRowUpdateWithoutOrderInput!]
+  upsert: [OrderRowUpsertWithoutOrderInput!]
 }
 
-input OrderProductUpdateWithoutOrderDataInput {
+input OrderRowUpdateWithoutOrderDataInput {
   quantity: Int
   product: ProductUpdateOneInput
 }
 
-input OrderProductUpdateWithoutOrderInput {
-  where: OrderProductWhereUniqueInput!
-  data: OrderProductUpdateWithoutOrderDataInput!
+input OrderRowUpdateWithoutOrderInput {
+  where: OrderRowWhereUniqueInput!
+  data: OrderRowUpdateWithoutOrderDataInput!
 }
 
-input OrderProductUpsertWithoutOrderInput {
-  where: OrderProductWhereUniqueInput!
-  update: OrderProductUpdateWithoutOrderDataInput!
-  create: OrderProductCreateWithoutOrderInput!
+input OrderRowUpsertWithoutOrderInput {
+  where: OrderRowWhereUniqueInput!
+  update: OrderRowUpdateWithoutOrderDataInput!
+  create: OrderRowCreateWithoutOrderInput!
 }
 
-input OrderProductWhereInput {
+input OrderRowWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [OrderProductWhereInput!]
+  AND: [OrderRowWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [OrderProductWhereInput!]
+  OR: [OrderRowWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -752,7 +752,7 @@ input OrderProductWhereInput {
   order: OrderWhereInput
 }
 
-input OrderProductWhereUniqueInput {
+input OrderRowWhereUniqueInput {
   id: ID
 }
 
@@ -792,32 +792,32 @@ input OrderSubscriptionWhereInput {
 }
 
 input OrderUpdateInput {
-  products: OrderProductUpdateManyWithoutOrderInput
+  rows: OrderRowUpdateManyWithoutOrderInput
   user: UserUpdateOneInput
 }
 
-input OrderUpdateOneWithoutProductsInput {
-  create: OrderCreateWithoutProductsInput
+input OrderUpdateOneWithoutRowsInput {
+  create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
   disconnect: OrderWhereUniqueInput
   delete: OrderWhereUniqueInput
-  update: OrderUpdateWithoutProductsInput
-  upsert: OrderUpsertWithoutProductsInput
+  update: OrderUpdateWithoutRowsInput
+  upsert: OrderUpsertWithoutRowsInput
 }
 
-input OrderUpdateWithoutProductsDataInput {
+input OrderUpdateWithoutRowsDataInput {
   user: UserUpdateOneInput
 }
 
-input OrderUpdateWithoutProductsInput {
+input OrderUpdateWithoutRowsInput {
   where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutProductsDataInput!
+  data: OrderUpdateWithoutRowsDataInput!
 }
 
-input OrderUpsertWithoutProductsInput {
+input OrderUpsertWithoutRowsInput {
   where: OrderWhereUniqueInput!
-  update: OrderUpdateWithoutProductsDataInput!
-  create: OrderCreateWithoutProductsInput!
+  update: OrderUpdateWithoutRowsDataInput!
+  create: OrderCreateWithoutRowsInput!
 }
 
 input OrderWhereInput {
@@ -940,9 +940,9 @@ input OrderWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  products_every: OrderProductWhereInput
-  products_some: OrderProductWhereInput
-  products_none: OrderProductWhereInput
+  rows_every: OrderRowWhereInput
+  rows_some: OrderRowWhereInput
+  rows_none: OrderRowWhereInput
   user: UserWhereInput
 }
 
@@ -2111,37 +2111,37 @@ type Mutation {
   createBrand(data: BrandCreateInput!): Brand!
   createProduct(data: ProductCreateInput!): Product!
   createOrder(data: OrderCreateInput!): Order!
-  createOrderProduct(data: OrderProductCreateInput!): OrderProduct!
+  createOrderRow(data: OrderRowCreateInput!): OrderRow!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
-  updateOrderProduct(data: OrderProductUpdateInput!, where: OrderProductWhereUniqueInput!): OrderProduct
+  updateOrderRow(data: OrderRowUpdateInput!, where: OrderRowWhereUniqueInput!): OrderRow
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
   deleteBrand(where: BrandWhereUniqueInput!): Brand
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteOrder(where: OrderWhereUniqueInput!): Order
-  deleteOrderProduct(where: OrderProductWhereUniqueInput!): OrderProduct
+  deleteOrderRow(where: OrderRowWhereUniqueInput!): OrderRow
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
-  upsertOrderProduct(where: OrderProductWhereUniqueInput!, create: OrderProductCreateInput!, update: OrderProductUpdateInput!): OrderProduct!
+  upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
   updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
-  updateManyOrderProducts(data: OrderProductUpdateInput!, where: OrderProductWhereInput!): BatchPayload!
+  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
   deleteManyBrands(where: BrandWhereInput!): BatchPayload!
   deleteManyProducts(where: ProductWhereInput!): BatchPayload!
   deleteManyOrders(where: OrderWhereInput!): BatchPayload!
-  deleteManyOrderProducts(where: OrderProductWhereInput!): BatchPayload!
+  deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
 }
 
 type Query {
@@ -2150,19 +2150,19 @@ type Query {
   brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
-  orderProducts(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderProduct]!
+  orderRows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
   brand(where: BrandWhereUniqueInput!): Brand
   product(where: ProductWhereUniqueInput!): Product
   order(where: OrderWhereUniqueInput!): Order
-  orderProduct(where: OrderProductWhereUniqueInput!): OrderProduct
+  orderRow(where: OrderRowWhereUniqueInput!): OrderRow
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
-  orderProductsConnection(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderProductConnection!
+  orderRowsConnection(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderRowConnection!
   """
   Fetches an object given its ID
   """
@@ -2178,7 +2178,7 @@ type Subscription {
   brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
-  orderProduct(where: OrderProductSubscriptionWhereInput): OrderProductSubscriptionPayload
+  orderRow(where: OrderRowSubscriptionWhereInput): OrderRowSubscriptionPayload
 }
 `
 
@@ -2245,7 +2245,7 @@ export type OrderOrderByInput =
   'updatedAt_ASC' |
   'updatedAt_DESC'
 
-export type OrderProductOrderByInput = 
+export type OrderRowOrderByInput = 
   'id_ASC' |
   'id_DESC' |
   'createdAt_ASC' |
@@ -2260,7 +2260,7 @@ export type MutationType =
   'UPDATED' |
   'DELETED'
 
-export interface OrderProductCreateWithoutOrderInput {
+export interface OrderRowCreateWithoutOrderInput {
   quantity?: Int
   product: ProductCreateOneInput
 }
@@ -2331,13 +2331,13 @@ export interface PostWhereInput {
   author?: UserWhereInput
 }
 
-export interface OrderProductUpdateManyWithoutOrderInput {
-  create?: OrderProductCreateWithoutOrderInput[] | OrderProductCreateWithoutOrderInput
-  connect?: OrderProductWhereUniqueInput[] | OrderProductWhereUniqueInput
-  disconnect?: OrderProductWhereUniqueInput[] | OrderProductWhereUniqueInput
-  delete?: OrderProductWhereUniqueInput[] | OrderProductWhereUniqueInput
-  update?: OrderProductUpdateWithoutOrderInput[] | OrderProductUpdateWithoutOrderInput
-  upsert?: OrderProductUpsertWithoutOrderInput[] | OrderProductUpsertWithoutOrderInput
+export interface OrderRowUpdateManyWithoutOrderInput {
+  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
+  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  disconnect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  delete?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  update?: OrderRowUpdateWithoutOrderInput[] | OrderRowUpdateWithoutOrderInput
+  upsert?: OrderRowUpsertWithoutOrderInput[] | OrderRowUpsertWithoutOrderInput
 }
 
 export interface ProductUpdateInput {
@@ -2348,11 +2348,11 @@ export interface ProductUpdateInput {
 }
 
 export interface OrderUpdateInput {
-  products?: OrderProductUpdateManyWithoutOrderInput
+  rows?: OrderRowUpdateManyWithoutOrderInput
   user?: UserUpdateOneInput
 }
 
-export interface OrderCreateWithoutProductsInput {
+export interface OrderCreateWithoutRowsInput {
   user?: UserCreateOneInput
 }
 
@@ -2362,14 +2362,14 @@ export interface BrandUpsertNestedInput {
   create: BrandCreateInput
 }
 
-export interface OrderProductSubscriptionWhereInput {
-  AND?: OrderProductSubscriptionWhereInput[] | OrderProductSubscriptionWhereInput
-  OR?: OrderProductSubscriptionWhereInput[] | OrderProductSubscriptionWhereInput
+export interface OrderRowSubscriptionWhereInput {
+  AND?: OrderRowSubscriptionWhereInput[] | OrderRowSubscriptionWhereInput
+  OR?: OrderRowSubscriptionWhereInput[] | OrderRowSubscriptionWhereInput
   mutation_in?: MutationType[] | MutationType
   updatedFields_contains?: String
   updatedFields_contains_every?: String[] | String
   updatedFields_contains_some?: String[] | String
-  node?: OrderProductWhereInput
+  node?: OrderRowWhereInput
 }
 
 export interface BrandUpdateDataInput {
@@ -2547,9 +2547,9 @@ export interface OrderWhereInput {
   updatedAt_lte?: DateTime
   updatedAt_gt?: DateTime
   updatedAt_gte?: DateTime
-  products_every?: OrderProductWhereInput
-  products_some?: OrderProductWhereInput
-  products_none?: OrderProductWhereInput
+  rows_every?: OrderRowWhereInput
+  rows_some?: OrderRowWhereInput
+  rows_none?: OrderRowWhereInput
   user?: UserWhereInput
 }
 
@@ -2574,10 +2574,10 @@ export interface UserCreateWithoutPostsInput {
   name: String
 }
 
-export interface OrderUpsertWithoutProductsInput {
+export interface OrderUpsertWithoutRowsInput {
   where: OrderWhereUniqueInput
-  update: OrderUpdateWithoutProductsDataInput
-  create: OrderCreateWithoutProductsInput
+  update: OrderUpdateWithoutRowsDataInput
+  create: OrderCreateWithoutRowsInput
 }
 
 export interface UserCreateInput {
@@ -2615,9 +2615,9 @@ export interface BrandCreateInput {
   name: String
 }
 
-export interface OrderUpdateWithoutProductsInput {
+export interface OrderUpdateWithoutRowsInput {
   where: OrderWhereUniqueInput
-  data: OrderUpdateWithoutProductsDataInput
+  data: OrderUpdateWithoutRowsDataInput
 }
 
 export interface ProductCreateInput {
@@ -2627,10 +2627,10 @@ export interface ProductCreateInput {
   brand: BrandCreateOneInput
 }
 
-export interface OrderProductUpdateInput {
+export interface OrderRowUpdateInput {
   quantity?: Int
   product?: ProductUpdateOneInput
-  order?: OrderUpdateOneWithoutProductsInput
+  order?: OrderUpdateOneWithoutRowsInput
 }
 
 export interface BrandCreateOneInput {
@@ -2646,7 +2646,7 @@ export interface UserUpdateDataInput {
 }
 
 export interface OrderCreateInput {
-  products?: OrderProductCreateManyWithoutOrderInput
+  rows?: OrderRowCreateManyWithoutOrderInput
   user?: UserCreateOneInput
 }
 
@@ -2659,9 +2659,9 @@ export interface UserUpdateOneInput {
   upsert?: UserUpsertNestedInput
 }
 
-export interface OrderProductCreateManyWithoutOrderInput {
-  create?: OrderProductCreateWithoutOrderInput[] | OrderProductCreateWithoutOrderInput
-  connect?: OrderProductWhereUniqueInput[] | OrderProductWhereUniqueInput
+export interface OrderRowCreateManyWithoutOrderInput {
+  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
+  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
 }
 
 export interface ProductUpsertNestedInput {
@@ -2689,7 +2689,7 @@ export interface ProductCreateOneInput {
   connect?: ProductWhereUniqueInput
 }
 
-export interface OrderProductUpdateWithoutOrderDataInput {
+export interface OrderRowUpdateWithoutOrderDataInput {
   quantity?: Int
   product?: ProductUpdateOneInput
 }
@@ -2748,10 +2748,10 @@ export interface BrandWhereInput {
   name_not_ends_with?: String
 }
 
-export interface OrderProductCreateInput {
+export interface OrderRowCreateInput {
   quantity?: Int
   product: ProductCreateOneInput
-  order: OrderCreateOneWithoutProductsInput
+  order: OrderCreateOneWithoutRowsInput
 }
 
 export interface ProductSubscriptionWhereInput {
@@ -2764,14 +2764,14 @@ export interface ProductSubscriptionWhereInput {
   node?: ProductWhereInput
 }
 
-export interface OrderCreateOneWithoutProductsInput {
-  create?: OrderCreateWithoutProductsInput
+export interface OrderCreateOneWithoutRowsInput {
+  create?: OrderCreateWithoutRowsInput
   connect?: OrderWhereUniqueInput
 }
 
-export interface OrderProductWhereInput {
-  AND?: OrderProductWhereInput[] | OrderProductWhereInput
-  OR?: OrderProductWhereInput[] | OrderProductWhereInput
+export interface OrderRowWhereInput {
+  AND?: OrderRowWhereInput[] | OrderRowWhereInput
+  OR?: OrderRowWhereInput[] | OrderRowWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -2814,7 +2814,7 @@ export interface OrderProductWhereInput {
   order?: OrderWhereInput
 }
 
-export interface OrderUpdateWithoutProductsDataInput {
+export interface OrderUpdateWithoutRowsDataInput {
   user?: UserUpdateOneInput
 }
 
@@ -2829,13 +2829,13 @@ export interface PostUpdateInput {
   author?: UserUpdateOneWithoutPostsInput
 }
 
-export interface OrderUpdateOneWithoutProductsInput {
-  create?: OrderCreateWithoutProductsInput
+export interface OrderUpdateOneWithoutRowsInput {
+  create?: OrderCreateWithoutRowsInput
   connect?: OrderWhereUniqueInput
   disconnect?: OrderWhereUniqueInput
   delete?: OrderWhereUniqueInput
-  update?: OrderUpdateWithoutProductsInput
-  upsert?: OrderUpsertWithoutProductsInput
+  update?: OrderUpdateWithoutRowsInput
+  upsert?: OrderUpsertWithoutRowsInput
 }
 
 export interface UserUpdateOneWithoutPostsInput {
@@ -2870,9 +2870,9 @@ export interface UserUpdateWithoutPostsDataInput {
   name?: String
 }
 
-export interface OrderProductUpdateWithoutOrderInput {
-  where: OrderProductWhereUniqueInput
-  data: OrderProductUpdateWithoutOrderDataInput
+export interface OrderRowUpdateWithoutOrderInput {
+  where: OrderRowWhereUniqueInput
+  data: OrderRowUpdateWithoutOrderDataInput
 }
 
 export interface UserUpsertWithoutPostsInput {
@@ -2939,13 +2939,13 @@ export interface PostUpdateWithoutAuthorInput {
   data: PostUpdateWithoutAuthorDataInput
 }
 
-export interface OrderProductUpsertWithoutOrderInput {
-  where: OrderProductWhereUniqueInput
-  update: OrderProductUpdateWithoutOrderDataInput
-  create: OrderProductCreateWithoutOrderInput
+export interface OrderRowUpsertWithoutOrderInput {
+  where: OrderRowWhereUniqueInput
+  update: OrderRowUpdateWithoutOrderDataInput
+  create: OrderRowCreateWithoutOrderInput
 }
 
-export interface OrderProductWhereUniqueInput {
+export interface OrderRowWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -2986,7 +2986,7 @@ export interface Node {
   id: ID_Output
 }
 
-export interface OrderProductPreviousValues {
+export interface OrderRowPreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
@@ -3010,7 +3010,7 @@ export interface Brand extends Node {
   name: String
 }
 
-export interface OrderProduct extends Node {
+export interface OrderRow extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
@@ -3027,7 +3027,7 @@ export interface User extends Node {
   posts?: Post[]
 }
 
-export interface AggregateOrderProduct {
+export interface AggregateOrderRow {
   count: Int
 }
 
@@ -3035,10 +3035,10 @@ export interface AggregateOrderProduct {
  * A connection to a list of items.
 
  */
-export interface OrderProductConnection {
+export interface OrderRowConnection {
   pageInfo: PageInfo
-  edges: OrderProductEdge[]
-  aggregate: AggregateOrderProduct
+  edges: OrderRowEdge[]
+  aggregate: AggregateOrderRow
 }
 
 export interface BatchPayload {
@@ -3054,11 +3054,11 @@ export interface OrderEdge {
   cursor: String
 }
 
-export interface OrderProductSubscriptionPayload {
+export interface OrderRowSubscriptionPayload {
   mutation: MutationType
-  node?: OrderProduct
+  node?: OrderRow
   updatedFields?: String[]
-  previousValues?: OrderProductPreviousValues
+  previousValues?: OrderRowPreviousValues
 }
 
 export interface AggregateProduct {
@@ -3069,7 +3069,7 @@ export interface Order extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  products?: OrderProduct[]
+  rows?: OrderRow[]
   user?: User
 }
 
@@ -3158,8 +3158,8 @@ export interface UserSubscriptionPayload {
  * An edge in a connection.
 
  */
-export interface OrderProductEdge {
-  node: OrderProduct
+export interface OrderRowEdge {
+  node: OrderRow
   cursor: String
 }
 
@@ -3319,19 +3319,19 @@ export type Query = {
   brands: (args: { where?: BrandWhereInput, orderBy?: BrandOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Brand[]>
   products: (args: { where?: ProductWhereInput, orderBy?: ProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Product[]>
   orders: (args: { where?: OrderWhereInput, orderBy?: OrderOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Order[]>
-  orderProducts: (args: { where?: OrderProductWhereInput, orderBy?: OrderProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderProduct[]>
+  orderRows: (args: { where?: OrderRowWhereInput, orderBy?: OrderRowOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderRow[]>
   post: (args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Post | null>
   user: (args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
   brand: (args: { where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
   product: (args: { where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
   order: (args: { where: OrderWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Order | null>
-  orderProduct: (args: { where: OrderProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderProduct | null>
+  orderRow: (args: { where: OrderRowWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow | null>
   postsConnection: (args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<PostConnection>
   usersConnection: (args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<UserConnection>
   brandsConnection: (args: { where?: BrandWhereInput, orderBy?: BrandOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<BrandConnection>
   productsConnection: (args: { where?: ProductWhereInput, orderBy?: ProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<ProductConnection>
   ordersConnection: (args: { where?: OrderWhereInput, orderBy?: OrderOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderConnection>
-  orderProductsConnection: (args: { where?: OrderProductWhereInput, orderBy?: OrderProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderProductConnection>
+  orderRowsConnection: (args: { where?: OrderRowWhereInput, orderBy?: OrderRowOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderRowConnection>
   node: (args: { id: ID_Output }, info?: GraphQLResolveInfo | string) => Promise<Node | null>
 }
 
@@ -3341,37 +3341,37 @@ export type Mutation = {
   createBrand: (args: { data: BrandCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Brand>
   createProduct: (args: { data: ProductCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Product>
   createOrder: (args: { data: OrderCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Order>
-  createOrderProduct: (args: { data: OrderProductCreateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderProduct>
+  createOrderRow: (args: { data: OrderRowCreateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow>
   updatePost: (args: { data: PostUpdateInput, where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Post | null>
   updateUser: (args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
   updateBrand: (args: { data: BrandUpdateInput, where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
   updateProduct: (args: { data: ProductUpdateInput, where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
   updateOrder: (args: { data: OrderUpdateInput, where: OrderWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Order | null>
-  updateOrderProduct: (args: { data: OrderProductUpdateInput, where: OrderProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderProduct | null>
+  updateOrderRow: (args: { data: OrderRowUpdateInput, where: OrderRowWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow | null>
   deletePost: (args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Post | null>
   deleteUser: (args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
   deleteBrand: (args: { where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
   deleteProduct: (args: { where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
   deleteOrder: (args: { where: OrderWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Order | null>
-  deleteOrderProduct: (args: { where: OrderProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderProduct | null>
+  deleteOrderRow: (args: { where: OrderRowWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow | null>
   upsertPost: (args: { where: PostWhereUniqueInput, create: PostCreateInput, update: PostUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Post>
   upsertUser: (args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<User>
   upsertBrand: (args: { where: BrandWhereUniqueInput, create: BrandCreateInput, update: BrandUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Brand>
   upsertProduct: (args: { where: ProductWhereUniqueInput, create: ProductCreateInput, update: ProductUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Product>
   upsertOrder: (args: { where: OrderWhereUniqueInput, create: OrderCreateInput, update: OrderUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Order>
-  upsertOrderProduct: (args: { where: OrderProductWhereUniqueInput, create: OrderProductCreateInput, update: OrderProductUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderProduct>
+  upsertOrderRow: (args: { where: OrderRowWhereUniqueInput, create: OrderRowCreateInput, update: OrderRowUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow>
   updateManyPosts: (args: { data: PostUpdateInput, where: PostWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyUsers: (args: { data: UserUpdateInput, where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyBrands: (args: { data: BrandUpdateInput, where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyProducts: (args: { data: ProductUpdateInput, where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyOrders: (args: { data: OrderUpdateInput, where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyOrderProducts: (args: { data: OrderProductUpdateInput, where: OrderProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyOrderRows: (args: { data: OrderRowUpdateInput, where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyPosts: (args: { where: PostWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyUsers: (args: { where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyBrands: (args: { where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyProducts: (args: { where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyOrders: (args: { where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyOrderProducts: (args: { where: OrderProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyOrderRows: (args: { where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
 }
 
 export type Subscription = {
@@ -3380,7 +3380,7 @@ export type Subscription = {
   brand: (args: { where?: BrandSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<BrandSubscriptionPayload>>
   product: (args: { where?: ProductSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<ProductSubscriptionPayload>>
   order: (args: { where?: OrderSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<OrderSubscriptionPayload>>
-  orderProduct: (args: { where?: OrderProductSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<OrderProductSubscriptionPayload>>
+  orderRow: (args: { where?: OrderRowSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<OrderRowSubscriptionPayload>>
 }
 
 export class Prisma extends BasePrisma {
@@ -3395,7 +3395,7 @@ export class Prisma extends BasePrisma {
     Brand: (where: BrandWhereInput): Promise<boolean> => super.existsDelegate('query', 'brands', { where }, {}, '{ id }'),
     Product: (where: ProductWhereInput): Promise<boolean> => super.existsDelegate('query', 'products', { where }, {}, '{ id }'),
     Order: (where: OrderWhereInput): Promise<boolean> => super.existsDelegate('query', 'orders', { where }, {}, '{ id }'),
-    OrderProduct: (where: OrderProductWhereInput): Promise<boolean> => super.existsDelegate('query', 'orderProducts', { where }, {}, '{ id }')
+    OrderRow: (where: OrderRowWhereInput): Promise<boolean> => super.existsDelegate('query', 'orderRows', { where }, {}, '{ id }')
   }
 
   query: Query = {
@@ -3404,19 +3404,19 @@ export class Prisma extends BasePrisma {
     brands: (args, info): Promise<Brand[]> => super.delegate('query', 'brands', args, {}, info),
     products: (args, info): Promise<Product[]> => super.delegate('query', 'products', args, {}, info),
     orders: (args, info): Promise<Order[]> => super.delegate('query', 'orders', args, {}, info),
-    orderProducts: (args, info): Promise<OrderProduct[]> => super.delegate('query', 'orderProducts', args, {}, info),
+    orderRows: (args, info): Promise<OrderRow[]> => super.delegate('query', 'orderRows', args, {}, info),
     post: (args, info): Promise<Post | null> => super.delegate('query', 'post', args, {}, info),
     user: (args, info): Promise<User | null> => super.delegate('query', 'user', args, {}, info),
     brand: (args, info): Promise<Brand | null> => super.delegate('query', 'brand', args, {}, info),
     product: (args, info): Promise<Product | null> => super.delegate('query', 'product', args, {}, info),
     order: (args, info): Promise<Order | null> => super.delegate('query', 'order', args, {}, info),
-    orderProduct: (args, info): Promise<OrderProduct | null> => super.delegate('query', 'orderProduct', args, {}, info),
+    orderRow: (args, info): Promise<OrderRow | null> => super.delegate('query', 'orderRow', args, {}, info),
     postsConnection: (args, info): Promise<PostConnection> => super.delegate('query', 'postsConnection', args, {}, info),
     usersConnection: (args, info): Promise<UserConnection> => super.delegate('query', 'usersConnection', args, {}, info),
     brandsConnection: (args, info): Promise<BrandConnection> => super.delegate('query', 'brandsConnection', args, {}, info),
     productsConnection: (args, info): Promise<ProductConnection> => super.delegate('query', 'productsConnection', args, {}, info),
     ordersConnection: (args, info): Promise<OrderConnection> => super.delegate('query', 'ordersConnection', args, {}, info),
-    orderProductsConnection: (args, info): Promise<OrderProductConnection> => super.delegate('query', 'orderProductsConnection', args, {}, info),
+    orderRowsConnection: (args, info): Promise<OrderRowConnection> => super.delegate('query', 'orderRowsConnection', args, {}, info),
     node: (args, info): Promise<Node | null> => super.delegate('query', 'node', args, {}, info)
   }
 
@@ -3426,37 +3426,37 @@ export class Prisma extends BasePrisma {
     createBrand: (args, info): Promise<Brand> => super.delegate('mutation', 'createBrand', args, {}, info),
     createProduct: (args, info): Promise<Product> => super.delegate('mutation', 'createProduct', args, {}, info),
     createOrder: (args, info): Promise<Order> => super.delegate('mutation', 'createOrder', args, {}, info),
-    createOrderProduct: (args, info): Promise<OrderProduct> => super.delegate('mutation', 'createOrderProduct', args, {}, info),
+    createOrderRow: (args, info): Promise<OrderRow> => super.delegate('mutation', 'createOrderRow', args, {}, info),
     updatePost: (args, info): Promise<Post | null> => super.delegate('mutation', 'updatePost', args, {}, info),
     updateUser: (args, info): Promise<User | null> => super.delegate('mutation', 'updateUser', args, {}, info),
     updateBrand: (args, info): Promise<Brand | null> => super.delegate('mutation', 'updateBrand', args, {}, info),
     updateProduct: (args, info): Promise<Product | null> => super.delegate('mutation', 'updateProduct', args, {}, info),
     updateOrder: (args, info): Promise<Order | null> => super.delegate('mutation', 'updateOrder', args, {}, info),
-    updateOrderProduct: (args, info): Promise<OrderProduct | null> => super.delegate('mutation', 'updateOrderProduct', args, {}, info),
+    updateOrderRow: (args, info): Promise<OrderRow | null> => super.delegate('mutation', 'updateOrderRow', args, {}, info),
     deletePost: (args, info): Promise<Post | null> => super.delegate('mutation', 'deletePost', args, {}, info),
     deleteUser: (args, info): Promise<User | null> => super.delegate('mutation', 'deleteUser', args, {}, info),
     deleteBrand: (args, info): Promise<Brand | null> => super.delegate('mutation', 'deleteBrand', args, {}, info),
     deleteProduct: (args, info): Promise<Product | null> => super.delegate('mutation', 'deleteProduct', args, {}, info),
     deleteOrder: (args, info): Promise<Order | null> => super.delegate('mutation', 'deleteOrder', args, {}, info),
-    deleteOrderProduct: (args, info): Promise<OrderProduct | null> => super.delegate('mutation', 'deleteOrderProduct', args, {}, info),
+    deleteOrderRow: (args, info): Promise<OrderRow | null> => super.delegate('mutation', 'deleteOrderRow', args, {}, info),
     upsertPost: (args, info): Promise<Post> => super.delegate('mutation', 'upsertPost', args, {}, info),
     upsertUser: (args, info): Promise<User> => super.delegate('mutation', 'upsertUser', args, {}, info),
     upsertBrand: (args, info): Promise<Brand> => super.delegate('mutation', 'upsertBrand', args, {}, info),
     upsertProduct: (args, info): Promise<Product> => super.delegate('mutation', 'upsertProduct', args, {}, info),
     upsertOrder: (args, info): Promise<Order> => super.delegate('mutation', 'upsertOrder', args, {}, info),
-    upsertOrderProduct: (args, info): Promise<OrderProduct> => super.delegate('mutation', 'upsertOrderProduct', args, {}, info),
+    upsertOrderRow: (args, info): Promise<OrderRow> => super.delegate('mutation', 'upsertOrderRow', args, {}, info),
     updateManyPosts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyPosts', args, {}, info),
     updateManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyUsers', args, {}, info),
     updateManyBrands: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyBrands', args, {}, info),
     updateManyProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyProducts', args, {}, info),
     updateManyOrders: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyOrders', args, {}, info),
-    updateManyOrderProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyOrderProducts', args, {}, info),
+    updateManyOrderRows: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyOrderRows', args, {}, info),
     deleteManyPosts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyPosts', args, {}, info),
     deleteManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyUsers', args, {}, info),
     deleteManyBrands: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyBrands', args, {}, info),
     deleteManyProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyProducts', args, {}, info),
     deleteManyOrders: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyOrders', args, {}, info),
-    deleteManyOrderProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyOrderProducts', args, {}, info)
+    deleteManyOrderRows: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyOrderRows', args, {}, info)
   }
 
   subscription: Subscription = {
@@ -3465,6 +3465,6 @@ export class Prisma extends BasePrisma {
     brand: (args, infoOrQuery): Promise<AsyncIterator<BrandSubscriptionPayload>> => super.delegateSubscription('brand', args, {}, infoOrQuery),
     product: (args, infoOrQuery): Promise<AsyncIterator<ProductSubscriptionPayload>> => super.delegateSubscription('product', args, {}, infoOrQuery),
     order: (args, infoOrQuery): Promise<AsyncIterator<OrderSubscriptionPayload>> => super.delegateSubscription('order', args, {}, infoOrQuery),
-    orderProduct: (args, infoOrQuery): Promise<AsyncIterator<OrderProductSubscriptionPayload>> => super.delegateSubscription('orderProduct', args, {}, infoOrQuery)
+    orderRow: (args, infoOrQuery): Promise<AsyncIterator<OrderRowSubscriptionPayload>> => super.delegateSubscription('orderRow', args, {}, infoOrQuery)
   }
 }

@@ -4,7 +4,7 @@ export const GetOrderFragment = gql`
   fragment GetOrderFragment on Order {
     __typename
     id
-    products {
+    rows {
       __typename
       id
       quantity

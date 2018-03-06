@@ -46,16 +46,16 @@ type Order {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  products: [OrderProduct!]! @relation(name: "ProductInOrder")
+  rows: [OrderRow!]! @relation(name: "OrderRow")
   user: User
 }
 
-type OrderProduct {
+type OrderRow {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
   quantity: Int! @default(value: "1")
   product: Product!
-  order: Order! @relation(name: "ProductInOrder")
+  order: Order! @relation(name: "OrderRow")
 }

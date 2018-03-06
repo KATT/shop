@@ -16,11 +16,11 @@ type Order implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  products(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderProduct!]
+  rows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow!]
   user(where: UserWhereInput): User
 }
 
-type OrderProduct implements Node {
+type OrderRow implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -70,7 +70,7 @@ type AggregateOrder {
   count: Int!
 }
 
-type AggregateOrderProduct {
+type AggregateOrderRow {
   count: Int!
 }
 
@@ -410,37 +410,37 @@ type Mutation {
   createBrand(data: BrandCreateInput!): Brand!
   createProduct(data: ProductCreateInput!): Product!
   createOrder(data: OrderCreateInput!): Order!
-  createOrderProduct(data: OrderProductCreateInput!): OrderProduct!
+  createOrderRow(data: OrderRowCreateInput!): OrderRow!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
-  updateOrderProduct(data: OrderProductUpdateInput!, where: OrderProductWhereUniqueInput!): OrderProduct
+  updateOrderRow(data: OrderRowUpdateInput!, where: OrderRowWhereUniqueInput!): OrderRow
   deletePost(where: PostWhereUniqueInput!): Post
   deleteUser(where: UserWhereUniqueInput!): User
   deleteBrand(where: BrandWhereUniqueInput!): Brand
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteOrder(where: OrderWhereUniqueInput!): Order
-  deleteOrderProduct(where: OrderProductWhereUniqueInput!): OrderProduct
+  deleteOrderRow(where: OrderRowWhereUniqueInput!): OrderRow
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
-  upsertOrderProduct(where: OrderProductWhereUniqueInput!, create: OrderProductCreateInput!, update: OrderProductUpdateInput!): OrderProduct!
+  upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
   updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
-  updateManyOrderProducts(data: OrderProductUpdateInput!, where: OrderProductWhereInput!): BatchPayload!
+  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
   deleteManyBrands(where: BrandWhereInput!): BatchPayload!
   deleteManyProducts(where: ProductWhereInput!): BatchPayload!
   deleteManyOrders(where: OrderWhereInput!): BatchPayload!
-  deleteManyOrderProducts(where: OrderProductWhereInput!): BatchPayload!
+  deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -475,16 +475,16 @@ type OrderConnection {
 }
 
 input OrderCreateInput {
-  products: OrderProductCreateManyWithoutOrderInput
+  rows: OrderRowCreateManyWithoutOrderInput
   user: UserCreateOneInput
 }
 
-input OrderCreateOneWithoutProductsInput {
-  create: OrderCreateWithoutProductsInput
+input OrderCreateOneWithoutRowsInput {
+  create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
 }
 
-input OrderCreateWithoutProductsInput {
+input OrderCreateWithoutRowsInput {
   user: UserCreateOneInput
 }
 
@@ -520,7 +520,7 @@ type OrderPreviousValues {
 """
 A connection to a list of items.
 """
-type OrderProductConnection {
+type OrderRowConnection {
   """
   Information to aid in pagination.
   """
@@ -528,22 +528,22 @@ type OrderProductConnection {
   """
   A list of edges.
   """
-  edges: [OrderProductEdge]!
-  aggregate: AggregateOrderProduct!
+  edges: [OrderRowEdge]!
+  aggregate: AggregateOrderRow!
 }
 
-input OrderProductCreateInput {
+input OrderRowCreateInput {
   quantity: Int
   product: ProductCreateOneInput!
-  order: OrderCreateOneWithoutProductsInput!
+  order: OrderCreateOneWithoutRowsInput!
 }
 
-input OrderProductCreateManyWithoutOrderInput {
-  create: [OrderProductCreateWithoutOrderInput!]
-  connect: [OrderProductWhereUniqueInput!]
+input OrderRowCreateManyWithoutOrderInput {
+  create: [OrderRowCreateWithoutOrderInput!]
+  connect: [OrderRowWhereUniqueInput!]
 }
 
-input OrderProductCreateWithoutOrderInput {
+input OrderRowCreateWithoutOrderInput {
   quantity: Int
   product: ProductCreateOneInput!
 }
@@ -551,18 +551,18 @@ input OrderProductCreateWithoutOrderInput {
 """
 An edge in a connection.
 """
-type OrderProductEdge {
+type OrderRowEdge {
   """
   The item at the end of the edge.
   """
-  node: OrderProduct!
+  node: OrderRow!
   """
   A cursor for use in pagination.
   """
   cursor: String!
 }
 
-enum OrderProductOrderByInput {
+enum OrderRowOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
@@ -573,29 +573,29 @@ enum OrderProductOrderByInput {
   quantity_DESC
 }
 
-type OrderProductPreviousValues {
+type OrderRowPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   quantity: Int!
 }
 
-type OrderProductSubscriptionPayload {
+type OrderRowSubscriptionPayload {
   mutation: MutationType!
-  node: OrderProduct
+  node: OrderRow
   updatedFields: [String!]
-  previousValues: OrderProductPreviousValues
+  previousValues: OrderRowPreviousValues
 }
 
-input OrderProductSubscriptionWhereInput {
+input OrderRowSubscriptionWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [OrderProductSubscriptionWhereInput!]
+  AND: [OrderRowSubscriptionWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [OrderProductSubscriptionWhereInput!]
+  OR: [OrderRowSubscriptionWhereInput!]
   """
   The subscription event gets dispatched when it's listed in mutation_in
   """
@@ -612,49 +612,49 @@ input OrderProductSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: OrderProductWhereInput
+  node: OrderRowWhereInput
 }
 
-input OrderProductUpdateInput {
+input OrderRowUpdateInput {
   quantity: Int
   product: ProductUpdateOneInput
-  order: OrderUpdateOneWithoutProductsInput
+  order: OrderUpdateOneWithoutRowsInput
 }
 
-input OrderProductUpdateManyWithoutOrderInput {
-  create: [OrderProductCreateWithoutOrderInput!]
-  connect: [OrderProductWhereUniqueInput!]
-  disconnect: [OrderProductWhereUniqueInput!]
-  delete: [OrderProductWhereUniqueInput!]
-  update: [OrderProductUpdateWithoutOrderInput!]
-  upsert: [OrderProductUpsertWithoutOrderInput!]
+input OrderRowUpdateManyWithoutOrderInput {
+  create: [OrderRowCreateWithoutOrderInput!]
+  connect: [OrderRowWhereUniqueInput!]
+  disconnect: [OrderRowWhereUniqueInput!]
+  delete: [OrderRowWhereUniqueInput!]
+  update: [OrderRowUpdateWithoutOrderInput!]
+  upsert: [OrderRowUpsertWithoutOrderInput!]
 }
 
-input OrderProductUpdateWithoutOrderDataInput {
+input OrderRowUpdateWithoutOrderDataInput {
   quantity: Int
   product: ProductUpdateOneInput
 }
 
-input OrderProductUpdateWithoutOrderInput {
-  where: OrderProductWhereUniqueInput!
-  data: OrderProductUpdateWithoutOrderDataInput!
+input OrderRowUpdateWithoutOrderInput {
+  where: OrderRowWhereUniqueInput!
+  data: OrderRowUpdateWithoutOrderDataInput!
 }
 
-input OrderProductUpsertWithoutOrderInput {
-  where: OrderProductWhereUniqueInput!
-  update: OrderProductUpdateWithoutOrderDataInput!
-  create: OrderProductCreateWithoutOrderInput!
+input OrderRowUpsertWithoutOrderInput {
+  where: OrderRowWhereUniqueInput!
+  update: OrderRowUpdateWithoutOrderDataInput!
+  create: OrderRowCreateWithoutOrderInput!
 }
 
-input OrderProductWhereInput {
+input OrderRowWhereInput {
   """
   Logical AND on all given filters.
   """
-  AND: [OrderProductWhereInput!]
+  AND: [OrderRowWhereInput!]
   """
   Logical OR on all given filters.
   """
-  OR: [OrderProductWhereInput!]
+  OR: [OrderRowWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -799,7 +799,7 @@ input OrderProductWhereInput {
   order: OrderWhereInput
 }
 
-input OrderProductWhereUniqueInput {
+input OrderRowWhereUniqueInput {
   id: ID
 }
 
@@ -839,32 +839,32 @@ input OrderSubscriptionWhereInput {
 }
 
 input OrderUpdateInput {
-  products: OrderProductUpdateManyWithoutOrderInput
+  rows: OrderRowUpdateManyWithoutOrderInput
   user: UserUpdateOneInput
 }
 
-input OrderUpdateOneWithoutProductsInput {
-  create: OrderCreateWithoutProductsInput
+input OrderUpdateOneWithoutRowsInput {
+  create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
   disconnect: OrderWhereUniqueInput
   delete: OrderWhereUniqueInput
-  update: OrderUpdateWithoutProductsInput
-  upsert: OrderUpsertWithoutProductsInput
+  update: OrderUpdateWithoutRowsInput
+  upsert: OrderUpsertWithoutRowsInput
 }
 
-input OrderUpdateWithoutProductsDataInput {
+input OrderUpdateWithoutRowsDataInput {
   user: UserUpdateOneInput
 }
 
-input OrderUpdateWithoutProductsInput {
+input OrderUpdateWithoutRowsInput {
   where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutProductsDataInput!
+  data: OrderUpdateWithoutRowsDataInput!
 }
 
-input OrderUpsertWithoutProductsInput {
+input OrderUpsertWithoutRowsInput {
   where: OrderWhereUniqueInput!
-  update: OrderUpdateWithoutProductsDataInput!
-  create: OrderCreateWithoutProductsInput!
+  update: OrderUpdateWithoutRowsDataInput!
+  create: OrderCreateWithoutRowsInput!
 }
 
 input OrderWhereInput {
@@ -987,9 +987,9 @@ input OrderWhereInput {
   All values greater than or equal the given value.
   """
   updatedAt_gte: DateTime
-  products_every: OrderProductWhereInput
-  products_some: OrderProductWhereInput
-  products_none: OrderProductWhereInput
+  rows_every: OrderRowWhereInput
+  rows_some: OrderRowWhereInput
+  rows_none: OrderRowWhereInput
   user: UserWhereInput
 }
 
@@ -1758,19 +1758,19 @@ type Query {
   brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
-  orderProducts(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderProduct]!
+  orderRows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow]!
   post(where: PostWhereUniqueInput!): Post
   user(where: UserWhereUniqueInput!): User
   brand(where: BrandWhereUniqueInput!): Brand
   product(where: ProductWhereUniqueInput!): Product
   order(where: OrderWhereUniqueInput!): Order
-  orderProduct(where: OrderProductWhereUniqueInput!): OrderProduct
+  orderRow(where: OrderRowWhereUniqueInput!): OrderRow
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
-  orderProductsConnection(where: OrderProductWhereInput, orderBy: OrderProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderProductConnection!
+  orderRowsConnection(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderRowConnection!
   """
   Fetches an object given its ID
   """
@@ -1786,7 +1786,7 @@ type Subscription {
   brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
-  orderProduct(where: OrderProductSubscriptionWhereInput): OrderProductSubscriptionPayload
+  orderRow(where: OrderRowSubscriptionWhereInput): OrderRowSubscriptionPayload
 }
 
 """

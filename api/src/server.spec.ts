@@ -53,7 +53,7 @@ async function createOrder(): Promise<Order> {
     mutation {
       createOrder {
         id
-        products {
+        rows {
           quantity
           product {
             id
@@ -81,7 +81,7 @@ async function createOrder(): Promise<Order> {
 it('mutation.createOrder', async () => {
   const order = await createOrder();
 
-  expect(Array.isArray(order.products)).toBeTruthy();
+  expect(Array.isArray(order.rows)).toBeTruthy();
 });
 
 class GraphQLError extends Error {
@@ -93,7 +93,7 @@ async function addProductToOrder(variables = {}): Promise<Order> {
     mutation ($orderId: String! $productId: String! $quantity: Int) {
       addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
         id
-        products {
+        rows {
           quantity
           product {
             id
@@ -140,11 +140,11 @@ describe('mutation.addProductToOrder', () => {
     });
 
     expect(orderAfter.id).toEqual(order.id);
-    expect(orderAfter.products).toHaveLength(1);
+    expect(orderAfter.rows).toHaveLength(1);
 
-    expect(orderAfter.products[0].quantity).toEqual(1);
-    expect(orderAfter.products[0].product.id).toEqual(product.id);
-    expect(orderAfter.products[0].product.name).toEqual(product.name);
+    expect(orderAfter.rows[0].quantity).toEqual(1);
+    expect(orderAfter.rows[0].product.id).toEqual(product.id);
+    expect(orderAfter.rows[0].product.name).toEqual(product.name);
   });
 
   it('when adding same product several times, it increases quantity', async () => {
@@ -162,11 +162,11 @@ describe('mutation.addProductToOrder', () => {
 
     const orderAfter = await addProductToOrder(opts);
 
-    expect(orderAfter.products).toHaveLength(1);
+    expect(orderAfter.rows).toHaveLength(1);
 
-    expect(orderAfter.products[0].quantity).toEqual(5);
-    expect(orderAfter.products[0].product.id).toEqual(product.id);
-    expect(orderAfter.products[0].product.name).toEqual(product.name);
+    expect(orderAfter.rows[0].quantity).toEqual(5);
+    expect(orderAfter.rows[0].product.id).toEqual(product.id);
+    expect(orderAfter.rows[0].product.name).toEqual(product.name);
   });
 
   it('works to add different products', async () => {
@@ -185,15 +185,15 @@ describe('mutation.addProductToOrder', () => {
       productId: secondProduct.id,
     });
 
-    expect(orderAfter.products).toHaveLength(2);
+    expect(orderAfter.rows).toHaveLength(2);
 
-    expect(orderAfter.products[0].quantity).toEqual(1);
-    expect(orderAfter.products[0].product.id).toEqual(firstProduct.id);
-    expect(orderAfter.products[0].product.name).toEqual(firstProduct.name);
+    expect(orderAfter.rows[0].quantity).toEqual(1);
+    expect(orderAfter.rows[0].product.id).toEqual(firstProduct.id);
+    expect(orderAfter.rows[0].product.name).toEqual(firstProduct.name);
 
-    expect(orderAfter.products[1].quantity).toEqual(1);
-    expect(orderAfter.products[1].product.id).toEqual(secondProduct.id);
-    expect(orderAfter.products[1].product.name).toEqual(secondProduct.name);
+    expect(orderAfter.rows[1].quantity).toEqual(1);
+    expect(orderAfter.rows[1].product.id).toEqual(secondProduct.id);
+    expect(orderAfter.rows[1].product.name).toEqual(secondProduct.name);
   });
 
   it('works to add several of the same product in one query', async () => {
@@ -209,11 +209,11 @@ describe('mutation.addProductToOrder', () => {
     });
 
     expect(orderAfter.id).toEqual(order.id);
-    expect(orderAfter.products).toHaveLength(1);
+    expect(orderAfter.rows).toHaveLength(1);
 
-    expect(orderAfter.products[0].quantity).toEqual(quantity);
-    expect(orderAfter.products[0].product.id).toEqual(product.id);
-    expect(orderAfter.products[0].product.name).toEqual(product.name);
+    expect(orderAfter.rows[0].quantity).toEqual(quantity);
+    expect(orderAfter.rows[0].product.id).toEqual(product.id);
+    expect(orderAfter.rows[0].product.name).toEqual(product.name);
   });
 
   it('errors when supplying invalid quantity', async () => {

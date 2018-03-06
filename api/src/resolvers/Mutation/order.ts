@@ -18,7 +18,7 @@ export default {
     const fragment = `
       {
         id
-        products {
+        rows {
           id
           quantity
           product {
@@ -34,20 +34,20 @@ export default {
       },
     }, fragment);
 
-    const orderProduct = order.products.find(({product}) => product.id === productId);
+    const orderRow = order.rows.find(({product}) => product.id === productId);
 
-    if (orderProduct) {
-      await ctx.db.mutation.updateOrderProduct({
+    if (orderRow) {
+      await ctx.db.mutation.updateOrderRow({
         data: {
-          quantity: quantity + orderProduct.quantity,
+          quantity: quantity + orderRow.quantity,
         },
         where: {
-          id: orderProduct.id,
+          id: orderRow.id,
         },
       });
 
     } else {
-      await ctx.db.mutation.createOrderProduct({
+      await ctx.db.mutation.createOrderRow({
         data: {
           quantity,
           product: {

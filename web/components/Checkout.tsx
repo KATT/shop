@@ -8,7 +8,7 @@ function Checkout(props) {
     <div className="Checkout">
       {props.data.loading && <div>Loading..</div>}
       {order && <ul>
-        {order.products.map((row) => (
+        {order.rows.map((row) => (
           <li key={row.id}>
             {row.product.brand.name} {row.product.name} - quantity: {row.quantity}
           </li>
