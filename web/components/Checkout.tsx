@@ -1,13 +1,20 @@
-import gql from 'graphql-tag';
-import { compose, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import { Cart } from '../lib/prisma';
 import { GetCartQuery } from '../queries/GetCartQuery';
 
 function Checkout(props) {
+  const cart: Cart = props.data.cart;
   return (
     <div className="Checkout">
-      I'm the contents of the Checkout Modal!
-
-      <pre>cart: {JSON.stringify(props, null, 4)}</pre>
+      {props.data.loading && <div>Loading..</div>}
+      {cart && <ul>
+        {cart.products.map((row) => (
+          <li key={row.id}>
+            {row.product.brand.name} {row.product.name} - quantity: {row.quantity}
+          </li>
+        ))}
+      </ul>
+      }
     </div>
   );
 }

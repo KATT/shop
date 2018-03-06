@@ -5,8 +5,11 @@ export const GetCartFragment = gql`
     __typename
     id
     products {
+      __typename
+      id
       quantity
       product {
+        __typename
         id
         name
         brand { name }
