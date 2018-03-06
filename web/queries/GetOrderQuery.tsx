@@ -12,6 +12,7 @@ export const GetOrderFragment = gql`
         __typename
         id
         name
+        price
         brand { name }
       }
     }

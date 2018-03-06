@@ -16,6 +16,7 @@ async function getProducts(): Promise<Product[]> {
       products {
         id
         name
+        price
       }
     }
   `;
@@ -48,18 +49,21 @@ it('query.products()', async () => {
   const products = await getProducts();
 });
 
-async function createOrder(): Promise<Order> {
+const defaultOrderFragment = `
+  id
+  rows {
+    quantity
+    product {
+      id
+      name
+    }
+  }
+`;
+async function createOrder(fragment = defaultOrderFragment): Promise<Order> {
   const query = `
     mutation {
       createOrder {
-        id
-        rows {
-          quantity
-          product {
-            id
-            name
-          }
-        }
+        ${defaultOrderFragment}
       }
     }
   `;
@@ -88,18 +92,19 @@ class GraphQLError extends Error {
   public errors: any[];
 }
 
-async function addProductToOrder(variables = {}): Promise<Order> {
+interface AddProductToOrderVariables {
+  orderId: string;
+  productId: string;
+  quantity?: number;
+}
+async function addProductToOrder(
+  variables: AddProductToOrderVariables,
+  fragment = defaultOrderFragment,
+): Promise<Order> {
   const query = `
     mutation ($orderId: String! $productId: String! $quantity: Int) {
       addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
-        id
-        rows {
-          quantity
-          product {
-            id
-            name
-          }
-        }
+        ${fragment}
       }
     }
   `;
@@ -236,5 +241,34 @@ describe('mutation.addProductToOrder', () => {
     expect(err).toBeInstanceOf(Error);
 
     expect(err.errors[0].message).toBe('quantity must be greater than 0');
+  });
+});
+
+describe('query.order', () => {
+  let products: Product[];
+
+  beforeAll(async () => {
+    products = await getProducts();
+
+    expect(products.length).toBeGreaterThan(0);
+  });
+
+  it('returns the total of each row', async () => {
+    const order = await createOrder();
+
+    const [product] = products;
+    const quantity = 2;
+
+    expect(product.price).toBeGreaterThan(0);
+
+    const opts = {
+      productId: product.id,
+      orderId: order.id,
+      quantity,
+    };
+    const fragment =  `id, rows { total }`;
+    const cartAfter = await addProductToOrder(opts, fragment);
+
+    expect(cartAfter.rows[0].total).toEqual(product.price * quantity);
   });
 });

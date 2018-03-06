@@ -1,6 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga';
 import { Prisma } from './generated/prisma';
-import resolvers from './resolvers';
+import { fragmentReplacements, resolvers } from './resolvers';
 
 export interface ServerOptions {
   PRISMA_ENDPOINT: string;
@@ -15,6 +15,7 @@ export default ({PRISMA_ENDPOINT, PRISMA_SECRET, PRISMA_DEBUG}: ServerOptions) =
     context: req => ({
       ...req,
       db: new Prisma({
+        fragmentReplacements,
         endpoint: PRISMA_ENDPOINT, // the endpoint of the Prisma DB service (value is set in .env)
         secret: PRISMA_SECRET, // taken from database/prisma.yml (value is set in .env)
         debug: PRISMA_DEBUG, // log all GraphQL queries & mutations

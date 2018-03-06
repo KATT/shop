@@ -1,7 +1,6 @@
 # import Post from "./generated/prisma.graphql"
 # import Product from "./generated/prisma.graphql"
-# import type Order from "./generated/prisma.graphql"
-# import type ID from "./generated/prisma.graphql"
+# import ID from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
@@ -28,6 +27,32 @@ type Mutation {
   deletePost(id: ID!): Post!
   createOrder: Order!
   addProductToOrder(orderId: String!, productId: String!, quantity: Int): Order!
+}
+
+type Order implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  rows(
+    where: OrderRowWhereInput
+    orderBy: OrderRowOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [OrderRow!]
+  user(where: UserWhereInput): User
+}
+
+type OrderRow implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int!
+  product(where: ProductWhereInput): Product!
+  order(where: OrderWhereInput): Order!
+  total: Int!
 }
 
 type AuthPayload {
