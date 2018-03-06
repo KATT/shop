@@ -1,3 +1,4 @@
+import { GraphQLError } from 'graphql';
 import { Context } from '../../utils';
 
 export default {
@@ -11,6 +12,9 @@ export default {
   },
   async addProductToCart(parent, args, ctx: Context, info) {
     const {quantity = 1, cartId, productId} = args;
+    if (quantity < 1) {
+      throw new GraphQLError('quantity must be greater than 0');
+    }
     const fragment = `
       {
         id

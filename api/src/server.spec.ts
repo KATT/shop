@@ -84,6 +84,10 @@ it('mutation.createCart', async () => {
   expect(Array.isArray(cart.products)).toBeTruthy();
 });
 
+class GraphQLError extends Error {
+  public errors: any[];
+}
+
 async function addProductToCart(variables = {}): Promise<Cart> {
   const query = `
     mutation ($cartId: String! $productId: String! $quantity: Int) {
@@ -106,7 +110,11 @@ async function addProductToCart(variables = {}): Promise<Cart> {
       query,
       variables,
     });
-  expect(body).not.toHaveProperty('errors');
+  if (body.errors) {
+    const err = new GraphQLError();
+    err.errors = body.errors;
+    throw err;
+  }
   expect(body).toHaveProperty('data');
 
   const cart: Cart = body.data.addProductToCart;
@@ -206,5 +214,27 @@ describe('mutation.addProductToCart', () => {
     expect(cartAfter.products[0].quantity).toEqual(quantity);
     expect(cartAfter.products[0].product.id).toEqual(product.id);
     expect(cartAfter.products[0].product.name).toEqual(product.name);
+  });
+
+  it('errors when supplying invalid quantity', async () => {
+    const cart = await createCart();
+
+    const [product] = products;
+    const quantity = 0;
+
+    let err: GraphQLError;
+
+    try {
+      await addProductToCart({
+        cartId: cart.id,
+        productId: product.id,
+        quantity,
+      });
+    } catch (e) {
+      err = e;
+    }
+    expect(err).toBeInstanceOf(Error);
+
+    expect(err.errors[0].message).toBe('quantity must be greater than 0');
   });
 });
