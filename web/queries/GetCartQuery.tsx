@@ -16,7 +16,7 @@ export const GetCartFragment = gql`
 
 export const GetCartQuery = gql`
   query GetCartQuery($id: ID!) {
-    cart(where: {id: $id}) {
+    cart(id: $id) {
       ...GetCartFragment
     }
   }
