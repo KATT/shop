@@ -39,7 +39,7 @@ function calculateTotals(order: APIOrder) {
   };
 }
 
-function addProduct(order: APIOrder, product: Product) {
+function addProduct(order: APIOrder, product: Product): APIOrder {
   const rows = [...order.rows];
   const index = order.rows.findIndex((row) => row.product.id === product.id);
 
@@ -59,6 +59,7 @@ function addProduct(order: APIOrder, product: Product) {
       total: product.price,
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),
+      order,
     } as APIOrderRow);
   }
   const newOrder = {
@@ -92,15 +93,17 @@ function ProductList(props: Props) {
                     productId: product.id,
                   },
                   optimisticResponse: () => {
-                    const rows = [];
                     return {
                       __typename: 'Mutation',
-                      addProductToOrder: addProduct(order, product),
+                      addProductToOrder: {
+                        __typename: 'OrderRow',
+                        order: addProduct(order, product),
+                      },
                     };
                   },
                   update: (proxy, { data: { addProductToOrder } }) => {
                     proxy.writeFragment({
-                      id: orderId,
+                      id: addProductToOrder.order.id,
                       fragment: gql`
                         fragment OrderFragment on Order {
                           rows
@@ -109,8 +112,8 @@ function ProductList(props: Props) {
                       `,
                       data: {
                         __typename: 'Order',
-                        rows: addProductToOrder.rows,
-                        total: addProductToOrder.total,
+                        rows: addProductToOrder.order.rows,
+                        total: addProductToOrder.order.total,
                       },
                     });
                   },
@@ -170,7 +173,9 @@ function ProductList(props: Props) {
 const addProductToOrder: any = gql`
   mutation addProductToOrder ($orderId: String! $productId: String! $quantity: Int) {
     addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
-      ...GetOrderFragment
+      order {
+        ...GetOrderFragment
+      }
     }
   }
   ${GetOrderFragment}

@@ -6,6 +6,7 @@ import {Order, OrderRow} from './generated/prisma';
 
 export interface APIOrderRow extends OrderRow {
   total: number;
+  order?: APIOrder;
 }
 
 export interface APIOrder extends Order {

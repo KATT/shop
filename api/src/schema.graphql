@@ -26,7 +26,11 @@ type Mutation {
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
   createOrder: Order!
-  addProductToOrder(orderId: String!, productId: String!, quantity: Int): Order!
+  addProductToOrder(
+    orderId: String!
+    productId: String!
+    quantity: Int
+  ): OrderRow!
 }
 
 type Order implements Node {

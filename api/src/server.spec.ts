@@ -1,5 +1,6 @@
 import * as request from 'supertest';
 import { Order, Product } from './generated/prisma';
+import { APIOrderRow } from './schema';
 import server from './server';
 
 const {
@@ -97,10 +98,23 @@ interface AddProductToOrderVariables {
   productId: string;
   quantity?: number;
 }
+
+const defaultOrderRowFragment = `
+  id
+  product {
+    id
+    name
+  }
+  total
+  quantity
+  order {
+    ${defaultOrderFragment}
+  }
+`;
 async function addProductToOrder(
   variables: AddProductToOrderVariables,
-  fragment = defaultOrderFragment,
-): Promise<Order> {
+  fragment = defaultOrderRowFragment,
+): Promise<APIOrderRow> {
   const query = `
     mutation ($orderId: String! $productId: String! $quantity: Int) {
       addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
@@ -122,8 +136,8 @@ async function addProductToOrder(
   }
   expect(body).toHaveProperty('data');
 
-  const order: Order = body.data.addProductToOrder;
-  return order;
+  const row: APIOrderRow = body.data.addProductToOrder;
+  return row;
 }
 
 describe('mutation.addProductToOrder', () => {
@@ -139,17 +153,17 @@ describe('mutation.addProductToOrder', () => {
     const order = await createOrder();
 
     const [product] = products;
-    const orderAfter = await addProductToOrder({
+    const orderRow = await addProductToOrder({
       orderId: order.id,
       productId: product.id,
     });
 
-    expect(orderAfter.id).toEqual(order.id);
-    expect(orderAfter.rows).toHaveLength(1);
+    expect(orderRow.order.id).toEqual(order.id);
+    expect(orderRow.order.rows).toHaveLength(1);
 
-    expect(orderAfter.rows[0].quantity).toEqual(1);
-    expect(orderAfter.rows[0].product.id).toEqual(product.id);
-    expect(orderAfter.rows[0].product.name).toEqual(product.name);
+    expect(orderRow.quantity).toEqual(1);
+    expect(orderRow.product.id).toEqual(product.id);
+    expect(orderRow.product.name).toEqual(product.name);
   });
 
   it('when adding same product several times, it increases quantity', async () => {
@@ -165,13 +179,13 @@ describe('mutation.addProductToOrder', () => {
     await addProductToOrder(opts);
     await addProductToOrder(opts);
 
-    const orderAfter = await addProductToOrder(opts);
+    const row = await addProductToOrder(opts);
 
-    expect(orderAfter.rows).toHaveLength(1);
+    expect(row.order.rows).toHaveLength(1);
 
-    expect(orderAfter.rows[0].quantity).toEqual(5);
-    expect(orderAfter.rows[0].product.id).toEqual(product.id);
-    expect(orderAfter.rows[0].product.name).toEqual(product.name);
+    expect(row.quantity).toEqual(5);
+    expect(row.product.id).toEqual(product.id);
+    expect(row.product.name).toEqual(product.name);
   });
 
   it('works to add different products', async () => {
@@ -181,24 +195,24 @@ describe('mutation.addProductToOrder', () => {
 
     const [product1, product2] = products;
 
-    await addProductToOrder({
+    const row1 = await addProductToOrder({
       orderId: order.id,
       productId: product1.id,
     });
-    const orderAfter = await addProductToOrder({
+    const row2 = await addProductToOrder({
       orderId: order.id,
       productId: product2.id,
     });
 
-    expect(orderAfter.rows).toHaveLength(2);
+    expect(row2.order.rows).toHaveLength(2);
 
-    expect(orderAfter.rows[0].quantity).toEqual(1);
-    expect(orderAfter.rows[0].product.id).toEqual(product1.id);
-    expect(orderAfter.rows[0].product.name).toEqual(product1.name);
+    expect(row1.quantity).toEqual(1);
+    expect(row1.product.id).toEqual(product1.id);
+    expect(row1.product.name).toEqual(product1.name);
 
-    expect(orderAfter.rows[1].quantity).toEqual(1);
-    expect(orderAfter.rows[1].product.id).toEqual(product2.id);
-    expect(orderAfter.rows[1].product.name).toEqual(product2.name);
+    expect(row2.quantity).toEqual(1);
+    expect(row2.product.id).toEqual(product2.id);
+    expect(row2.product.name).toEqual(product2.name);
   });
 
   it('works to add several of the same product in one query', async () => {
@@ -207,18 +221,18 @@ describe('mutation.addProductToOrder', () => {
     const [product] = products;
     const quantity = 20;
 
-    const orderAfter = await addProductToOrder({
+    const row = await addProductToOrder({
       orderId: order.id,
       productId: product.id,
       quantity,
     });
 
-    expect(orderAfter.id).toEqual(order.id);
-    expect(orderAfter.rows).toHaveLength(1);
+    expect(row.order.id).toEqual(order.id);
+    expect(row.order.rows).toHaveLength(1);
 
-    expect(orderAfter.rows[0].quantity).toEqual(quantity);
-    expect(orderAfter.rows[0].product.id).toEqual(product.id);
-    expect(orderAfter.rows[0].product.name).toEqual(product.name);
+    expect(row.quantity).toEqual(quantity);
+    expect(row.product.id).toEqual(product.id);
+    expect(row.product.name).toEqual(product.name);
   });
 
   it('errors when supplying invalid quantity', async () => {
@@ -266,10 +280,11 @@ describe('query.order', () => {
       orderId: order.id,
       quantity,
     };
-    const fragment =  `id, rows { total }`;
-    const cartAfter = await addProductToOrder(opts, fragment);
+    const fragment =  `total, order { rows { total } }`;
+    const row = await addProductToOrder(opts, fragment);
 
-    expect(cartAfter.rows[0].total).toEqual(product.price * quantity);
+    expect(row.total).toEqual(product.price * quantity);
+    expect(row.order.rows[0].total).toEqual(product.price * quantity);
   });
 
   it('returns the total of the whole order', async () => {
@@ -284,10 +299,18 @@ describe('query.order', () => {
       productId: product1.id,
       orderId: order.id,
     };
-    const fragment =  `total`;
-    await addProductToOrder(opts1, fragment);
-    const cartAfter = await addProductToOrder(opts1, fragment);
+    const opts2 = {
+      productId: product2.id,
+      orderId: order.id,
+      quantity: 2,
+    };
+    const fragment =  `order { total }`;
 
-    expect(cartAfter.total).toEqual(product1.price + product2.price);
+    const row1 = await addProductToOrder(opts1, fragment);
+    expect(row1.order.total).toEqual(product1.price);
+
+    const row2 = await addProductToOrder(opts2, fragment);
+
+    expect(row2.order.total).toEqual(product1.price + product2.price * 2);
   });
 });
