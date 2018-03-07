@@ -6,8 +6,7 @@
     "dev": "dotenv -- nodemon server/index.ts",
     "build": "tsc --project tsconfig.server.json && next build",
     "start": "NODE_ENV=production node dist/",
-    "deploy":
-      "now -e GRAPHQL_URL=https://react-prisma-graphql-shopping-cart-api.kattcorp.co.uk",
+    "deploy": "now -e GRAPHQL_URL=https://react-prisma-graphql-shopping-cart-api.kattcorp.co.uk",
     "alias": "now alias"
   },
   "dependencies": {
@@ -22,7 +21,8 @@
     "next": "^5.0.0",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "@types/express": "^4.11.1",

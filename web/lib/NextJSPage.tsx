@@ -1,12 +1,12 @@
 import { ApolloClient } from 'apollo-client';
+import { SingletonRouter } from 'next/router';
 import { Component } from 'react';
-import {UrlWithParsedQuery} from 'url';
 
 export interface ParsedUrlQuery {
   [key: string]: string | string[];
 }
 export interface NextJSPageProps {
-  url?: UrlWithParsedQuery;
+  url: SingletonRouter;
 }
 
 export interface NextJSPageContext {

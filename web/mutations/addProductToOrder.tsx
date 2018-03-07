@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
+import {print as printSource} from 'graphql/language/printer';
+import qs from 'querystring';
 import { compose, graphql, QueryProps } from 'react-apollo';
 import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
 import { GetOrderFragment, GetOrderProductFragment, GetOrderQuery } from '../queries/GetOrderQuery';
-
 export interface OrderData extends QueryProps {
   order: APIOrder;
 }
@@ -26,69 +27,7 @@ export function calculateTotals(order: APIOrder) {
   };
 }
 
-export const addProductToOrderQuery: any = gql`
-  mutation addProductToOrder ($orderId: String! $productId: String! $quantity: Int) {
-    addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
-      order {
-        ...GetOrderFragment
-      }
-    }
-  }
-  ${GetOrderFragment}
-`;
-
-export const addProductToOrderGraphQL = compose(
-  graphql<Response, InputProps>(GetOrderQuery, {
-    name: 'orderData',
-    options: ({ orderId }) => ({
-      variables: {
-        id: orderId,
-      },
-    }),
-  }),
-  graphql<Response, InputProps>(addProductToOrderQuery, {
-    name: 'addProductToOrder',
-    props: (props: any) => ({
-      addProductToOrder: (product: Product) => {
-        const {order} = props.ownProps.orderData;
-
-        return (props as any).addProductToOrder({
-          variables: {
-            orderId: order.id,
-            productId: product.id,
-          },
-          optimisticResponse: () => {
-            return {
-              __typename: 'Mutation',
-              addProductToOrder: {
-                __typename: 'OrderRow',
-                order: addProduct(order, product),
-              },
-            };
-          },
-          update: (proxy, { data: { addProductToOrder } }) => {
-            proxy.writeFragment({
-              id: addProductToOrder.order.id,
-              fragment: gql`
-                fragment OrderFragment on Order {
-                  rows
-                  total
-                }
-              `,
-              data: {
-                __typename: 'Order',
-                rows: addProductToOrder.order.rows,
-                total: addProductToOrder.order.total,
-              },
-            });
-          },
-        });
-      },
-    }),
-  }),
-);
-
-function addProduct(order: APIOrder, product: Product): APIOrder {
+export function addProductReducer(order: APIOrder, product: Product): APIOrder {
   const rows = [...order.rows];
   const index = order.rows.findIndex((row) => row.product.id === product.id);
 
@@ -118,6 +57,84 @@ function addProduct(order: APIOrder, product: Product): APIOrder {
 
   return calculateTotals(newOrder);
 }
+
+export const addProductToOrderQuery: any = gql`
+  mutation addProductToOrder ($orderId: String! $productId: String! $quantity: Int) {
+    addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
+      order {
+        ...GetOrderFragment
+      }
+    }
+  }
+  ${GetOrderFragment}
+`;
+
+export const addProductToOrderGraphQL = compose(
+  graphql<Response, InputProps>(GetOrderQuery, {
+    name: 'orderData',
+    options: ({ orderId }) => ({
+      variables: {
+        id: orderId,
+      },
+    }),
+  }),
+  graphql<Response, InputProps>(addProductToOrderQuery, {
+    name: 'addProductToOrder',
+    props: (props: any) => ({
+      addProductToOrderFallback: (product: Product, redirect: string) => {
+        const {order} = props.ownProps.orderData;
+
+        const query = printSource(addProductToOrderQuery);
+        const variables = {
+          orderId: order.id,
+          productId: product.id,
+        };
+
+        const stringified = qs.stringify({
+          query,
+          variables: JSON.stringify(variables),
+          redirect,
+        });
+
+        return {query, variables, redirect, stringified};
+      },
+      addProductToOrder: (product: Product) => {
+        const {order} = props.ownProps.orderData;
+        return (props as any).addProductToOrder({
+          variables: {
+            orderId: order.id,
+            productId: product.id,
+          },
+          optimisticResponse: () => {
+            return {
+              __typename: 'Mutation',
+              addProductToOrder: {
+                __typename: 'OrderRow',
+                order: addProductReducer(order, product),
+              },
+            };
+          },
+          update: (proxy, { data: { addProductToOrder } }) => {
+            proxy.writeFragment({
+              id: addProductToOrder.order.id,
+              fragment: gql`
+                fragment OrderFragment on Order {
+                  rows
+                  total
+                }
+              `,
+              data: {
+                __typename: 'Order',
+                rows: addProductToOrder.order.rows,
+                total: addProductToOrder.order.total,
+              },
+            });
+          },
+        });
+      },
+    }),
+  }),
+);
 
 export const fragments = {
   Product: GetOrderProductFragment,

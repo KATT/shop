@@ -1,20 +1,25 @@
 import gql from 'graphql-tag';
+import { SingletonRouter } from 'next/router';
 import { compose, graphql, QueryProps } from 'react-apollo';
-import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
+import { Product } from '../lib/prisma';
 import { addProductToOrderGraphQL, fragments } from '../mutations/addProductToOrder';
-
 const PRODUCTS_PER_PAGE = 50;
 
 interface ProductsData extends QueryProps {
   products: Product[];
 }
 
-interface Props {
+interface InputProps {
   orderId: string;
+  url: SingletonRouter;
+}
+
+interface Props extends InputProps {
   productsData: ProductsData;
   addProductToOrder: any;
   loadMoreProducts: any;
   addProductToOrderTest;
+  addProductToOrderFallback;
 }
 
 function ProductList(props: Props) {
@@ -22,6 +27,8 @@ function ProductList(props: Props) {
     productsData: { loading, error, products },
     loadMoreProducts,
     addProductToOrder,
+    addProductToOrderFallback,
+    url,
   } = props;
 
   if (error) { return <div>Error loading Products</div>; }
@@ -30,12 +37,25 @@ function ProductList(props: Props) {
     return (
       <section>
         <ul>
-          {products.map((product: any) =>
-            <li key={product.id}>
-              {product.name}: {' '}
-              <button onClick={() => addProductToOrder(product)}>Add to order</button>
-            </li>,
-          )}
+          {products.map((product: any) => {
+            const fallback = addProductToOrderFallback(product, url.asPath);
+            return (
+              <li key={product.id}>
+                <pre>{JSON.stringify(fallback, null, 4)}</pre>
+                {product.name}:  {' '}
+                <a href={`/_gql/m/?${fallback.stringified}`}>Add to order (link)</a>
+                <form
+                  action={'/_gql/m'}
+                  method="post"
+                  onSubmit={(e) => e.preventDefault() && addProductToOrder(product)}
+                  >
+                    <input type="hidden" name="query" value={fallback.query} />
+                    <input type="hidden" name="variables" value={JSON.stringify(fallback.variables)} />
+                    <button type="submit" onClick={() => addProductToOrder(product)}>Add to order</button>
+                </form>
+              </li>
+            );
+          })}
         </ul>
         {areMoreProducts ?
           <button onClick={() => loadMoreProducts()}> {
@@ -97,11 +117,6 @@ const productsQuery: any = gql`
   }
   ${fragments.Product}
 `;
-
-interface InputProps {
-  orderId: string;
-}
-
 export default compose(
   graphql<Response, InputProps>(productsQuery, {
     name: 'productsData',

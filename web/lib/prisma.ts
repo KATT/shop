@@ -1,1 +1,1 @@
-export * from '../../api/src/generated/prisma';
+export * from '../../api/src/schema';

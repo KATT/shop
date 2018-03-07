@@ -1,6 +1,8 @@
 import * as express from 'express';
 import * as next from 'next';
 
+import routeGraphql from './routes/graphql';
+
 const port = parseInt(process.env.PORT, 10) || 5000;
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -11,9 +13,7 @@ app.prepare()
   .then(() => {
     const server = express();
 
-    server.get('/cat/talk', (req, res) => {
-      res.send('meow');
-    });
+    server.use('/_gql', routeGraphql());
 
     server.get('*', (req, res) => {
       return handle(req, res);

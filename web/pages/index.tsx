@@ -6,6 +6,6 @@ export default withOrder((props: WithOrderProps) => (
   <Layout {...props}>
     Hello World.{' '}
 
-    <ProductList orderId={props.orderId} />
+    <ProductList orderId={props.orderId} url={props.url} />
   </Layout>
 ));
