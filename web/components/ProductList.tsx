@@ -1,11 +1,81 @@
 import gql from 'graphql-tag';
 import { compose, graphql } from 'react-apollo';
-import { GetOrderFragment } from '../queries/GetOrderQuery';
+import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
+import { GetOrderFragment, GetOrderProductFragment, GetOrderQuery } from '../queries/GetOrderQuery';
 
 const PRODUCTS_PER_PAGE = 50;
 
-function ProductList(props: any) {
-  const { orderId, data: { loading, error, products }, loadMoreProducts, addProductToOrder } = props;
+interface ApolloResponse {
+  loading: boolean;
+  error: boolean;
+}
+interface OrderData extends ApolloResponse {
+  order: APIOrder;
+}
+interface ProductsData extends ApolloResponse {
+  products: Product[];
+}
+
+interface Props {
+  orderId: string;
+  orderData: OrderData;
+  productsData: ProductsData;
+  addProductToOrder: any;
+  loadMoreProducts: any;
+}
+
+function calculateTotals(order: APIOrder) {
+  const rows = order.rows.map((row) => ({
+    ...row,
+    total: row.quantity * row.product.price,
+  }));
+
+  const total = rows.reduce((sum, row) => sum + row.total, 0);
+
+  return {
+    ...order,
+    rows,
+    total,
+  };
+}
+
+function addProduct(order: APIOrder, product: Product) {
+  const rows = [...order.rows];
+  const index = order.rows.findIndex((row) => row.product.id === product.id);
+
+  if (index > -1) {
+    const row = rows[index];
+    const quantity = row.quantity + 1;
+    rows[index] = {
+      ...row,
+      quantity,
+    };
+  } else {
+    rows.push({
+      __typename: 'OrderRow',
+      id: new Date().toJSON(),
+      product,
+      quantity: 1,
+      total: product.price,
+      createdAt: new Date().toJSON(),
+      updatedAt: new Date().toJSON(),
+    } as APIOrderRow);
+  }
+  const newOrder = {
+    ...order,
+    rows,
+  };
+
+  return calculateTotals(newOrder);
+}
+function ProductList(props: Props) {
+  const {
+    orderId,
+    orderData: { order },
+    productsData: { loading, error, products },
+    loadMoreProducts,
+    addProductToOrder,
+  } = props;
 
   if (error) { return <div>Error loading Products</div>; }
   if (products && products.length) {
@@ -21,17 +91,26 @@ function ProductList(props: any) {
                     orderId,
                     productId: product.id,
                   },
+                  optimisticResponse: () => {
+                    const rows = [];
+                    return {
+                      __typename: 'Mutation',
+                      addProductToOrder: addProduct(order, product),
+                    };
+                  },
                   update: (proxy, { data: { addProductToOrder } }) => {
                     proxy.writeFragment({
                       id: orderId,
                       fragment: gql`
                         fragment OrderFragment on Order {
-                          products
+                          rows
+                          total
                         }
                       `,
                       data: {
                         __typename: 'Order',
-                        products: addProductToOrder.products,
+                        rows: addProductToOrder.rows,
+                        total: addProductToOrder.total,
                       },
                     });
                   },
@@ -100,10 +179,14 @@ const addProductToOrder: any = gql`
 const productsQuery: any = gql`
   query products($first: Int!, $skip: Int!) {
     products(orderBy: createdAt_DESC, first: $first, skip: $skip) {
+      __typename
       id
       name
-    },
+      price
+      ...GetOrderProductFragment
+    }
   }
+  ${GetOrderProductFragment}
 `;
 
 interface InputProps {
@@ -111,19 +194,20 @@ interface InputProps {
 }
 
 export default compose(
-    graphql<Response, InputProps>(productsQuery, {
+  graphql<Response, InputProps>(productsQuery, {
+    name: 'productsData',
     options: {
       variables: {
         skip: 0,
         first: PRODUCTS_PER_PAGE,
       },
     },
-    props: ({ data }: any) => ({
-      data,
+    props: ({ productsData }: any) => ({
+      productsData,
       loadMoreProducts: () => {
-        return data.fetchMore({
+        return productsData.fetchMore({
           variables: {
-            skip: data.products.length,
+            skip: productsData.products.length,
           },
           updateQuery: (previousResult: any, { fetchMoreResult }: any) => {
             if (!fetchMoreResult) {
@@ -135,6 +219,14 @@ export default compose(
             });
           },
         });
+      },
+    }),
+  }),
+  graphql<Response, InputProps>(GetOrderQuery, {
+    name: 'orderData',
+    options: ({ orderId }) => ({
+      variables: {
+        id: orderId,
       },
     }),
   }),

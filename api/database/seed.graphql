@@ -8,12 +8,7 @@ mutation {
   }
 
   nikeAirMax: createProduct(
-    data: {
-      name: "Air Max"
-      currency: GBP
-      price: 5000
-      brand: { connect: { name: "Nike" } }
-    }
+    data: { name: "Air Max", price: 5000, brand: { connect: { name: "Nike" } } }
   ) {
     id
   }
@@ -21,7 +16,6 @@ mutation {
   adidasSuperstar: createProduct(
     data: {
       name: "Superstar"
-      currency: GBP
       price: 5000
       brand: { connect: { name: "Adidas" } }
     }
