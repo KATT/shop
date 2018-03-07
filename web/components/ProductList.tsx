@@ -41,7 +41,6 @@ function ProductList(props: Props) {
             const fallback = addProductToOrderFallback(product, url.asPath);
             return (
               <li key={product.id}>
-                <pre>{JSON.stringify(fallback, null, 4)}</pre>
                 {product.name}:  {' '}
                 <a href={`/_gql/m/?${fallback.stringified}`}>Add to order (link)</a>
                 <form

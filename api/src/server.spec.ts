@@ -11,6 +11,29 @@ const {
 
 let app;
 
+interface Body {
+  data?: any;
+  errors?: Error[];
+}
+
+async function graphqlRequest({variables, query}): Promise<Body> {
+  const {body} = await request(app)
+    .post('/')
+    .send({
+      query,
+      variables,
+    });
+
+  if (body.errors) {
+    const err = new GraphQLError();
+    err.errors = body.errors;
+    throw err;
+  }
+  expect(body).toHaveProperty('data');
+
+  return body;
+}
+
 async function getProducts(): Promise<Product[]> {
   const query = `
     query {
@@ -23,14 +46,7 @@ async function getProducts(): Promise<Product[]> {
   `;
 
   const variables = {};
-  const {body} = await request(app)
-    .post('/')
-    .send({
-      query,
-      variables,
-    });
-  expect(body).not.toHaveProperty('errors');
-  expect(body).toHaveProperty('data');
+  const body = await graphqlRequest({query, variables});
 
   expect(Array.isArray(body.data.products)).toBeTruthy();
 
@@ -70,14 +86,7 @@ async function createOrder(fragment = defaultOrderFragment): Promise<Order> {
   `;
 
   const variables = {};
-  const {body} = await request(app)
-    .post('/')
-    .send({
-      query,
-      variables,
-    });
-  expect(body).not.toHaveProperty('errors');
-  expect(body).toHaveProperty('data');
+  const body = await graphqlRequest({query, variables});
 
   const order: Order = body.data.createOrder;
   return order;
@@ -123,20 +132,31 @@ async function addProductToOrder(
     }
   `;
 
-  const {body} = await request(app)
-    .post('/')
-    .send({
-      query,
-      variables,
-    });
-  if (body.errors) {
-    const err = new GraphQLError();
-    err.errors = body.errors;
-    throw err;
-  }
-  expect(body).toHaveProperty('data');
+  const body = await graphqlRequest({query, variables});
 
   const row: APIOrderRow = body.data.addProductToOrder;
+  return row;
+}
+
+interface UpdateOrderRowVariables {
+  id: string;
+  quantity?: number;
+}
+async function updateOrderRow(
+  variables: UpdateOrderRowVariables,
+  fragment = defaultOrderRowFragment,
+): Promise<APIOrderRow> {
+  const query = `
+    mutation ($id: ID! $quantity: Int) {
+      updateOrderRow (id: $id, quantity: $quantity) {
+        ${fragment}
+      }
+    }
+  `;
+
+  const body = await graphqlRequest({query, variables});
+
+  const row: APIOrderRow = body.data.updateOrderRow;
   return row;
 }
 
@@ -336,5 +356,37 @@ describe('query.order', () => {
     const row2 = await addProductToOrder(opts2, fragment);
 
     expect(row2.order.total).toEqual(product1.price + product2.price * 2);
+  });
+});
+
+describe('mutation.updateOrderRow', () => {
+  let products: Product[];
+
+  beforeAll(async () => {
+    products = await getProducts();
+
+    expect(products.length).toBeGreaterThan(0);
+  });
+
+  it('is possible to change quantity', async () => {
+    const order = await createOrder();
+
+    const [product1, product2] = products;
+
+    expect(product1.price).toBeGreaterThan(0);
+
+    const opts1 = {
+      productId: product1.id,
+      orderId: order.id,
+    };
+    const row1 = await addProductToOrder(opts1);
+
+    const rowAfter = await updateOrderRow({
+      id: row1.id,
+      quantity: 10,
+    });
+
+    expect(rowAfter.quantity).toEqual(10);
+    expect(rowAfter.total).toEqual(product1.price * rowAfter.quantity);
   });
 });

@@ -20,7 +20,7 @@ export default {
       throw new GraphQLError('quantity must be greater than 0');
     }
 
-    const key = ['updateOrder', orderId].join('-');
+    const key = ['Order', orderId].join('-');
     return lock.acquire(key, async () => {
       const fragment = `
         {
@@ -67,6 +67,41 @@ export default {
               id: orderId,
             },
           },
+        },
+      }, info);
+    });
+  },
+
+  async updateOrderRow(parent, args, ctx: Context, info): Promise<OrderRow> {
+    if (args.quantity < 1) {
+      throw new GraphQLError('quantity must be greater than 0');
+    }
+    const {
+      id,
+      ...data,
+    } = args;
+
+    const fragment = `
+      {
+        id
+        order {
+          id
+        }
+      }
+    `;
+
+    const row = await ctx.db.query.orderRow({
+      where: {
+        id: args.id,
+      },
+    }, fragment);
+
+    const key = ['Order', row.order.id].join('-');
+    return lock.acquire(key, async () => {
+      return ctx.db.mutation.updateOrderRow({
+        data,
+        where: {
+          id: row.id,
         },
       }, info);
     });
