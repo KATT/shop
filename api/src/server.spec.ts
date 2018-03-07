@@ -188,7 +188,7 @@ describe('mutation.addProductToOrder', () => {
     expect(row.product.name).toEqual(product.name);
   });
 
-  it.skip('when adding same product several times, in parallell, it increases quantity', async () => {
+  it('when adding same product several times, in parallell, it increases quantity', async () => {
     const order = await createOrder();
 
     const [product] = products;

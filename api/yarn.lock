@@ -41,6 +41,10 @@
     request-promise "^4.1.1"
     yargs "^8.0.2"
 
+"@types/async-lock@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/async-lock/-/async-lock-1.1.0.tgz#002b1ebeebd382aff66b68bed70a74c7bdd06e3e"
+
 "@types/bcryptjs@2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.1.tgz#7fb63922b5b106edacdcfe084cd38850f78aacfc"
@@ -451,6 +455,10 @@ async-each@^1.0.0:
 async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
+
+async-lock@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/async-lock/-/async-lock-1.1.2.tgz#d552b3f8fe93018bf917efcf66d3154b9035282a"
 
 async@^1.4.0, async@^1.5.2:
   version "1.5.2"

@@ -7,20 +7,26 @@
     "dev:playground": "graphql playground",
     "build": "rimraf dist && tsc",
     "deploy:local": "prisma deploy && graphql prepare",
-    "deploy:dev":
-      "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
+    "deploy:dev": "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
     "alias": "now alias",
     "test": "PORT=4010 dotenv -- jest"
   },
   "jest": {
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
     },
-    "testMatch": ["**/*.spec.(ts|tsx)"]
+    "testMatch": [
+      "**/*.spec.(ts|tsx)"
+    ]
   },
   "private": true,
   "dependencies": {
+    "async-lock": "^1.1.2",
     "bcryptjs": "2.4.3",
     "graphql-yoga": "1.4.3",
     "jsonwebtoken": "8.1.1",
@@ -28,6 +34,7 @@
     "prisma-binding": "1.5.15"
   },
   "devDependencies": {
+    "@types/async-lock": "^1.1.0",
     "@types/bcryptjs": "2.4.1",
     "@types/jest": "*",
     "@types/supertest": "^2.0.4",
