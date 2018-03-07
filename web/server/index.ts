@@ -1,3 +1,4 @@
+import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as next from 'next';
 
@@ -13,10 +14,12 @@ app.prepare()
   .then(() => {
     const server = express();
 
+    server.use(cookieParser());
+
     server.use('/_gql', routeGraphql());
 
     server.get('*', (req, res) => {
-      return handle(req, res);
+      handle(req, res);
     });
 
     server.listen(port, (err) => {

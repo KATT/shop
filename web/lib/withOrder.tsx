@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import qs from 'querystring';
 import {Component} from 'react';
 import { NextJSPageContext, NextJSPageProps} from './NextJSPage';
 import { Order } from './prisma';
@@ -19,27 +20,46 @@ export interface WithOrderProps extends NextJSPageProps {
 export interface WithOrderContext extends NextJSPageContext {
   orderId: string;
 }
-let orderId;
+
+function getOrderId(ctx: NextJSPageContext): string {
+  if (!ctx.isBrowser) {
+    return ctx.req.cookies.orderId;
+  }
+  const { orderId } = qs.parse(document.cookie);
+
+  return orderId as string;
+}
+
+function saveOrderId(orderId, ctx: NextJSPageContext) {
+  if (!ctx.isBrowser) {
+    ctx.res.cookie('orderId', orderId);
+    return;
+  }
+  const cookies = {
+    ...qs.parse(document.cookie),
+    orderId,
+  };
+
+  document.cookie = qs.stringify(cookies);
+
+  return cookies;
+}
 
 export default (ComposedComponent: any) => {
   class WithOrder extends Component {
     public static displayName = `WithOrder(${getComponentDisplayName(ComposedComponent)})`;
     public static async getInitialProps(ctx: NextJSPageContext): Promise<WithOrderProps> {
-      const { apollo } = ctx;
+      const { apollo, req } = ctx;
 
-      // 🚧 TODO:
-      // 1. orderId = readFromCookie()
-      // 2. getOrderByID(orderId)
-      // 3. if (!orderExists) -> createOrder
-      if (ctx.isBrowser) {
-        orderId = (window as any).__NEXT_DATA__.props.orderId;
-      }
+      let orderId = getOrderId(ctx);
       if (!orderId) {
         const res: any = await apollo.mutate({
           mutation: createOrder,
           variables: {},
         });
         orderId = res.data.createOrder.id;
+
+        saveOrderId(orderId, ctx);
       }
 
       // Evaluate the composed component's getInitialProps()

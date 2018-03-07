@@ -14,6 +14,8 @@ export interface NextJSPageContext {
   pathname: string;
   isBrowser: boolean;
   apollo: ApolloClient<any>;
+  req: any;
+  res: any;
 }
 
 export class NextJSPage extends Component<NextJSPageProps, any> {
