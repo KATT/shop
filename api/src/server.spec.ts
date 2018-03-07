@@ -188,6 +188,30 @@ describe('mutation.addProductToOrder', () => {
     expect(row.product.name).toEqual(product.name);
   });
 
+  it.skip('when adding same product several times, in parallell, it increases quantity', async () => {
+    const order = await createOrder();
+
+    const [product] = products;
+    const opts = {
+      orderId: order.id,
+      productId: product.id,
+    };
+
+    await Promise.all(
+      Array(9).fill(null).map(() =>
+        addProductToOrder(opts),
+      ),
+    );
+
+    const row = await addProductToOrder(opts);
+
+    expect(row.order.rows).toHaveLength(1);
+
+    expect(row.quantity).toEqual(10);
+    expect(row.product.id).toEqual(product.id);
+    expect(row.product.name).toEqual(product.name);
+  });
+
   it('works to add different products', async () => {
     expect(products.length).toBeGreaterThan(1);
 
