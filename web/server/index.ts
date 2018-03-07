@@ -1,3 +1,4 @@
+import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as next from 'next';
@@ -15,6 +16,7 @@ app.prepare()
     const server = express();
 
     server.use(cookieParser());
+    server.use(bodyParser.urlencoded({extended: false}));
 
     server.use('/_gql', routeGraphql());
 

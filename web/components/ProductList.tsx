@@ -48,6 +48,7 @@ function ProductList(props: Props) {
                   method="post"
                   onSubmit={(e) => e.preventDefault() && addProductToOrder(product)}
                   >
+                    <input type="hidden" name="redirect" value={fallback.redirect} />
                     <input type="hidden" name="query" value={fallback.query} />
                     <input type="hidden" name="variables" value={JSON.stringify(fallback.variables)} />
                     <button type="submit" onClick={() => addProductToOrder(product)}>Add to order</button>

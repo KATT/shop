@@ -13,6 +13,7 @@
     "apollo-client-preset": "^1.0.8",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-transform-inline-environment-variables": "^0.3.0",
+    "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "graphql": "^0.13.1",
@@ -26,6 +27,7 @@
     "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.8",
     "@types/cookie-parser": "^1.4.1",
     "@types/express": "^4.11.1",
     "@types/graphql": "^0.12.4",
