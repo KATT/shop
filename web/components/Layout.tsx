@@ -4,6 +4,7 @@ import Router from 'next/router';
 import style from 'next/style';
 import { Component, Fragment, MouseEvent, ReactNode } from 'react';
 import Modal from 'react-modal';
+import normalizeCSS from '../lib/normalize-css';
 import Checkout from './Checkout';
 import Header from './Header';
 
@@ -29,6 +30,7 @@ export default class Layout extends Component<LayoutProps> {
           <title>{title && `${title} | `}KATTCORP Webshop</title>
         </Head>
         <style jsx global>{`
+          ${normalizeCSS}
           body {
             background: #e5e5e5;
             font: 10px;
