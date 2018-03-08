@@ -4,6 +4,11 @@ import qs from 'querystring';
 import { compose, graphql, QueryProps } from 'react-apollo';
 import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
 import { GetOrderFragment, GetOrderProductFragment, GetOrderQuery } from '../queries/GetOrderQuery';
+
+// 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
+// TODO - Refactor into render prop like UpdateOrderRow
+
+
 export interface OrderData extends QueryProps {
   order: APIOrder;
 }
