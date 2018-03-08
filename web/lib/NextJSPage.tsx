@@ -7,6 +7,7 @@ export interface ParsedUrlQuery {
 }
 export interface NextJSPageProps {
   url: SingletonRouter;
+  serverState: any;
 }
 
 export interface NextJSPageContext {
