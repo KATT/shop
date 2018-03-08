@@ -10,7 +10,7 @@ interface LayoutProps extends WithOrderProps {
 export default class Layout extends Component<LayoutProps> {
 
   public render() {
-    const {children} = this.props;
+    const {children, url} = this.props;
     return (
       <Fragment>
         <nav>
@@ -30,7 +30,7 @@ export default class Layout extends Component<LayoutProps> {
           <pre>orderId: {JSON.stringify(this.props.orderId)}</pre>
           <pre>url: {JSON.stringify(this.props.url)}</pre>
         </main>
-        {this.isCheckoutOpen() && <Checkout orderId={this.props.orderId} />}
+        {this.isCheckoutOpen() && <Checkout orderId={this.props.orderId} url={url} />}
      </Fragment>
     );
   }
