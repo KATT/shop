@@ -9,7 +9,9 @@
     "deploy": "now -e GRAPHQL_URL=https://shop-api.kattcorp.co.uk/",
     "alias": "now alias"
   },
-  "engines": { "node": "9.x.x" },
+  "engines": {
+    "node": "9.x.x"
+  },
   "dependencies": {
     "apollo-client-preset": "^1.0.8",
     "babel-plugin-inline-dotenv": "^1.1.2",
@@ -25,6 +27,7 @@
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
+    "react-modal": "^3.3.1",
     "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
@@ -38,6 +41,7 @@
     "@types/next": "^2.4.8",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.0.38",
+    "@types/react-modal": "^3.1.2",
     "@zeit/next-typescript": "0.0.10",
     "concurrently": "^3.5.1",
     "dotenv-cli": "^1.4.0",

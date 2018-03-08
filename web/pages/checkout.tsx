@@ -4,6 +4,6 @@ import withOrder from '../lib/withOrder';
 
 export default withOrder(props => (
   <Layout {...props}>
-    <Checkout orderId={props.orderId} />
+    <Checkout orderId={props.orderId} url={props.url} />
   </Layout>
 ));
