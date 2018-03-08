@@ -1,9 +1,11 @@
 import { WithOrderProps } from 'lib/withOrder';
-import Link from 'next/link';
+import Head from 'next/head';
 import Router from 'next/router';
+import style from 'next/style';
 import { Component, Fragment, MouseEvent, ReactNode } from 'react';
 import Modal from 'react-modal';
 import Checkout from './Checkout';
+import Header from './Header';
 
 const isBrowser: boolean = !!(process as any).browser;
 if (isBrowser) {
@@ -12,33 +14,34 @@ if (isBrowser) {
 
 interface LayoutProps extends WithOrderProps {
   children: ReactNode;
+  title?: string;
 }
 
 export default class Layout extends Component<LayoutProps> {
 
   public render() {
-    const {children, url} = this.props;
+    const {children, url, title} = this.props;
     return (
       <Fragment>
-        <nav>
-          <Link href="/" prefetch>
-            <a>Home</a>
-          </Link>{' '}
-          <Link href="/about" prefetch>
-            <a>About</a>
-          </Link>{' '}
-          <Link href="/checkout" prefetch>
-            <a>Checkout</a>
-          </Link>{' '}
-
-        </nav>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta charSet="utf-8" />
+          <title>{title && `${title} | `}KATTCORP Webshop</title>
+        </Head>
+        <style jsx global>{`
+          body {
+            background: #e5e5e5;
+            font: 10px;
+            color: #000;
+          }
+        `}</style>
+        <Header />
         <main>
           <pre>url: {JSON.stringify(this.props.url)}</pre>
-          {children}
-
           <a href={'/checkout'}  onClick={this.clickCheckout}>
             Checkout Modal
           </a>
+          {children}
         </main>
         <Modal
           isOpen={this.isCheckoutOpen()}
