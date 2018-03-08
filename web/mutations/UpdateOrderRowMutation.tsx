@@ -19,18 +19,19 @@ interface Props {
   redirect: string;
   updateOrderRowMutation?: () => {};
 }
+
 export function orderReducerUpdateOrderRow(order: APIOrder, variables: UpdateOrderRowVariables) {
   const newOrder = {
     ...order,
     rows: order.rows.reduce((rows, row) => {
-      if (row.id === variables.id) {
-        if (variables.quantity < 1) {
-          // row deleted!
-          return rows;
-        }
-        row = {...row, ...variables};
+      if (row.id !== variables.id) {
+        return [...rows, row];
       }
-      return [...rows, row];
+      if (variables.quantity < 1) {
+        // row deleted!
+        return rows;
+      }
+      return [...rows, {...row, ...variables}];
     }, []),
   };
 
