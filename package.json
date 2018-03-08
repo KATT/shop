@@ -11,7 +11,7 @@
     "setup:api": "cd api && yarn install",
     "setup:web": "cd web && yarn install",
     "setup:e2e": "cd e2e && yarn install",
-    "setup": "npm-run-all --parallel setup:*",
+    "setup": "yarn install && npm-run-all --parallel setup:*",
     "build": "npm-run-all --parallel build:*",
     "start:api": "cd api && yarn start",
     "start:web": "cd web && yarn start -- -p 5000",
