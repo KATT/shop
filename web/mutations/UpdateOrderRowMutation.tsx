@@ -1,15 +1,10 @@
 import gql from 'graphql-tag';
 import {print as printSource} from 'graphql/language/printer';
-import { APIOrder, APIOrderRow, ID_Input } from 'lib/prisma';
+import { APIOrder, APIOrderRow, ID_Input, UpdateOrderRowVariables } from 'lib/prisma';
 import React, { ReactNode } from 'react';
 import { compose, graphql, QueryProps } from 'react-apollo';
 import { GetOrderFragment } from '../queries/GetOrderQuery';
 import { calculateTotals } from './addProductToOrder';
-
-interface UpdateOrderRowVariables {
-  id: string;
-  quantity?: number;
-}
 
 interface Props {
   className?: string;

@@ -2,12 +2,11 @@ import gql from 'graphql-tag';
 import {print as printSource} from 'graphql/language/printer';
 import qs from 'querystring';
 import { compose, graphql, QueryProps } from 'react-apollo';
-import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
+import { AddProductToOrderVariables, APIOrder, APIOrderRow, Product } from '../lib/prisma';
 import { GetOrderFragment, GetOrderProductFragment, GetOrderQuery } from '../queries/GetOrderQuery';
 
 // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
 // TODO - Refactor into render prop like UpdateOrderRow
-
 
 export interface OrderData extends QueryProps {
   order: APIOrder;
@@ -15,6 +14,13 @@ export interface OrderData extends QueryProps {
 
 export interface InputProps {
   orderId: string;
+}
+
+export interface AddProductToOrderNoJSProps {
+  query: string;
+  variables: AddProductToOrderVariables;
+  redirect: string;
+  stringified: string;
 }
 
 export function calculateTotals(order: APIOrder) {
@@ -86,7 +92,7 @@ export const addProductToOrderGraphQL = compose(
   graphql<Response, InputProps>(addProductToOrderQuery, {
     name: 'addProductToOrder',
     props: (props: any) => ({
-      addProductToOrderFallback: (product: Product, redirect: string) => {
+      addProductToOrderFallback: (product: Product, redirect: string): AddProductToOrderNoJSProps => {
         const {orderId} = props.ownProps;
 
         const query = printSource(addProductToOrderQuery);

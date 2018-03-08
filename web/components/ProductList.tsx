@@ -3,7 +3,9 @@ import { SingletonRouter } from 'next/router';
 import { compose, graphql, QueryProps } from 'react-apollo';
 import { Product } from '../lib/prisma';
 import { addProductToOrderGraphQL, fragments } from '../mutations/addProductToOrder';
-const PRODUCTS_PER_PAGE = 50;
+import ProductCard from './ProductCard';
+
+const PRODUCTS_PER_PAGE = 10;
 
 interface ProductsData extends QueryProps {
   products: Product[];
@@ -39,22 +41,7 @@ function ProductList(props: Props) {
         <ul>
           {products.map((product: any) => {
             const fallback = addProductToOrderFallback(product, url.asPath);
-            return (
-              <li key={product.id}>
-                {product.name}:  {' '}
-                <a href={`/_gql/m/?${fallback.stringified}`}>Add to order (link)</a>
-                <form
-                  action={'/_gql/m'}
-                  method="post"
-                  onSubmit={(e) => e.preventDefault() && addProductToOrder(product)}
-                  >
-                    <input type="hidden" name="redirect" value={fallback.redirect} />
-                    <input type="hidden" name="query" value={fallback.query} />
-                    <input type="hidden" name="variables" value={JSON.stringify(fallback.variables)} />
-                    <button type="submit" onClick={() => addProductToOrder(product)}>Add to order</button>
-                </form>
-              </li>
-            );
+            return <ProductCard {...{fallback, product, addProductToOrder}} />;
           })}
         </ul>
         {areMoreProducts ?
