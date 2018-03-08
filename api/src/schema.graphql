@@ -1,12 +1,7 @@
-# import Post from "./generated/prisma.graphql"
 # import Product from "./generated/prisma.graphql"
 # import ID from "./generated/prisma.graphql"
 
 type Query {
-  feed: [Post!]!
-  drafts: [Post!]!
-  post(id: ID!): Post
-  me: User
   products(
     where: ProductWhereInput
     orderBy: ProductOrderByInput
@@ -25,11 +20,6 @@ type UpdateOrderRowResponse {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
-  createDraft(title: String!, text: String!): Post!
-  publish(id: ID!): Post!
-  deletePost(id: ID!): Post!
   createOrder: Order!
   addProductToOrder(
     orderId: String!
@@ -52,7 +42,6 @@ type Order implements Node {
     first: Int
     last: Int
   ): [OrderRow!]
-  user(where: UserWhereInput): User
   total: Int!
 }
 
@@ -66,14 +55,8 @@ type OrderRow implements Node {
   total: Int!
 }
 
-type AuthPayload {
-  token: String!
-  user: User!
-}
-
 type User {
   id: ID!
   email: String!
   name: String!
-  posts: [Post!]!
 }
