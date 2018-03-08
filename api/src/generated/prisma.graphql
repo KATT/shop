@@ -44,7 +44,6 @@ type Product implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   price: Int!
-  currency: Currency!
   brand(where: BrandWhereInput): Brand!
   name: String!
 }
@@ -192,22 +191,16 @@ input BrandUpdateInput {
   name: String
 }
 
-input BrandUpdateNestedInput {
-  where: BrandWhereUniqueInput!
-  data: BrandUpdateDataInput!
-}
-
 input BrandUpdateOneInput {
   create: BrandCreateInput
   connect: BrandWhereUniqueInput
-  disconnect: BrandWhereUniqueInput
-  delete: BrandWhereUniqueInput
-  update: BrandUpdateNestedInput
+  disconnect: Boolean
+  delete: Boolean
+  update: BrandUpdateDataInput
   upsert: BrandUpsertNestedInput
 }
 
 input BrandUpsertNestedInput {
-  where: BrandWhereUniqueInput!
   update: BrandUpdateDataInput!
   create: BrandCreateInput!
 }
@@ -390,10 +383,6 @@ input BrandWhereInput {
 input BrandWhereUniqueInput {
   id: ID
   name: String
-}
-
-enum Currency {
-  GBP
 }
 
 scalar DateTime
@@ -626,8 +615,8 @@ input OrderRowUpdateManyWithoutOrderInput {
   connect: [OrderRowWhereUniqueInput!]
   disconnect: [OrderRowWhereUniqueInput!]
   delete: [OrderRowWhereUniqueInput!]
-  update: [OrderRowUpdateWithoutOrderInput!]
-  upsert: [OrderRowUpsertWithoutOrderInput!]
+  update: [OrderRowUpdateWithWhereUniqueWithoutOrderInput!]
+  upsert: [OrderRowUpsertWithWhereUniqueWithoutOrderInput!]
 }
 
 input OrderRowUpdateWithoutOrderDataInput {
@@ -635,12 +624,12 @@ input OrderRowUpdateWithoutOrderDataInput {
   product: ProductUpdateOneInput
 }
 
-input OrderRowUpdateWithoutOrderInput {
+input OrderRowUpdateWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   data: OrderRowUpdateWithoutOrderDataInput!
 }
 
-input OrderRowUpsertWithoutOrderInput {
+input OrderRowUpsertWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   update: OrderRowUpdateWithoutOrderDataInput!
   create: OrderRowCreateWithoutOrderInput!
@@ -846,9 +835,9 @@ input OrderUpdateInput {
 input OrderUpdateOneWithoutRowsInput {
   create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
-  disconnect: OrderWhereUniqueInput
-  delete: OrderWhereUniqueInput
-  update: OrderUpdateWithoutRowsInput
+  disconnect: Boolean
+  delete: Boolean
+  update: OrderUpdateWithoutRowsDataInput
   upsert: OrderUpsertWithoutRowsInput
 }
 
@@ -856,13 +845,7 @@ input OrderUpdateWithoutRowsDataInput {
   user: UserUpdateOneInput
 }
 
-input OrderUpdateWithoutRowsInput {
-  where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutRowsDataInput!
-}
-
 input OrderUpsertWithoutRowsInput {
-  where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutRowsDataInput!
   create: OrderCreateWithoutRowsInput!
 }
@@ -1137,8 +1120,8 @@ input PostUpdateManyWithoutAuthorInput {
   connect: [PostWhereUniqueInput!]
   disconnect: [PostWhereUniqueInput!]
   delete: [PostWhereUniqueInput!]
-  update: [PostUpdateWithoutAuthorInput!]
-  upsert: [PostUpsertWithoutAuthorInput!]
+  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
 input PostUpdateWithoutAuthorDataInput {
@@ -1147,12 +1130,12 @@ input PostUpdateWithoutAuthorDataInput {
   text: String
 }
 
-input PostUpdateWithoutAuthorInput {
+input PostUpdateWithWhereUniqueWithoutAuthorInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutAuthorDataInput!
 }
 
-input PostUpsertWithoutAuthorInput {
+input PostUpsertWithWhereUniqueWithoutAuthorInput {
   where: PostWhereUniqueInput!
   update: PostUpdateWithoutAuthorDataInput!
   create: PostCreateWithoutAuthorInput!
@@ -1413,7 +1396,6 @@ type ProductConnection {
 
 input ProductCreateInput {
   price: Int!
-  currency: Currency!
   name: String!
   brand: BrandCreateOneInput!
 }
@@ -1446,8 +1428,6 @@ enum ProductOrderByInput {
   updatedAt_DESC
   price_ASC
   price_DESC
-  currency_ASC
-  currency_DESC
   name_ASC
   name_DESC
 }
@@ -1457,7 +1437,6 @@ type ProductPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   price: Int!
-  currency: Currency!
   name: String!
 }
 
@@ -1498,34 +1477,26 @@ input ProductSubscriptionWhereInput {
 
 input ProductUpdateDataInput {
   price: Int
-  currency: Currency
   name: String
   brand: BrandUpdateOneInput
 }
 
 input ProductUpdateInput {
   price: Int
-  currency: Currency
   name: String
   brand: BrandUpdateOneInput
-}
-
-input ProductUpdateNestedInput {
-  where: ProductWhereUniqueInput!
-  data: ProductUpdateDataInput!
 }
 
 input ProductUpdateOneInput {
   create: ProductCreateInput
   connect: ProductWhereUniqueInput
-  disconnect: ProductWhereUniqueInput
-  delete: ProductWhereUniqueInput
-  update: ProductUpdateNestedInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ProductUpdateDataInput
   upsert: ProductUpsertNestedInput
 }
 
 input ProductUpsertNestedInput {
-  where: ProductWhereUniqueInput!
   update: ProductUpdateDataInput!
   create: ProductCreateInput!
 }
@@ -1679,19 +1650,6 @@ input ProductWhereInput {
   All values greater than or equal the given value.
   """
   price_gte: Int
-  currency: Currency
-  """
-  All values that are not equal to given value.
-  """
-  currency_not: Currency
-  """
-  All values that are contained in given list.
-  """
-  currency_in: [Currency!]
-  """
-  All values that are not contained in given list.
-  """
-  currency_not_in: [Currency!]
   name: String
   """
   All values that are not equal to given value.
@@ -1912,26 +1870,21 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutAuthorInput
 }
 
-input UserUpdateNestedInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
-}
-
 input UserUpdateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  delete: UserWhereUniqueInput
-  update: UserUpdateNestedInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
 }
 
 input UserUpdateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  delete: UserWhereUniqueInput
-  update: UserUpdateWithoutPostsInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutPostsDataInput
   upsert: UserUpsertWithoutPostsInput
 }
 
@@ -1941,19 +1894,12 @@ input UserUpdateWithoutPostsDataInput {
   name: String
 }
 
-input UserUpdateWithoutPostsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutPostsDataInput!
-}
-
 input UserUpsertNestedInput {
-  where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
 }
 
 input UserUpsertWithoutPostsInput {
-  where: UserWhereUniqueInput!
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
 }
