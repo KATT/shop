@@ -10,7 +10,9 @@ type Brand {
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  name: String! @unique
+  name: String!
+  slug: String! @unique
+  url: String!
 }
 
 type Product {
@@ -23,6 +25,8 @@ type Product {
 
   brand: Brand!
   name: String!
+  slug: String! @unique
+  thumbnail: String!
 }
 
 type Order {

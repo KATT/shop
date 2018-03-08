@@ -9,7 +9,7 @@ export = {
 
   ProductList(client: NightwatchBrowser) {
     client
-      .assert.containsText('body', 'Air Max');
+      .assert.containsText('body', 'Neko Bus');
   },
 
   ToggleCheckout(client: NightwatchBrowser) {

@@ -7,6 +7,8 @@ type Brand implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
+  slug: String!
+  url: String!
 }
 
 type Order implements Node {
@@ -33,6 +35,8 @@ type Product implements Node {
   price: Int!
   brand(where: BrandWhereInput): Brand!
   name: String!
+  slug: String!
+  thumbnail: String!
 }
 
 type User implements Node {
@@ -86,6 +90,8 @@ type BrandConnection {
 
 input BrandCreateInput {
   name: String!
+  slug: String!
+  url: String!
 }
 
 input BrandCreateOneInput {
@@ -116,6 +122,10 @@ enum BrandOrderByInput {
   updatedAt_DESC
   name_ASC
   name_DESC
+  slug_ASC
+  slug_DESC
+  url_ASC
+  url_DESC
 }
 
 type BrandPreviousValues {
@@ -123,6 +133,8 @@ type BrandPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
+  slug: String!
+  url: String!
 }
 
 type BrandSubscriptionPayload {
@@ -162,10 +174,14 @@ input BrandSubscriptionWhereInput {
 
 input BrandUpdateDataInput {
   name: String
+  slug: String
+  url: String
 }
 
 input BrandUpdateInput {
   name: String
+  slug: String
+  url: String
 }
 
 input BrandUpdateOneInput {
@@ -355,11 +371,117 @@ input BrandWhereInput {
   All values not ending with the given string.
   """
   name_not_ends_with: String
+  slug: String
+  """
+  All values that are not equal to given value.
+  """
+  slug_not: String
+  """
+  All values that are contained in given list.
+  """
+  slug_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  slug_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  slug_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  slug_lte: String
+  """
+  All values greater than the given value.
+  """
+  slug_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  slug_gte: String
+  """
+  All values containing the given string.
+  """
+  slug_contains: String
+  """
+  All values not containing the given string.
+  """
+  slug_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  slug_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  slug_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  slug_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  slug_not_ends_with: String
+  url: String
+  """
+  All values that are not equal to given value.
+  """
+  url_not: String
+  """
+  All values that are contained in given list.
+  """
+  url_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  url_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  url_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  url_lte: String
+  """
+  All values greater than the given value.
+  """
+  url_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  url_gte: String
+  """
+  All values containing the given string.
+  """
+  url_contains: String
+  """
+  All values not containing the given string.
+  """
+  url_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  url_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  url_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  url_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  url_not_ends_with: String
 }
 
 input BrandWhereUniqueInput {
   id: ID
-  name: String
+  slug: String
 }
 
 scalar DateTime
@@ -958,6 +1080,8 @@ type ProductConnection {
 input ProductCreateInput {
   price: Int!
   name: String!
+  slug: String!
+  thumbnail: String!
   brand: BrandCreateOneInput!
 }
 
@@ -991,6 +1115,10 @@ enum ProductOrderByInput {
   price_DESC
   name_ASC
   name_DESC
+  slug_ASC
+  slug_DESC
+  thumbnail_ASC
+  thumbnail_DESC
 }
 
 type ProductPreviousValues {
@@ -999,6 +1127,8 @@ type ProductPreviousValues {
   updatedAt: DateTime!
   price: Int!
   name: String!
+  slug: String!
+  thumbnail: String!
 }
 
 type ProductSubscriptionPayload {
@@ -1039,12 +1169,16 @@ input ProductSubscriptionWhereInput {
 input ProductUpdateDataInput {
   price: Int
   name: String
+  slug: String
+  thumbnail: String
   brand: BrandUpdateOneInput
 }
 
 input ProductUpdateInput {
   price: Int
   name: String
+  slug: String
+  thumbnail: String
   brand: BrandUpdateOneInput
 }
 
@@ -1264,11 +1398,118 @@ input ProductWhereInput {
   All values not ending with the given string.
   """
   name_not_ends_with: String
+  slug: String
+  """
+  All values that are not equal to given value.
+  """
+  slug_not: String
+  """
+  All values that are contained in given list.
+  """
+  slug_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  slug_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  slug_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  slug_lte: String
+  """
+  All values greater than the given value.
+  """
+  slug_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  slug_gte: String
+  """
+  All values containing the given string.
+  """
+  slug_contains: String
+  """
+  All values not containing the given string.
+  """
+  slug_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  slug_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  slug_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  slug_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  slug_not_ends_with: String
+  thumbnail: String
+  """
+  All values that are not equal to given value.
+  """
+  thumbnail_not: String
+  """
+  All values that are contained in given list.
+  """
+  thumbnail_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  thumbnail_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  thumbnail_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  thumbnail_lte: String
+  """
+  All values greater than the given value.
+  """
+  thumbnail_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  thumbnail_gte: String
+  """
+  All values containing the given string.
+  """
+  thumbnail_contains: String
+  """
+  All values not containing the given string.
+  """
+  thumbnail_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  thumbnail_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  thumbnail_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  thumbnail_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  thumbnail_not_ends_with: String
   brand: BrandWhereInput
 }
 
 input ProductWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 """
@@ -1697,7 +1938,11 @@ export type BrandOrderByInput =
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'name_ASC' |
-  'name_DESC'
+  'name_DESC' |
+  'slug_ASC' |
+  'slug_DESC' |
+  'url_ASC' |
+  'url_DESC'
 
 export type ProductOrderByInput = 
   'id_ASC' |
@@ -1709,7 +1954,11 @@ export type ProductOrderByInput =
   'price_ASC' |
   'price_DESC' |
   'name_ASC' |
-  'name_DESC'
+  'name_DESC' |
+  'slug_ASC' |
+  'slug_DESC' |
+  'thumbnail_ASC' |
+  'thumbnail_DESC'
 
 export type OrderOrderByInput = 
   'id_ASC' |
@@ -1821,11 +2070,15 @@ export interface ProductUpsertNestedInput {
 
 export interface BrandUpdateInput {
   name?: String
+  slug?: String
+  url?: String
 }
 
 export interface ProductUpdateDataInput {
   price?: Int
   name?: String
+  slug?: String
+  thumbnail?: String
   brand?: BrandUpdateOneInput
 }
 
@@ -1898,6 +2151,34 @@ export interface ProductWhereInput {
   name_not_starts_with?: String
   name_ends_with?: String
   name_not_ends_with?: String
+  slug?: String
+  slug_not?: String
+  slug_in?: String[] | String
+  slug_not_in?: String[] | String
+  slug_lt?: String
+  slug_lte?: String
+  slug_gt?: String
+  slug_gte?: String
+  slug_contains?: String
+  slug_not_contains?: String
+  slug_starts_with?: String
+  slug_not_starts_with?: String
+  slug_ends_with?: String
+  slug_not_ends_with?: String
+  thumbnail?: String
+  thumbnail_not?: String
+  thumbnail_in?: String[] | String
+  thumbnail_not_in?: String[] | String
+  thumbnail_lt?: String
+  thumbnail_lte?: String
+  thumbnail_gt?: String
+  thumbnail_gte?: String
+  thumbnail_contains?: String
+  thumbnail_not_contains?: String
+  thumbnail_starts_with?: String
+  thumbnail_not_starts_with?: String
+  thumbnail_ends_with?: String
+  thumbnail_not_ends_with?: String
   brand?: BrandWhereInput
 }
 
@@ -2002,11 +2283,13 @@ export interface BrandUpsertNestedInput {
 
 export interface BrandWhereUniqueInput {
   id?: ID_Input
-  name?: String
+  slug?: String
 }
 
 export interface BrandUpdateDataInput {
   name?: String
+  slug?: String
+  url?: String
 }
 
 export interface OrderWhereUniqueInput {
@@ -2040,6 +2323,8 @@ export interface OrderRowUpdateInput {
 
 export interface BrandCreateInput {
   name: String
+  slug: String
+  url: String
 }
 
 export interface UserUpdateDataInput {
@@ -2051,6 +2336,8 @@ export interface UserUpdateDataInput {
 export interface ProductCreateInput {
   price: Int
   name: String
+  slug: String
+  thumbnail: String
   brand: BrandCreateOneInput
 }
 
@@ -2078,6 +2365,8 @@ export interface ProductSubscriptionWhereInput {
 export interface ProductUpdateInput {
   price?: Int
   name?: String
+  slug?: String
+  thumbnail?: String
   brand?: BrandUpdateOneInput
 }
 
@@ -2167,6 +2456,34 @@ export interface BrandWhereInput {
   name_not_starts_with?: String
   name_ends_with?: String
   name_not_ends_with?: String
+  slug?: String
+  slug_not?: String
+  slug_in?: String[] | String
+  slug_not_in?: String[] | String
+  slug_lt?: String
+  slug_lte?: String
+  slug_gt?: String
+  slug_gte?: String
+  slug_contains?: String
+  slug_not_contains?: String
+  slug_starts_with?: String
+  slug_not_starts_with?: String
+  slug_ends_with?: String
+  slug_not_ends_with?: String
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
 }
 
 export interface UserSubscriptionWhereInput {
@@ -2202,6 +2519,7 @@ export interface OrderRowCreateInput {
 
 export interface ProductWhereUniqueInput {
   id?: ID_Input
+  slug?: String
 }
 
 export interface OrderWhereInput {
@@ -2294,6 +2612,8 @@ export interface Product extends Node {
   price: Int
   brand: Brand
   name: String
+  slug: String
+  thumbnail: String
 }
 
 /*
@@ -2347,6 +2667,8 @@ export interface Brand extends Node {
   createdAt: DateTime
   updatedAt: DateTime
   name: String
+  slug: String
+  url: String
 }
 
 export interface AggregateProduct {
@@ -2454,6 +2776,8 @@ export interface ProductPreviousValues {
   updatedAt: DateTime
   price: Int
   name: String
+  slug: String
+  thumbnail: String
 }
 
 export interface ProductSubscriptionPayload {
@@ -2475,6 +2799,8 @@ export interface BrandPreviousValues {
   createdAt: DateTime
   updatedAt: DateTime
   name: String
+  slug: String
+  url: String
 }
 
 /*
