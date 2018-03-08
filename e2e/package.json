@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "build": "rimraf dist && tsc",
+    "dev": "yarn build -- --watch",
     "start": "yarn nightwatch",
     "test": "yarn start",
     "selenium": "selenium-server -port 4444"
@@ -9,6 +10,7 @@
   "devDependencies": {
     "@types/nightwatch": "^0.9.7",
     "nightwatch": "^0.9.19",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "typescript": "^2.7.2"
   }
 }

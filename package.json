@@ -17,10 +17,10 @@
     "start:web": "cd web && yarn start -- -p 5000",
     "start:e2e": "cd e2e && yarn start",
     "dev:api": "cd api && yarn dev",
-    "dev:web": "cd web && yarn dev -- -p 5000",
+    "dev:web": "cd e2e && yarn dev",
+    "dev:e2e": "cd web && yarn dev",
     "dev": "npm-run-all --parallel dev:*",
-    "test": "echo Insert some tests here!",
-    "e2e": "yarn build && npm-run-all --parallel --race start:*"
+    "test": "echo Insert some tests here!"
   },
   "private": true,
   "lint-staged": {
