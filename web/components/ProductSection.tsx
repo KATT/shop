@@ -21,7 +21,7 @@ interface Props extends InputProps {
   addProductToOrderFallback;
 }
 
-function ProductList(props: Props) {
+function ProductSection(props: Props) {
   const {
     products: { loading, error, products },
     addProductToOrder,
@@ -102,4 +102,4 @@ export default compose(
     name: 'products',
   }),
   addProductToOrderGraphQL,
-)(ProductList);
+)(ProductSection);

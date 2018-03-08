@@ -1,11 +1,11 @@
 import Layout from '../components/Layout';
-import ProductList from '../components/ProductList';
+import ProductSection from '../components/ProductSection';
 import withOrder, { WithOrderProps } from '../lib/withOrder';
 
 export default withOrder((props: WithOrderProps) => (
   <Layout {...props}>
     Hello World.{' '}
 
-    <ProductList orderId={props.orderId} url={props.url} />
+    <ProductSection orderId={props.orderId} url={props.url} />
   </Layout>
 ));
