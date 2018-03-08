@@ -20,7 +20,6 @@ interface Props {
   updateOrderRowMutation?: () => {};
 }
 export function orderReducerUpdateOrderRow(order: APIOrder, variables: UpdateOrderRowVariables) {
-
   const newOrder = {
     ...order,
     rows: order.rows.reduce((rows, row) => {

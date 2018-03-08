@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import { Order, Product } from './generated/prisma';
-import { APIOrderRow } from './schema';
+import { APIOrderRow, UpdateOrderRowResponse } from './schema';
 import server from './server';
 
 const {
@@ -27,6 +27,7 @@ async function graphqlRequest({variables, query}): Promise<Body> {
   if (body.errors) {
     const err = new GraphQLError();
     err.errors = body.errors;
+    // console.log('❌ errors', body.errors);
     throw err;
   }
   expect(body).toHaveProperty('data');
@@ -162,20 +163,24 @@ interface UpdateOrderRowVariables {
 }
 async function updateOrderRow(
   variables: UpdateOrderRowVariables,
-  fragment = defaultOrderRowFragment,
-): Promise<APIOrderRow> {
+): Promise<UpdateOrderRowResponse> {
   const query = `
     mutation ($id: ID! $quantity: Int) {
       updateOrderRow (id: $id, quantity: $quantity) {
-        ${fragment}
+        row {
+          ${defaultOrderRowFragment}
+        }
+        order {
+          ${defaultOrderFragment}
+        }
       }
     }
   `;
 
   const body = await graphqlRequest({query, variables});
 
-  const row: APIOrderRow = body.data.updateOrderRow;
-  return row;
+  const response: UpdateOrderRowResponse = body.data.updateOrderRow;
+  return response;
 }
 
 describe('mutation.addProductToOrder', () => {
@@ -399,13 +404,15 @@ describe('mutation.updateOrderRow', () => {
     };
     const row1 = await addProductToOrder(opts1);
 
-    const rowAfter = await updateOrderRow({
+    const res = await updateOrderRow({
       id: row1.id,
       quantity: 10,
     });
 
-    expect(rowAfter.quantity).toEqual(10);
-    expect(rowAfter.total).toEqual(product1.price * rowAfter.quantity);
+    expect(res.order.id).toBe(order.id);
+
+    expect(res.row.quantity).toEqual(10);
+    expect(res.row.total).toEqual(product1.price * res.row.quantity);
   });
 
   it('changing quantity to 0 removes row', async () => {
@@ -424,14 +431,14 @@ describe('mutation.updateOrderRow', () => {
     const row1 = await addProductToOrder(opts1);
     const row2 = await addProductToOrder(opts2);
 
-    await updateOrderRow({
+    const res = await updateOrderRow({
       id: row1.id,
       quantity: 0,
     });
 
-    const orderAfter = await getOrder(order.id);
+    expect(res.row).toBeNull();
 
-    expect(orderAfter.rows).toHaveLength(1);
-    expect(orderAfter.rows[0].id).toEqual(row2.id);
+    expect(res.order.rows).toHaveLength(1);
+    expect(res.order.rows[0].id).toEqual(row2.id);
   });
 });

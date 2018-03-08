@@ -19,6 +19,11 @@ type Query {
   order(id: ID!): Order!
 }
 
+type UpdateOrderRowResponse {
+  order: Order!
+  row: OrderRow
+}
+
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
@@ -31,7 +36,7 @@ type Mutation {
     productId: String!
     quantity: Int
   ): OrderRow!
-  updateOrderRow(id: ID!, quantity: Int): OrderRow
+  updateOrderRow(id: ID!, quantity: Int): UpdateOrderRowResponse
 }
 
 type Order implements Node {

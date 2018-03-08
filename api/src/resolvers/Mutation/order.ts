@@ -1,6 +1,6 @@
 import * as AsyncLock from 'async-lock';
 import { GraphQLError } from 'graphql';
-import { OrderRow } from '../../schema';
+import { APIOrderRow, OrderRow, UpdateOrderRowResponse } from '../../schema';
 import { Context } from '../../utils';
 
 const lock = new AsyncLock();
@@ -72,7 +72,7 @@ export default {
     });
   },
 
-  async updateOrderRow(parent, args, ctx: Context, info): Promise<OrderRow> {
+  async updateOrderRow(parent, args, ctx: Context, info): Promise<any> {
     if (args.quantity < 0) {
       throw new GraphQLError('quantity must be greater or equal to 0');
     }
@@ -90,28 +90,33 @@ export default {
       }
     `;
 
-    const row = await ctx.db.query.orderRow({
+    const {order} = await ctx.db.query.orderRow({
       where: {
         id: args.id,
       },
     }, fragment);
 
-    const key = ['Order', row.order.id].join('-');
-    return lock.acquire(key, async () => {
+    const key = ['Order', order.id].join('-');
+
+    await lock.acquire(key, async () => {
       if (data.quantity === 0) {
-        const ret = await ctx.db.mutation.deleteOrderRow({
+        return ctx.db.mutation.deleteOrderRow({
           where: {
-            id: row.id,
+            id,
           },
         });
-        return null;
       }
       return ctx.db.mutation.updateOrderRow({
         data,
         where: {
-          id: row.id,
+          id,
         },
       }, info);
     });
+
+    return {
+      orderId: order.id,
+      rowId: id,
+    };
   },
 };

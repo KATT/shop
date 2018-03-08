@@ -1,5 +1,7 @@
 import { extractFragmentReplacements } from 'prisma-binding';
 import { Order, OrderRow } from '../generated/prisma';
+import { APIOrder, UpdateOrderRowResponse } from '../schema';
+import { Context } from '../utils';
 import { AuthPayload } from './AuthPayload';
 import { auth } from './Mutation/auth';
 import order from './Mutation/order';
@@ -29,6 +31,26 @@ export const resolvers = {
         return source.rows.reduce((total, product) => (
           total + product.quantity * product.product.price
         ), 0);
+      },
+    },
+  },
+  UpdateOrderRowResponse: {
+    order: {
+      resolve: async ({orderId}, args, ctx: Context, info) => {
+        return ctx.db.query.order({
+          where: {
+            id: orderId,
+          },
+        }, info);
+      },
+    },
+    row: {
+      resolve: async ({rowId}, args, ctx: Context, info) => {
+        return ctx.db.query.orderRow({
+          where: {
+            id: rowId,
+          },
+        }, info);
       },
     },
   },

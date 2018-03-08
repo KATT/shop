@@ -13,3 +13,8 @@ export interface APIOrder extends Order {
   total: number;
   rows: APIOrderRow[];
 }
+
+export interface UpdateOrderRowResponse {
+  order: APIOrder;
+  row?: APIOrderRow;
+}
