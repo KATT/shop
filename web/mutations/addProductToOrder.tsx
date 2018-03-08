@@ -82,11 +82,11 @@ export const addProductToOrderGraphQL = compose(
     name: 'addProductToOrder',
     props: (props: any) => ({
       addProductToOrderFallback: (product: Product, redirect: string) => {
-        const {order} = props.ownProps.orderData;
+        const {orderId} = props.ownProps;
 
         const query = printSource(addProductToOrderQuery);
         const variables = {
-          orderId: order.id,
+          orderId,
           productId: product.id,
         };
 

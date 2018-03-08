@@ -16,7 +16,7 @@ type Query {
     first: Int
     last: Int
   ): [Product]!
-  order(id: ID!): Order!
+  order(id: ID!): Order
 }
 
 type UpdateOrderRowResponse {
