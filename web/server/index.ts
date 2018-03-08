@@ -30,6 +30,6 @@ app.prepare()
       }
 
       // tslint:disable-next-line:no-console
-      console.log(`> Ready on http://localhost:${port}`);
+      console.log(`> ✅  Web App is running on http://localhost:${port}`);
     });
   });

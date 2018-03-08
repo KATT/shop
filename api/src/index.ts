@@ -13,4 +13,4 @@ server({
   PRISMA_DEBUG: !!PRISMA_DEBUG, // log all GraphQL queries & mutations
 
   // tslint:disable-next-line:no-console
-}).start(() => console.log(`Server is running on http://localhost:${PORT}`));
+}).start(() => console.log(`> ✅  GraphQL API Gateway is running on http://localhost:${PORT}`));
