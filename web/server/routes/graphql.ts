@@ -1,5 +1,4 @@
 import * as express from 'express';
-import {DocumentNode} from 'graphql';
 import * as request from 'request-promise-native';
 
 interface ReqBodyOrQuery {
@@ -68,7 +67,7 @@ export default () => {
   router.all('/m/', asyncMiddleware(async (req, res) => {
     const {query, variables, redirect} = getParams(req);
 
-    const response = await request({
+    await request({
       uri: process.env.GRAPHQL_URL,
       method: 'POST',
       body: {
@@ -79,7 +78,6 @@ export default () => {
     });
 
     res.redirect(303, redirect);
-    // res.send({response, query, variables, redirect});
   }));
 
   return router;
