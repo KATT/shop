@@ -114,22 +114,6 @@ export const addProductToOrderGraphQL = compose(
               },
             };
           },
-          update: (proxy, { data: { addProductToOrder } }) => {
-            proxy.writeFragment({
-              id: addProductToOrder.order.id,
-              fragment: gql`
-                fragment OrderFragment on Order {
-                  rows
-                  total
-                }
-              `,
-              data: {
-                __typename: 'Order',
-                rows: addProductToOrder.order.rows,
-                total: addProductToOrder.order.total,
-              },
-            });
-          },
         });
       },
     }),
