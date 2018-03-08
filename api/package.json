@@ -2,9 +2,7 @@
   "name": "@katt/shop-api",
   "scripts": {
     "start": "dotenv -- node dist/",
-    "dev": "npm-run-all --parallel dev:*",
-    "dev:api": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
-    "dev:playground": "graphql playground",
+    "dev": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
     "build": "rimraf dist && tsc",
     "deploy:local": "prisma deploy && graphql prepare",
     "deploy:dev":
