@@ -73,8 +73,8 @@ export default {
   },
 
   async updateOrderRow(parent, args, ctx: Context, info): Promise<OrderRow> {
-    if (args.quantity < 1) {
-      throw new GraphQLError('quantity must be greater than 0');
+    if (args.quantity < 0) {
+      throw new GraphQLError('quantity must be greater or equal to 0');
     }
     const {
       id,
@@ -98,6 +98,14 @@ export default {
 
     const key = ['Order', row.order.id].join('-');
     return lock.acquire(key, async () => {
+      if (data.quantity === 0) {
+        const ret = await ctx.db.mutation.deleteOrderRow({
+          where: {
+            id: row.id,
+          },
+        });
+        return null;
+      }
       return ctx.db.mutation.updateOrderRow({
         data,
         where: {

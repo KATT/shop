@@ -69,6 +69,7 @@ it('query.products()', async () => {
 const defaultOrderFragment = `
   id
   rows {
+    id
     quantity
     product {
       id
@@ -90,6 +91,23 @@ async function createOrder(fragment = defaultOrderFragment): Promise<Order> {
 
   const order: Order = body.data.createOrder;
   return order;
+}
+
+async function getOrder(id, fragment = defaultOrderFragment): Promise<Order> {
+  const query = `
+    query {
+      order(id: "${id}") {
+        ${defaultOrderFragment}
+      }
+    }
+  `;
+
+  const variables = {};
+  const body = await graphqlRequest({query, variables});
+
+  expect(typeof body.data.order).toEqual('object');
+
+  return body.data.order;
 }
 
 it('mutation.createOrder', async () => {
@@ -388,5 +406,32 @@ describe('mutation.updateOrderRow', () => {
 
     expect(rowAfter.quantity).toEqual(10);
     expect(rowAfter.total).toEqual(product1.price * rowAfter.quantity);
+  });
+
+  it('changing quantity to 0 removes row', async () => {
+    const order = await createOrder();
+
+    const [product1, product2] = products;
+
+    const opts1 = {
+      productId: product1.id,
+      orderId: order.id,
+    };
+    const opts2 = {
+      productId: product2.id,
+      orderId: order.id,
+    };
+    const row1 = await addProductToOrder(opts1);
+    const row2 = await addProductToOrder(opts2);
+
+    await updateOrderRow({
+      id: row1.id,
+      quantity: 0,
+    });
+
+    const orderAfter = await getOrder(order.id);
+
+    expect(orderAfter.rows).toHaveLength(1);
+    expect(orderAfter.rows[0].id).toEqual(row2.id);
   });
 });
