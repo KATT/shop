@@ -1,5 +1,5 @@
 {
-  "name": "react-prisma-graphql-shopping-cart-api",
+  "name": "@katt/shop-api",
   "scripts": {
     "start": "dotenv -- node dist/",
     "dev": "npm-run-all --parallel dev:*",
@@ -7,22 +7,18 @@
     "dev:playground": "graphql playground",
     "build": "rimraf dist && tsc",
     "deploy:local": "prisma deploy && graphql prepare",
-    "deploy:dev": "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
+    "deploy:dev":
+      "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev -- now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
     "alias": "now alias",
     "test": "PORT=4010 dotenv -- jest"
   },
+  "engines": { "node": "9.x.x" },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
     },
-    "testMatch": [
-      "**/*.spec.(ts|tsx)"
-    ]
+    "testMatch": ["**/*.spec.(ts|tsx)"]
   },
   "private": true,
   "dependencies": {
@@ -52,7 +48,9 @@
   "now": {
     "alias": [
       "react-prisma-graphql-shopping-cart-api.kattcorp.co.uk",
-      "react-prisma-graphql-shopping-cart-api.kattcorp.com"
+      "react-prisma-graphql-shopping-cart-api.kattcorp.com",
+      "shop-api.kattcorp.co.uk",
+      "shop-api.kattcorp.com"
     ]
   }
 }

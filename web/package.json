@@ -1,14 +1,15 @@
 {
-  "name": "react-prisma-graphql-shopping-cart-web",
+  "name": "@katt/shop-web",
   "private": true,
   "version": "1.0.0",
   "scripts": {
     "dev": "dotenv -- nodemon server/index.ts",
     "build": "tsc --project tsconfig.server.json && next build",
     "start": "NODE_ENV=production node dist/",
-    "deploy": "now -e GRAPHQL_URL=https://react-prisma-graphql-shopping-cart-api.kattcorp.co.uk",
+    "deploy": "now -e GRAPHQL_URL=https://shop-api.kattcorp.co.uk/",
     "alias": "now alias"
   },
+  "engines": { "node": "9.x.x" },
   "dependencies": {
     "apollo-client-preset": "^1.0.8",
     "babel-plugin-inline-dotenv": "^1.1.2",
@@ -47,7 +48,9 @@
   "now": {
     "alias": [
       "react-prisma-graphql-shopping-cart.kattcorp.co.uk",
-      "react-prisma-graphql-shopping-cart.kattcorp.com"
+      "react-prisma-graphql-shopping-cart.kattcorp.com",
+      "shop.kattcorp.co.uk",
+      "shop.kattcorp.com"
     ]
   }
 }
