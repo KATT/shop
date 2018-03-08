@@ -4,8 +4,7 @@
     "build": "rimraf dist && tsc",
     "dev": "yarn build -- --watch",
     "start": "yarn nightwatch",
-    "test": "yarn start",
-    "selenium": "selenium-server -port 4444"
+    "test": "yarn start"
   },
   "devDependencies": {
     "@types/nightwatch": "^0.9.7",

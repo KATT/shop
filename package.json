@@ -8,7 +8,7 @@
     "build:api": "cd api && yarn build",
     "build:web": "cd web && yarn build",
     "build:e2e": "cd e2e && yarn build",
-    "setup:api": "cd api && yarn install",
+    "setup:api": "cd api && yarn install && yarn deploy:local",
     "setup:web": "cd web && yarn install",
     "setup:e2e": "cd e2e && yarn install",
     "setup": "yarn install && npm-run-all --parallel setup:*",
@@ -16,15 +16,21 @@
     "start:api": "cd api && yarn start",
     "start:web": "cd web && yarn start -- -p 5000",
     "start:e2e": "cd e2e && yarn start",
+    "start:prisma": "cd api && yarn prisma local start",
     "dev:api": "cd api && yarn dev",
     "dev:web": "cd e2e && yarn dev",
     "dev:e2e": "cd web && yarn dev",
     "dev": "npm-run-all --parallel dev:*",
-    "test": "echo Insert some tests here!"
+    "test:api": "cd api && yarn test",
+    "test": "npm-run-all --parallel test:*",
+    "selenium": "selenium-server -port 4444"
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}!api/src/generated/*.ts": ["tslint --fix", "git add"]
+    "*.{ts,tsx}!api/src/generated/*.ts": [
+      "tslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
     "husky": "^0.14.3",
