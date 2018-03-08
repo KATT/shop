@@ -4,6 +4,7 @@ import { compose, graphql, QueryProps } from 'react-apollo';
 import { Product } from '../lib/prisma';
 import { addProductToOrderGraphQL, fragments } from '../mutations/addProductToOrder';
 import ProductCard from './ProductCard';
+import ProductList from './ProductList';
 
 interface ProductsData extends QueryProps {
   products: Product[];
@@ -15,7 +16,7 @@ interface InputProps {
 }
 
 interface Props extends InputProps {
-  products: ProductsData;
+  productsData: ProductsData;
   addProductToOrder: any;
   loadMoreProducts: any;
   addProductToOrderFallback;
@@ -23,7 +24,7 @@ interface Props extends InputProps {
 
 function ProductSection(props: Props) {
   const {
-    products: { loading, error, products },
+    productsData: { loading, error, products },
     addProductToOrder,
     addProductToOrderFallback,
     url,
@@ -35,50 +36,10 @@ function ProductSection(props: Props) {
 
   return (
     <section>
-      {products && products.length && (
-        <ul>
-          {products.map((product: any) => {
-            const fallback = addProductToOrderFallback(product, url.asPath);
-            return <ProductCard {...{fallback, product, addProductToOrder}} />;
-          })}
-        </ul>
-      )}
+      {products && <ProductList {...{products, addProductToOrder, addProductToOrderFallback, url}} />}
       <style jsx>{`
         section {
           padding-bottom: 20px;
-        }
-        li {
-          display: block;
-          margin-bottom: 10px;
-        }
-        div {
-          align-items: center;
-          display: flex;
-        }
-        a {
-          font-size: 14px;
-          margin-right: 10px;
-          text-decoration: none;
-          padding-bottom: 0;
-          border: 0;
-        }
-        span {
-          font-size: 14px;
-          margin-right: 5px;
-        }
-        ul {
-          margin: 0;
-          padding: 0;
-        }
-        button:before {
-          align-self: center;
-          border-style: solid;
-          border-width: 6px 4px 0 4px;
-          border-color: #ffffff transparent transparent transparent;
-          content: "";
-          height: 0;
-          margin-right: 5px;
-          width: 0;
         }
       `}</style>
     </section>
@@ -99,7 +60,7 @@ const productsQuery: any = gql`
 `;
 export default compose(
   graphql<Response, InputProps>(productsQuery, {
-    name: 'products',
+    name: 'productsData',
   }),
   addProductToOrderGraphQL,
 )(ProductSection);
