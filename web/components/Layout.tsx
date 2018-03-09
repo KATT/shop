@@ -1,7 +1,6 @@
 import { WithOrderProps } from 'lib/withOrder';
 import Head from 'next/head';
 import Router from 'next/router';
-import style from 'next/style';
 import { Component, Fragment, MouseEvent, ReactNode } from 'react';
 import Modal from 'react-modal';
 import normalizeCSS from '../lib/normalize-css';
@@ -18,10 +17,12 @@ interface LayoutProps extends WithOrderProps {
   title?: string;
 }
 
+export type MouseCallback = (e?: MouseEvent<HTMLElement>) => void;
+
 export default class Layout extends Component<LayoutProps> {
 
   public render() {
-    const {children, url, title} = this.props;
+    const {children, url, title, orderId} = this.props;
     return (
       <Fragment>
         <Head>
@@ -31,18 +32,15 @@ export default class Layout extends Component<LayoutProps> {
         </Head>
         <style jsx global>{`
           ${normalizeCSS}
+          * { box-sizing: border-box; }
           body {
             background: #e5e5e5;
             font: 10px;
             color: #000;
-          }
+          }¨
         `}</style>
-        <Header />
+        <Header {...{orderId, openCheckoutModal: this.openCheckoutModal}} />
         <main>
-          <pre>url: {JSON.stringify(this.props.url)}</pre>
-          <a href={'/checkout'}  onClick={this.clickCheckout}>
-            Checkout Modal
-          </a>
           {children}
         </main>
         <Modal
@@ -51,6 +49,11 @@ export default class Layout extends Component<LayoutProps> {
           >
           <Checkout orderId={this.props.orderId} url={url} />
         </Modal>
+        <style jsx>{`
+          main {
+            padding: 2rem;
+          }
+        `}</style>
      </Fragment>
     );
   }
@@ -58,19 +61,9 @@ export default class Layout extends Component<LayoutProps> {
     return typeof this.props.url.query.checkout === 'string';
   }
 
-  private clickCheckout = (e: MouseEvent<HTMLElement>) => {
+  private openCheckoutModal = (e?: MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     Router.push(this.props.url.pathname + '?checkout', '/checkout');
-  }
-
-  private toggleCheckoutHref(): string {
-    let {pathname} = this.props.url;
-
-    if (!this.isCheckoutOpen()) {
-      pathname += '?checkout';
-    }
-
-    return pathname;
   }
 }

@@ -10,7 +10,7 @@ interface InputProps {
 }
 
 interface Props extends InputProps {
-  data: {
+  data?: {
     loading: boolean;
     order?: APIOrder
   };

@@ -1,4 +1,7 @@
 import gql from 'graphql-tag';
+import { APIOrder } from 'lib/prisma';
+import { ReactElement, ReactNode } from 'react';
+import { compose, graphql } from 'react-apollo';
 
 export const GetOrderProductFragment = gql`
   fragment GetOrderProductFragment on Product {
@@ -36,3 +39,30 @@ export const GetOrderQuery = gql`
   }
   ${GetOrderFragment}
 `;
+
+interface InputProps {
+  orderId: string;
+  children(props: OrderData): ReactElement<any>;
+}
+
+export interface OrderData {
+  loading: boolean;
+  error?: any;
+  order?: Partial<APIOrder>;
+}
+
+interface IntermediateProps extends InputProps {
+  data?: OrderData;
+}
+
+export const GetOrderComponent = ({ children, data }: IntermediateProps) => (
+  children({...data})
+);
+
+export default graphql<Response, InputProps>(GetOrderQuery, {
+  options: ({ orderId }) => ({
+    variables: {
+      id: orderId,
+    },
+  }),
+})(GetOrderComponent);

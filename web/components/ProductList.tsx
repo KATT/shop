@@ -18,11 +18,18 @@ export default function ProductList(props: Props) {
   } = props;
 
   return (
-    <ul>
+    <section className="ProductList">
       {products.map((product: any) => {
         const fallback = addProductToOrderFallback(product, url.asPath);
-        return <ProductCard {...{fallback, product, addProductToOrder}} />;
+        return <ProductCard {...{key: product.id, fallback, product, addProductToOrder}} />;
       })}
-    </ul>
+
+      <style jsx>{`
+        section {
+          display: flex;
+          flex-wrap: wrap;
+        }
+      `}</style>
+    </section>
   );
 }

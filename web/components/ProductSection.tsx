@@ -3,7 +3,7 @@ import { SingletonRouter } from 'next/router';
 import { compose, graphql, QueryProps } from 'react-apollo';
 import { Product } from '../lib/prisma';
 import { addProductToOrderGraphQL, fragments } from '../mutations/addProductToOrder';
-import ProductCard from './ProductCard';
+import { ProductCardFragment } from './ProductCard';
 import ProductList from './ProductList';
 
 interface ProductsData extends QueryProps {
@@ -54,9 +54,11 @@ const productsQuery: any = gql`
       name
       price
       ...GetOrderProductFragment
+      ...ProductCardFragment
     }
   }
   ${fragments.Product}
+  ${ProductCardFragment}
 `;
 export default compose(
   graphql<Response, InputProps>(productsQuery, {
