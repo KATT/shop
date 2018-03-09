@@ -2,6 +2,7 @@
 
 import { readFileSync } from 'fs';
 import * as _ from 'lodash';
+import * as ProgressBar from 'progress';
 import { BrandCreateInput } from '../schema';
 import { Prisma, Product, ProductCreateInput } from './../generated/prisma';
 /*
@@ -28,8 +29,10 @@ copy([...document.querySelectorAll('.item')].map((node) => {
 const prisma = new Prisma({
   endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma DB service (value is set in .env)
   secret: process.env.PRISMA_SECRET, // taken from database/prisma.yml (value is set in .env)
-  debug: true, // log all GraphQL queries & mutations
+  debug: false, // log all GraphQL queries & mutations
 });
+
+let bar: ProgressBar;
 
 async function main() {
   const seed: Product[] = JSON.parse(readFileSync(`${__dirname}/seed.json`, 'utf8'));
@@ -38,16 +41,11 @@ async function main() {
   if (existingProducts.length) {
     throw new Error('There are already products in the db.');
   }
+
   const brands: BrandCreateInput[]  = _(seed)
     .map(({ brand }) => brand)
     .uniqBy(({ slug }) => slug)
     .valueOf();
-
-  for (const data of brands) {
-    await prisma.mutation.createBrand({
-      data,
-    });
-  }
 
   const products: ProductCreateInput[] = seed.map((product) => {
     const input: ProductCreateInput = {
@@ -61,19 +59,34 @@ async function main() {
     return input;
   });
 
+  bar = new ProgressBar('  seeding database [:bar] :percent :etas', {
+    complete: '=',
+    incomplete: ' ',
+    width: 20,
+    total: brands.length + products.length,
+  });
+
+  for (const data of brands) {
+    await prisma.mutation.createBrand({
+      data,
+    });
+    bar.tick();
+  }
+
   for (const data of products) {
     await prisma.mutation.createProduct({
       data,
     });
+    bar.tick();
   }
-
+  console.log('\n');
 }
 
 main().then(() => {
-  console.log('🎉 Seed successful');
+  console.log('🎉  Seed successful');
   process.exit(0);
 }).catch(e => {
   console.error(e);
-  console.error('❌ Seed failed. See above.');
+  console.error('\n❌  Seed failed. See above.');
   process.exit(1);
 });

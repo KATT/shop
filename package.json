@@ -8,7 +8,8 @@
     "build:api": "cd api && yarn build",
     "build:web": "cd web && yarn build",
     "build:e2e": "cd e2e && yarn build",
-    "setup:api": "cd api && yarn install && yarn deploy:local",
+    "setup:api":
+      "cd api && yarn install && yarn deploy:local && yarn seed:local",
     "setup:web": "cd web && yarn install",
     "setup:e2e": "cd e2e && yarn install",
     "setup": "yarn install && npm-run-all --parallel setup:*",
@@ -27,10 +28,7 @@
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}!api/src/generated/*.ts": [
-      "tslint --fix",
-      "git add"
-    ]
+    "*.{ts,tsx}!api/src/generated/*.ts": ["tslint --fix", "git add"]
   },
   "devDependencies": {
     "husky": "^0.14.3",
