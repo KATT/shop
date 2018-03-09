@@ -192,16 +192,22 @@ input BrandUpdateInput {
   url: String
 }
 
+input BrandUpdateNestedInput {
+  where: BrandWhereUniqueInput!
+  data: BrandUpdateDataInput!
+}
+
 input BrandUpdateOneInput {
   create: BrandCreateInput
   connect: BrandWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: BrandUpdateDataInput
+  disconnect: BrandWhereUniqueInput
+  delete: BrandWhereUniqueInput
+  update: BrandUpdateNestedInput
   upsert: BrandUpsertNestedInput
 }
 
 input BrandUpsertNestedInput {
+  where: BrandWhereUniqueInput!
   update: BrandUpdateDataInput!
   create: BrandCreateInput!
 }
@@ -716,8 +722,8 @@ input OrderRowUpdateManyWithoutOrderInput {
   connect: [OrderRowWhereUniqueInput!]
   disconnect: [OrderRowWhereUniqueInput!]
   delete: [OrderRowWhereUniqueInput!]
-  update: [OrderRowUpdateWithWhereUniqueWithoutOrderInput!]
-  upsert: [OrderRowUpsertWithWhereUniqueWithoutOrderInput!]
+  update: [OrderRowUpdateWithoutOrderInput!]
+  upsert: [OrderRowUpsertWithoutOrderInput!]
 }
 
 input OrderRowUpdateWithoutOrderDataInput {
@@ -725,12 +731,12 @@ input OrderRowUpdateWithoutOrderDataInput {
   product: ProductUpdateOneInput
 }
 
-input OrderRowUpdateWithWhereUniqueWithoutOrderInput {
+input OrderRowUpdateWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   data: OrderRowUpdateWithoutOrderDataInput!
 }
 
-input OrderRowUpsertWithWhereUniqueWithoutOrderInput {
+input OrderRowUpsertWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   update: OrderRowUpdateWithoutOrderDataInput!
   create: OrderRowCreateWithoutOrderInput!
@@ -936,9 +942,9 @@ input OrderUpdateInput {
 input OrderUpdateOneWithoutRowsInput {
   create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: OrderUpdateWithoutRowsDataInput
+  disconnect: OrderWhereUniqueInput
+  delete: OrderWhereUniqueInput
+  update: OrderUpdateWithoutRowsInput
   upsert: OrderUpsertWithoutRowsInput
 }
 
@@ -946,7 +952,13 @@ input OrderUpdateWithoutRowsDataInput {
   user: UserUpdateOneInput
 }
 
+input OrderUpdateWithoutRowsInput {
+  where: OrderWhereUniqueInput!
+  data: OrderUpdateWithoutRowsDataInput!
+}
+
 input OrderUpsertWithoutRowsInput {
+  where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutRowsDataInput!
   create: OrderCreateWithoutRowsInput!
 }
@@ -1223,16 +1235,22 @@ input ProductUpdateInput {
   brand: BrandUpdateOneInput
 }
 
+input ProductUpdateNestedInput {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateDataInput!
+}
+
 input ProductUpdateOneInput {
   create: ProductCreateInput
   connect: ProductWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: ProductUpdateDataInput
+  disconnect: ProductWhereUniqueInput
+  delete: ProductWhereUniqueInput
+  update: ProductUpdateNestedInput
   upsert: ProductUpsertNestedInput
 }
 
 input ProductUpsertNestedInput {
+  where: ProductWhereUniqueInput!
   update: ProductUpdateDataInput!
   create: ProductCreateInput!
 }
@@ -1695,16 +1713,22 @@ input UserUpdateInput {
   name: String
 }
 
+input UserUpdateNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
 input UserUpdateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: UserUpdateDataInput
+  disconnect: UserWhereUniqueInput
+  delete: UserWhereUniqueInput
+  update: UserUpdateNestedInput
   upsert: UserUpsertNestedInput
 }
 
 input UserUpsertNestedInput {
+  where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
 }
