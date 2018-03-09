@@ -1,3 +1,5 @@
+// tslint:disable:no-console
+
 import { readFileSync } from 'fs';
 import * as _ from 'lodash';
 import { BrandCreateInput } from '../schema';
@@ -38,7 +40,7 @@ async function main() {
   }
   const brands: BrandCreateInput[]  = _(seed)
     .map(({ brand }) => brand)
-    .uniqBy(({slug}) => slug)
+    .uniqBy(({ slug }) => slug)
     .valueOf();
 
   for (const data of brands) {
@@ -59,7 +61,6 @@ async function main() {
     return input;
   });
 
-
   for (const data of products) {
     await prisma.mutation.createProduct({
       data,
@@ -69,9 +70,10 @@ async function main() {
 }
 
 main().then(() => {
-  console.log('🎉');
+  console.log('🎉 Seed successful');
   process.exit(0);
 }).catch(e => {
   console.error(e);
-  console.error('❌  Something went wrong');
+  console.error('❌ Seed failed. See above.');
+  process.exit(1);
 });

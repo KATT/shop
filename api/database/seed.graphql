@@ -1,0 +1,7 @@
+mutation {
+  kattcorp: createBrand(
+    data: { name: "Nike", slug: "kattcorp", url: "https://kattcorp.co.uk" }
+  ) {
+    id
+  }
+}
