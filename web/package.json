@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "dotenv -- nodemon server/index.ts",
-    "build": "tsc --project tsconfig.server.json && next build",
-    "start": "NODE_ENV=production node dist/",
+    "build": "tsc --project tsconfig.server.json && dotenv -- next build",
+    "start": "NODE_ENV=production dotenv -- node dist/",
     "deploy": "now -e GRAPHQL_URL=https://shop-api.kattcorp.co.uk/",
     "alias": "now alias"
   },
