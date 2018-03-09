@@ -7,7 +7,7 @@
 * [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`./web`)
 * [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`./e2e`)
 * [Jest](https://facebook.github.io/jest/) for the other testing
-* [Circle CI](http://nightwatchjs.org/) CI _(🚧 [WIP]((https://github.com/graphcool/prisma/issues/2000)))_
+* [Circle CI](http://nightwatchjs.org/) CI _(🚧 [WIP](<(https://github.com/graphcool/prisma/issues/2000)>))_
 
 ## Features
 
@@ -22,40 +22,42 @@
 
 ## Setup
 
-1. Install node _(duh)_
-1. Install [Homebrew](https://brew.sh/)
-1. Install Docker - `brew cask install docker`
-1. Install yarn - `npm install -g yarn`
-1. Start Docker
-1. Setup local prisma cluster: `yarn start:prisma`
-1. _Magic_ - `yarn setup`
-    - Installs deps for
-      - `./`
-      - `./api`
-      - `./web`
-      - `./e2e`
-    - Deploys Prisma backend to local cluster
-
+1.  Install node _(duh)_
+1.  Install [Homebrew](https://brew.sh/)
+1.  Install Docker - `brew cask install docker`
+1.  Install yarn - `npm install -g yarn`
+1.  Start Docker
+1.  Setup local prisma cluster: `yarn start:prisma`
+1.  _Magic_ - `yarn setup`
+    * Installs deps for
+      * `./`
+      * `./api`
+      * `./web`
+      * `./e2e`
+    * Deploys Prisma backend to local cluster
 
 ## Development
 
 `yarn dev` starts the API Gateway, the Next.js `./web`, and a TypeScript watcher for `./e2e` in parallell.
 
-If you prefer separate output, navigate to `./api./``./web` in separate shells and run `yarn dev`
+If you prefer separate output, navigate to ` ./api./``./web ` in separate shells and run `yarn dev`
 
 If everything goes smoothly you should be able to access the below:
 
-- API Gateway: http://localhost:4000
-- Web App: http://localhost:5000
+* API Gateway: http://localhost:4000
+* Web App: http://localhost:5000
 
-## Run tests locally
+## Tests
 
+### API Gateway
+
+```sh
+cd api && yarn test
 ```
-yarn test
-```
 
-Runs test in `./api`. `./web` has no tests _(yet)_.
+### Web
 
+`./web` has no tests _(yet)_.
 
 ### E2E
 
@@ -74,6 +76,12 @@ brew cask install java
 1.  Setup + start apps: `yarn setup && yarn build && yarn dev`
 1.  Run tests: `yarn start:e2e`
 
+### Conventions, how to write etc
+
+#### `./web`
+
+* 🚧 WIP - `./mutations` and `./queries` are intended to expose HOC Components with render props for easy handling of data loading / rendering
+* .. _TBC_
 
 ## What's next?
 
