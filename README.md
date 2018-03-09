@@ -1,5 +1,8 @@
 # React/Prisma/TS/GraphQL E-Commerce Example
 
+* [shop.kattcorp.co.uk](https://shop.kattcorp.co.uk)
+* [shop-api.kattcorp.co.uk](https://shop-api.kattcorp.co.uk)
+
 ## Tech
 
 * [TypeScript](typescriptlang.org) (we have `*.js` in `.gitignore`!)
@@ -7,7 +10,7 @@
 * [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`./web`)
 * [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`./e2e`)
 * [Jest](https://facebook.github.io/jest/) for the other testing
-* [Circle CI](http://nightwatchjs.org/) CI _(🚧 [WIP](<(https://github.com/graphcool/prisma/issues/2000)>))_
+* [Circle CI](http://circleci.com/) _(🚧 [WIP](<(https://github.com/graphcool/prisma/issues/2000)>))_
 
 ## Features
 
