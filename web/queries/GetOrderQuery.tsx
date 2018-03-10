@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { APIOrder } from 'lib/prisma';
 import { ReactElement, ReactNode } from 'react';
-import { compose, graphql } from 'react-apollo';
+import { compose, graphql, QueryProps } from 'react-apollo';
 
 export const GetOrderProductFragment = gql`
   fragment GetOrderProductFragment on Product {
@@ -45,9 +45,7 @@ interface InputProps {
   children(props: OrderData): ReactElement<any>;
 }
 
-export interface OrderData {
-  loading: boolean;
-  error?: any;
+export interface OrderData extends QueryProps {
   order?: Partial<APIOrder>;
 }
 

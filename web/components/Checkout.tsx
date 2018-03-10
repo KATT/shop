@@ -1,40 +1,35 @@
 import { SingletonRouter } from 'next/router';
+import { Fragment } from 'react';
 import { graphql } from 'react-apollo';
 import { APIOrder } from '../lib/prisma';
-import { GetOrderQueryAST } from '../queries/GetOrderQuery';
+import GetOrderQuery, {GetOrderQueryAST} from '../queries/GetOrderQuery';
 import OrderRowList from './OrderRowList';
 
-interface InputProps {
+interface Props {
   orderId: string;
   url: SingletonRouter;
 }
-interface Props extends InputProps {
-  data?: {
-    // 🚧 TODO - I'm sure there's some Apollo typedef for responses that you can extend for this
-    loading: boolean;
-    order?: APIOrder
-  };
-}
 
-function Checkout({data: {order, loading}, url}: Props) {
+function Checkout({orderId, url}: Props) {
   return (
     <section className="Checkout">
       <h1>Your shopping cart</h1>
-      {loading && <div>Loading..</div>}
-      {order && (
-        <div>
-          <OrderRowList {...{order, url}} />
-          Order total: {order.total}
-        </div>
-      )}
+
+      <GetOrderQuery {...{orderId}}>{
+        ({loading, order}) => (
+          <Fragment>
+            {loading && <div>Loading..</div>}
+            {order && (
+              <div>
+                <OrderRowList {...{order, url}} />
+                Order total: {order.total}
+              </div>
+            )}
+          </Fragment>
+        )
+      }</GetOrderQuery>
     </section>
   );
 }
 
-export default graphql<Response, InputProps>(GetOrderQueryAST, {
-  options: ({ orderId }) => ({
-    variables: {
-      id: orderId,
-    },
-  }),
-})(Checkout);
+export default Checkout;

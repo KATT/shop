@@ -1,13 +1,9 @@
-import gql from 'graphql-tag';
 import { SingletonRouter } from 'next/router';
-import { compose, graphql } from 'react-apollo';
 import { APIOrder } from '../lib/prisma';
-import { addProductToOrderGraphQL, fragments } from '../mutations/addProductToOrder';
 import UpdateOrderRowMutation from '../mutations/UpdateOrderRowMutation';
-import { ProductCardFragment } from './ProductCard';
 
 interface Props {
-  order: APIOrder;
+  order: Partial<APIOrder>;
   url: SingletonRouter;
 }
 

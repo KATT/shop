@@ -9,7 +9,7 @@ import { calculateTotals } from './addProductToOrder';
 interface Props {
   className?: string;
   children: ReactNode;
-  order: APIOrder;
+  order: Partial<APIOrder>;
   variables: UpdateOrderRowVariables;
   redirect: string;
   updateOrderRowMutation?: () => {};
