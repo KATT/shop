@@ -78,6 +78,9 @@ brew cask install java
 1.  Run selenium: `yarn selenium`
 1.  Setup + start apps: `yarn setup && yarn build && yarn dev`
 1.  Run tests: `yarn start:e2e`
+    * Will start 2 environments in parallel
+      * Chrome: javascript enabled
+      * Chrome: javascript disabled
 
 ### Conventions, how to write etc
 
