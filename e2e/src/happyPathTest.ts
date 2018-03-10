@@ -1,10 +1,11 @@
 import {NightwatchBrowser} from 'nightwatch';
 
 // Not sure if this is the right way to share props..
-const firstProductSelector = '[itemType="http://schema.org/Product"]:first-child';
-
 const priceSelector = '[itemProp="price"]';
 const nameSelector = '[itemProp="name"]';
+const productSelector = '[itemType="http://schema.org/Product"]';
+
+const firstProductSelector =  `${productSelector}:first-child`;
 
 let productName: string;
 
@@ -18,6 +19,7 @@ export = {
   AddItemToCart(client: NightwatchBrowser) {
     client.getText(`${firstProductSelector} ${nameSelector}`, ({value}) => {
       productName = value;
+      client.assert.equal(typeof productName, 'string');
     });
     client.click(`${firstProductSelector} button`);
   },
@@ -30,10 +32,26 @@ export = {
   },
 
   VerifyItemInCart(client: NightwatchBrowser) {
-    client.verify.containsText('.Checkout', productName);
+    client.assert.containsText('.Checkout', productName);
   },
 
-  after(client: NightwatchBrowser) {
-    client.end();
+  VerifyOnlyItemInCart(client: NightwatchBrowser) {
+    client.elements('css selector', `.Checkout ${productSelector}`, result => {
+      client.assert.equal(result.value.length, 1, 'Only one OrderRow');
+
+      client.getText('[aria-label="Quantity: 1"]', quantityResult => {
+        client.assert.equal(quantityResult.value, '1', 'OrderRow.quantity === 1');
+      });
+    });
+  },
+
+  AddTwoRemoveOne(client: NightwatchBrowser) {
+    client.click('.Checkout [aria-label^="Add 1"]');
+    client.click('.Checkout [aria-label^="Add 1"]');
+    client.click('.Checkout [aria-label^="Remove 1"]');
+
+    client.getText('[aria-label^="Quantity:"]', quantityResult => {
+      client.assert.equal(quantityResult.value, '2', 'OrderRow.quantity === 2');
+    });
   },
 };
