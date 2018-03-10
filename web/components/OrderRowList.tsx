@@ -1,6 +1,6 @@
 import { SingletonRouter } from 'next/router';
 import { APIOrder } from '../lib/prisma';
-import UpdateOrderRowMutation from '../mutations/UpdateOrderRowMutation';
+import UpdateOrderRowMutation, {Props as UpdateOrderRowMutationProps} from '../mutations/UpdateOrderRowMutation';
 
 interface Props {
   order: Partial<APIOrder>;
@@ -17,25 +17,30 @@ function OrderRowList(props: Props) {
   const orderRowMutationProps = {
     order,
     redirect: url.asPath,
+    style: {
+      display: 'inline-block',
+    },
   };
 
   return (
     <ul>
-      {rows.map((row) => (
-        <li key={row.id}>
-          {row.product.brand.name} {row.product.name} - quantity: {row.quantity} - total: {row.total}
+      {rows.map(({id, quantity, total, product: {name, brand}}) => (
+        <li key={id} itemProp="itemListElement" itemScope itemType="http://schema.org/Product">
+          {brand.name} {name}
           <UpdateOrderRowMutation
             {...orderRowMutationProps}
-            variables={{id: row.id, quantity: row.quantity - 1}}
+            variables={{id, quantity: quantity - 1}}
             >
-              <input type="submit" value="-1" />
+              <input type="submit" value="-" aria-label={`Remove 1 ${name} from cart`} />
           </UpdateOrderRowMutation>
+          {' '}<span aria-label={`Quantity: ${quantity}`}>{quantity}</span>{' '}
           <UpdateOrderRowMutation
             {...orderRowMutationProps}
-            variables={{id: row.id, quantity: row.quantity + 1}}
+            variables={{id, quantity: quantity + 1}}
             >
-              <input type="submit" value="+1" />
+            <input type="submit" value="+" aria-label={`Add 1 ${name} to cart`} />
           </UpdateOrderRowMutation>
+          - total: {total}
         </li>
       ))}
     </ul>

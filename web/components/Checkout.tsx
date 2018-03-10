@@ -22,7 +22,7 @@ function Checkout({orderId, url}: Props) {
             {order && (
               <div>
                 <OrderRowList {...{order, url}} />
-                Order total: {order.total}
+                <div>Order total: {order.total}</div>
               </div>
             )}
           </Fragment>

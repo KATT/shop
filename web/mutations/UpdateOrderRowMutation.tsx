@@ -6,13 +6,14 @@ import { compose, graphql, QueryProps } from 'react-apollo';
 import { GetOrderFragment } from '../queries/GetOrderQuery';
 import { calculateTotals } from './addProductToOrder';
 
-interface Props {
+export interface Props {
   className?: string;
   children: ReactNode;
   order: Partial<APIOrder>;
   variables: UpdateOrderRowVariables;
   redirect: string;
   updateOrderRowMutation?: () => {};
+  style?;
 }
 
 export function orderReducerUpdateOrderRow(order: Partial<APIOrder>, variables: UpdateOrderRowVariables) {
@@ -44,9 +45,10 @@ export const updateOrderRowQuery: any = gql`
   ${GetOrderFragment}
 `;
 
-export const UpdateOrderRow = ({ children, redirect, variables, updateOrderRowMutation }: Props) => (
+export const UpdateOrderRow = ({ children, redirect, variables, updateOrderRowMutation, style }: Props) => (
   <form
     action={'/_gql/m'}
+    style={style}
     method="post"
     onSubmit={(e) => {
       e.preventDefault();
