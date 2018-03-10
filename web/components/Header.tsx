@@ -24,8 +24,8 @@ export default ({orderId, openCheckoutModal}) => (
         <a href="/checkout" onClick={openCheckoutModal}>
           Checkout
           <GetOrderQuery {...{orderId}}>{
-            ({order}) => order && <Fragment>{` (${order.total})`}</Fragment>}
-          </GetOrderQuery>
+            ({order}) => order && <Fragment>{` (${order.total})`}</Fragment>
+          }</GetOrderQuery>
         </a>
       </nav>
     </header>
