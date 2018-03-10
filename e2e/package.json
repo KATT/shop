@@ -3,7 +3,9 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "dev": "yarn build -- --watch",
-    "start": "yarn nightwatch",
+    "start": "yarn start:js && yarn start:nojs",
+    "start:js": "yarn nightwatch",
+    "start:nojs": "yarn nightwatch --env nojs",
     "test": "yarn start"
   },
   "devDependencies": {
