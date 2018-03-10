@@ -15,9 +15,9 @@ export = {
   ToggleCheckout(client: NightwatchBrowser) {
     client
       .assert.elementNotPresent('.Checkout')
-      .click('#checkout-link')
+      .click('header a[href="/checkout"]')
       .waitForElementVisible('.Checkout', 1000)
-      .click('#checkout-link')
+      .back()
       .waitForElementNotPresent('.Checkout', 1000);
   },
 
