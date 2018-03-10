@@ -31,7 +31,7 @@ export const GetOrderFragment = gql`
   ${GetOrderProductFragment}
 `;
 
-export const GetOrderQuery = gql`
+export const GetOrderQueryAST = gql`
   query GetOrderQuery($id: ID!) {
     order(id: $id) {
       ...GetOrderFragment
@@ -59,7 +59,7 @@ export const GetOrderComponent = ({ children, data }: IntermediateProps) => (
   children({...data})
 );
 
-export default graphql<Response, InputProps>(GetOrderQuery, {
+export default graphql<Response, InputProps>(GetOrderQueryAST, {
   options: ({ orderId }) => ({
     variables: {
       id: orderId,

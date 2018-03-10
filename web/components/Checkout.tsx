@@ -1,7 +1,7 @@
 import { SingletonRouter } from 'next/router';
 import { graphql } from 'react-apollo';
 import { APIOrder } from '../lib/prisma';
-import { GetOrderQuery } from '../queries/GetOrderQuery';
+import { GetOrderQueryAST } from '../queries/GetOrderQuery';
 import OrderRowList from './OrderRowList';
 
 interface InputProps {
@@ -31,7 +31,7 @@ function Checkout({data: {order, loading}, url}: Props) {
   );
 }
 
-export default graphql<Response, InputProps>(GetOrderQuery, {
+export default graphql<Response, InputProps>(GetOrderQueryAST, {
   options: ({ orderId }) => ({
     variables: {
       id: orderId,

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import qs from 'querystring';
 import {Component} from 'react';
-import {GetOrderQuery} from '../queries/GetOrderQuery';
+import {GetOrderQueryAST} from '../queries/GetOrderQuery';
 import { NextJSPageContext, NextJSPageProps} from './NextJSPage';
 import { ID_Output } from './prisma';
 import withData, { getComponentDisplayName } from './withData';
@@ -56,7 +56,7 @@ export async function getOrCreateOrderId(ctx: NextJSPageContext): Promise<ID_Out
 
   if (orderId) {
     const getSavedOrderResult: any = await apollo.query({
-      query: GetOrderQuery,
+      query: GetOrderQueryAST,
       variables: {
         id: orderId,
       },

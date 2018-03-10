@@ -3,7 +3,7 @@ import {print as printSource} from 'graphql/language/printer';
 import qs from 'querystring';
 import { compose, graphql, QueryProps } from 'react-apollo';
 import { AddProductToOrderVariables, APIOrder, APIOrderRow, Product } from '../lib/prisma';
-import { GetOrderFragment, GetOrderProductFragment, GetOrderQuery } from '../queries/GetOrderQuery';
+import { GetOrderFragment, GetOrderProductFragment, GetOrderQueryAST } from '../queries/GetOrderQuery';
 
 // 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧
 // TODO - Refactor into render prop like UpdateOrderRow
@@ -81,7 +81,7 @@ export const addProductToOrderQuery: any = gql`
 `;
 
 export const addProductToOrderGraphQL = compose(
-  graphql<Response, InputProps>(GetOrderQuery, {
+  graphql<Response, InputProps>(GetOrderQueryAST, {
     name: 'orderData',
     options: ({ orderId }) => ({
       variables: {
