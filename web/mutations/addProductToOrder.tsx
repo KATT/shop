@@ -23,7 +23,7 @@ export interface AddProductToOrderNoJSProps {
   stringified: string;
 }
 
-export function calculateTotals(order: APIOrder) {
+export function calculateTotals(order: Partial<APIOrder>) {
   const rows = order.rows.map((row) => ({
     ...row,
     total: row.quantity * row.product.price,
@@ -38,7 +38,7 @@ export function calculateTotals(order: APIOrder) {
   };
 }
 
-export function addProductReducer(order: APIOrder, product: Product): APIOrder {
+export function addProductReducer(order: Partial<APIOrder>, product: Product): Partial<APIOrder> {
   const rows = [...order.rows];
   const index = order.rows.findIndex((row) => row.product.id === product.id);
 
