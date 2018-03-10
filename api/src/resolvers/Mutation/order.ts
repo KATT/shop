@@ -90,11 +90,15 @@ export default {
       }
     `;
 
-    const {order} = await ctx.db.query.orderRow({
+    const row = await ctx.db.query.orderRow({
       where: {
-        id: args.id,
+        id,
       },
     }, fragment);
+    if (!row) {
+      throw new Error(`Could not find row id '${id}'`);
+    }
+    const {order} = row;
 
     const key = ['Order', order.id].join('-');
 
