@@ -23,12 +23,13 @@ export const ProductCardFragment = gql`
 `;
 
 export default ({product, fallback, addProductToOrder}: Props) => (
-  <article className="ProductCard">
+  <article className="ProductCard" itemProp="itemListElement" itemScope itemType="http://schema.org/Product">
     <div className="image">
-      <img src={product.thumbnail} alt={product.name} />
+      <img src={product.thumbnail} alt={product.name} itemProp="image" />
     </div>
-    <div className="info">
-      {product.name} - {formatPrice(product.price)}
+    <div itemProp="name">{product.name}</div>
+    <div itemProp="offers" itemScope itemType="http://schema.org/Offer">
+      <span itemProp="price">{formatPrice(product.price)}</span>
     </div>
 
     <form

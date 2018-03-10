@@ -18,7 +18,7 @@ export default function ProductList(props: Props) {
   } = props;
 
   return (
-    <section className="ProductList">
+    <section className="ProductList" itemScope itemType="http://schema.org/ItemList">
       {products.map((product: any) => {
         const fallback = addProductToOrderFallback(product, url.asPath);
         return <ProductCard {...{key: product.id, fallback, product, addProductToOrder}} />;
