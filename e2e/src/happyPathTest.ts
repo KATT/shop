@@ -39,7 +39,7 @@ export = {
     client.elements('css selector', `.Checkout ${productSelector}`, result => {
       client.assert.equal(result.value.length, 1, 'Only one OrderRow');
 
-      client.getText('[aria-label="Quantity: 1"]', quantityResult => {
+      client.getText('[aria-label^="Quantity:"]', quantityResult => {
         client.assert.equal(quantityResult.value, '1', 'OrderRow.quantity === 1');
       });
     });
