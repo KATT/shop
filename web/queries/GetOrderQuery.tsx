@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { APIOrder } from 'lib/prisma';
-import { ReactElement, ReactNode } from 'react';
-import { compose, graphql, QueryProps } from 'react-apollo';
+import { ReactElement } from 'react';
+import { graphql, QueryProps } from 'react-apollo';
 
 export const GetOrderProductFields = `
   __typename
