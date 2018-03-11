@@ -18,7 +18,7 @@ export const resolvers = {
     },
   },
   Order: {
-    total: {
+    subTotal: {
       fragment: 'fragment OrderFragment on Order { rows { quantity, product { price } } }',
       resolve: (source: Order, args, context, info): number => {
         return source.rows.reduce((total, product) => (

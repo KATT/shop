@@ -42,7 +42,7 @@ type Order implements Node {
     first: Int
     last: Int
   ): [OrderRow!]
-  total: Int!
+  subTotal: Int!
 }
 
 type OrderRow implements Node {

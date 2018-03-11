@@ -23,6 +23,7 @@
     "dev:e2e": "cd web && yarn dev",
     "dev": "npm-run-all --parallel dev:*",
     "test:api": "cd api && yarn test",
+    "test:e2e": "yarn start:e2e",
     "test": "npm-run-all --parallel test:*",
     "selenium": "selenium-server -port 4444"
   },

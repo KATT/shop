@@ -10,7 +10,7 @@ export interface APIOrderRow extends OrderRow {
 }
 
 export interface APIOrder extends Order {
-  total: number;
+  subTotal: number;
   rows: APIOrderRow[];
 }
 

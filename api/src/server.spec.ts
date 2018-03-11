@@ -354,7 +354,7 @@ describe('query.order', () => {
     expect(row.order.rows[0].total).toEqual(product.price * quantity);
   });
 
-  it('returns the total of the whole order', async () => {
+  it('returns the subTotal of the whole order', async () => {
     const order = await createOrder();
 
     const [product1, product2] = products;
@@ -371,14 +371,14 @@ describe('query.order', () => {
       orderId: order.id,
       quantity: 2,
     };
-    const fragment =  `order { total }`;
+    const fragment =  `order { subTotal }`;
 
     const row1 = await addProductToOrder(opts1, fragment);
-    expect(row1.order.total).toEqual(product1.price);
+    expect(row1.order.subTotal).toEqual(product1.price);
 
     const row2 = await addProductToOrder(opts2, fragment);
 
-    expect(row2.order.total).toEqual(product1.price + product2.price * 2);
+    expect(row2.order.subTotal).toEqual(product1.price + product2.price * 2);
   });
 });
 
