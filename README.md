@@ -1,5 +1,7 @@
 # React/Prisma/TS/GraphQL E-Commerce Example
 
+[![Build Status](https://img.shields.io/travis/KATT/shop.svg)](https://travis-ci.org/KATT/shop)
+
 * [shop.kattcorp.co.uk](https://shop.kattcorp.co.uk)
 * [shop-api.kattcorp.co.uk](https://shop-api.kattcorp.co.uk)
 
@@ -10,7 +12,7 @@
 * [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`./web`)
 * [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`./e2e`)
 * [Jest](https://facebook.github.io/jest/) for the other testing
-* [Circle CI](http://circleci.com/) _(🚧 [WIP](<(https://github.com/graphcool/prisma/issues/2000)>))_
+* [Travis CI](travis-ci.org)
 
 ## Features
 
@@ -19,7 +21,6 @@
 * Add/edit products to/in cart
 * Open checkout modal
 * Server-rendered, code splitting etc, thanks to Next.js
-* Accessibility
 * Optimistic Apollo updates
 * Pessimistic™ updates: Everything on page works without JS enabled
 
