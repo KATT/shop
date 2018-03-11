@@ -43,7 +43,7 @@
 
 `yarn dev` starts the API Gateway, the Next.js `./web`, and a TypeScript watcher for `./e2e` in parallell.
 
-If you prefer separate output, navigate to ` ./api./``./web ` in separate shells and run `yarn dev`
+If you prefer separate output, navigate to `./api./` or `./web` in separate shells and run `yarn dev`
 
 If everything goes smoothly you should be able to access the below:
 
@@ -86,7 +86,7 @@ brew cask install java
 
 #### `./web`
 
-* 🚧 WIP - `./mutations` and `./queries` are intended to expose HOC Components with render props for easy handling of data loading / rendering
+* 🚧 WIP - `./mutations` and `./queries` are intended to expose render prop components for easy handling of data loading / rendering
 * .. _TBC_
 
 ## What's next?
