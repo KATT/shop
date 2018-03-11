@@ -2,6 +2,7 @@ import { SingletonRouter } from 'next/router';
 import { Fragment } from 'react';
 import { APIOrder } from '../lib/prisma';
 import UpdateOrderRowMutation from '../mutations/UpdateOrderRowMutation';
+import OrderRowQuantityInput from './OrderRowQuantityInput';
 
 interface Props {
   order: Partial<APIOrder>;
@@ -39,20 +40,14 @@ function OrderRowList(props: Props) {
             {...orderRowMutationProps}
             variables={{id, quantity}}
             >{({updateOrderRowMutation}) => (
-              <Fragment>
-                <input name="variables:quantity:type" type="hidden" value="Int" />
-                <input name="variables:quantity:value" type="number" min="0" step="1" value={quantity}
-                  onChange={(e) => {
-                    const {value} = e.target;
-
-                    updateOrderRowMutation({
-                      id,
-                      quantity: parseInt(value, 10),
-                    });
-                  }} />
-              </Fragment>
+              <OrderRowQuantityInput quantity={quantity} onChange={(newQuantity) => {
+                updateOrderRowMutation({
+                  id,
+                  quantity: newQuantity,
+                });
+              }} />
             )}</UpdateOrderRowMutation>
-          {' '}<span aria-label={`Quantity: ${quantity}`}>{quantity}</span>{' '}
+          {' '}
           <UpdateOrderRowMutation
             {...orderRowMutationProps}
             variables={{id, quantity: quantity + 1}}
