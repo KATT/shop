@@ -1,8 +1,6 @@
 import { SingletonRouter } from 'next/router';
 import { Fragment } from 'react';
-import { graphql } from 'react-apollo';
-import { APIOrder } from '../lib/prisma';
-import GetOrderQuery, {GetOrderQueryAST} from '../queries/GetOrderQuery';
+import GetOrderQuery from '../queries/GetOrderQuery';
 import OrderRowList from './OrderRowList';
 
 interface Props {
