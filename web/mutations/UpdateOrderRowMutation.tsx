@@ -51,6 +51,7 @@ export const updateOrderRowQuery: any = gql`
     }
   }
 `;
+const updateOrderRowQueryString = printSource(updateOrderRowQuery)
 
 function isFunction(obj: any) {
   return typeof obj === 'function';
@@ -67,7 +68,7 @@ export const UpdateOrderRow = ({ children, redirect, variables, updateOrderRowMu
       updateOrderRowMutation(variables);
     }}
     >
-      <input type="hidden" name="query" value={printSource(updateOrderRowQuery)} />
+      <input type="hidden" name="query" value={updateOrderRowQueryString} />
       <input type="hidden" name="redirect" value={redirect} />
       <input type="hidden" name="variables" value={JSON.stringify(variables)} />
       {isFunction(children) ? (children as RenderCallback)({updateOrderRowMutation}) : children}

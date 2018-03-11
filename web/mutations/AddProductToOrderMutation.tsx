@@ -111,7 +111,7 @@ export const AddProductToOrder = ({
     }}
     >
       <input type="hidden" name="redirect" value={redirect} />
-      <input type="hidden" name="query" value={printSource(AddProductToOrderAST)}  />
+      <input type="hidden" name="query" value={AddProductToOrderASTString}  />
       <input type="hidden" name="variables" value={JSON.stringify({orderId, productId})} />
       {isFunction(children) ? (children as RenderCallback)({addProductToOrderMutation}) : children}
   </form>
@@ -126,6 +126,7 @@ export const AddProductToOrderAST: any = gql`
     }
   }
 `;
+const AddProductToOrderASTString = printSource(AddProductToOrderAST);
 
 export const AddProductToOrderMutation = compose(
   graphql<Response, InputProps>(GetOrderQueryAST, {
