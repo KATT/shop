@@ -27,6 +27,7 @@ type Mutation {
     quantity: Int
   ): OrderRow!
   updateOrderRow(id: ID!, quantity: Int): UpdateOrderRowResponse
+  addDiscountCodeToOrder(orderId: ID!, code: String!): Order!
 }
 
 type Order implements Node {
@@ -43,6 +44,8 @@ type Order implements Node {
     last: Int
   ): [OrderRow!]
   subTotal: Int!
+  discountsTotal: Int!
+  total: Int!
 }
 
 type OrderRow implements Node {

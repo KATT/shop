@@ -1,6 +1,12 @@
 mutation {
-  kattcorp: createBrand(
-    data: { name: "Nike", slug: "kattcorp", url: "https://kattcorp.co.uk" }
+  createDiscountCode(
+    data: {
+      code: "FIRST"
+      name: "10% discount on your order"
+      description: "As a first time shopper you get discount on your first order."
+      type: Percentage
+      amount: 10
+    }
   ) {
     id
   }

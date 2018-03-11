@@ -1,6 +1,6 @@
 import * as AsyncLock from 'async-lock';
 import { GraphQLError } from 'graphql';
-import { APIOrderRow, OrderRow, UpdateOrderRowResponse } from '../../schema';
+import { AddDiscountCodeToOrderVariables, APIOrderRow, Order, OrderRow, UpdateOrderRowResponse } from '../../schema';
 import { Context } from '../../utils';
 
 const lock = new AsyncLock();
@@ -122,5 +122,25 @@ export default {
       orderId: order.id,
       rowId: id,
     };
+  },
+
+  async addDiscountCodeToOrder(
+    parent,
+    {code, orderId}: AddDiscountCodeToOrderVariables,
+    ctx: Context,
+    info,
+  ): Promise<Order> {
+    return ctx.db.mutation.updateOrder({
+      data: {
+        discountCodes: {
+          connect: {
+            code,
+          },
+        },
+      },
+      where: {
+        id: orderId,
+      },
+    }, info);
   },
 };

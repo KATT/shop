@@ -36,6 +36,8 @@ type Order {
 
   rows: [OrderRow!]! @relation(name: "OrderRow")
   user: User
+
+  discountCodes: [DiscountCode!]!
 }
 
 type OrderRow {
@@ -46,4 +48,21 @@ type OrderRow {
   quantity: Int! @default(value: "1")
   product: Product!
   order: Order! @relation(name: "OrderRow")
+}
+
+type DiscountCode {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  code: String! @unique
+  name: String!
+  description: String!
+
+  type: DiscountCodeType!
+  amount: Float!
+}
+
+enum DiscountCodeType {
+  Percentage
 }

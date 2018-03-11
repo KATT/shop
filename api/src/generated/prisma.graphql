@@ -14,12 +14,24 @@ type Brand implements Node {
   url: String!
 }
 
+type DiscountCode implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String!
+  type: DiscountCodeType!
+  amount: Float!
+}
+
 type Order implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   rows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow!]
   user(where: UserWhereInput): User
+  discountCodes(where: DiscountCodeWhereInput, orderBy: DiscountCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DiscountCode!]
 }
 
 type OrderRow implements Node {
@@ -55,6 +67,10 @@ type User implements Node {
 #
 
 type AggregateBrand {
+  count: Int!
+}
+
+type AggregateDiscountCode {
   count: Int!
 }
 
@@ -501,6 +517,481 @@ input BrandWhereUniqueInput {
 scalar DateTime
 
 """
+A connection to a list of items.
+"""
+type DiscountCodeConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [DiscountCodeEdge]!
+  aggregate: AggregateDiscountCode!
+}
+
+input DiscountCodeCreateInput {
+  code: String!
+  name: String!
+  description: String!
+  type: DiscountCodeType!
+  amount: Float!
+}
+
+input DiscountCodeCreateManyInput {
+  create: [DiscountCodeCreateInput!]
+  connect: [DiscountCodeWhereUniqueInput!]
+}
+
+"""
+An edge in a connection.
+"""
+type DiscountCodeEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: DiscountCode!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum DiscountCodeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  code_ASC
+  code_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  type_ASC
+  type_DESC
+  amount_ASC
+  amount_DESC
+}
+
+type DiscountCodePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String!
+  type: DiscountCodeType!
+  amount: Float!
+}
+
+type DiscountCodeSubscriptionPayload {
+  mutation: MutationType!
+  node: DiscountCode
+  updatedFields: [String!]
+  previousValues: DiscountCodePreviousValues
+}
+
+input DiscountCodeSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DiscountCodeSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DiscountCodeSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DiscountCodeWhereInput
+}
+
+enum DiscountCodeType {
+  Percentage
+}
+
+input DiscountCodeUpdateDataInput {
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
+}
+
+input DiscountCodeUpdateInput {
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
+}
+
+input DiscountCodeUpdateManyInput {
+  create: [DiscountCodeCreateInput!]
+  connect: [DiscountCodeWhereUniqueInput!]
+  disconnect: [DiscountCodeWhereUniqueInput!]
+  delete: [DiscountCodeWhereUniqueInput!]
+  update: [DiscountCodeUpdateNestedInput!]
+  upsert: [DiscountCodeUpsertNestedInput!]
+}
+
+input DiscountCodeUpdateNestedInput {
+  where: DiscountCodeWhereUniqueInput!
+  data: DiscountCodeUpdateDataInput!
+}
+
+input DiscountCodeUpsertNestedInput {
+  where: DiscountCodeWhereUniqueInput!
+  update: DiscountCodeUpdateDataInput!
+  create: DiscountCodeCreateInput!
+}
+
+input DiscountCodeWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DiscountCodeWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DiscountCodeWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  code: String
+  """
+  All values that are not equal to given value.
+  """
+  code_not: String
+  """
+  All values that are contained in given list.
+  """
+  code_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  code_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  code_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  code_lte: String
+  """
+  All values greater than the given value.
+  """
+  code_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  code_gte: String
+  """
+  All values containing the given string.
+  """
+  code_contains: String
+  """
+  All values not containing the given string.
+  """
+  code_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  code_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  code_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  code_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  code_not_ends_with: String
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
+  type: DiscountCodeType
+  """
+  All values that are not equal to given value.
+  """
+  type_not: DiscountCodeType
+  """
+  All values that are contained in given list.
+  """
+  type_in: [DiscountCodeType!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [DiscountCodeType!]
+  amount: Float
+  """
+  All values that are not equal to given value.
+  """
+  amount_not: Float
+  """
+  All values that are contained in given list.
+  """
+  amount_in: [Float!]
+  """
+  All values that are not contained in given list.
+  """
+  amount_not_in: [Float!]
+  """
+  All values less than the given value.
+  """
+  amount_lt: Float
+  """
+  All values less than or equal the given value.
+  """
+  amount_lte: Float
+  """
+  All values greater than the given value.
+  """
+  amount_gt: Float
+  """
+  All values greater than or equal the given value.
+  """
+  amount_gte: Float
+}
+
+input DiscountCodeWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+"""
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
@@ -512,31 +1003,37 @@ type Mutation {
   createProduct(data: ProductCreateInput!): Product!
   createOrder(data: OrderCreateInput!): Order!
   createOrderRow(data: OrderRowCreateInput!): OrderRow!
+  createDiscountCode(data: DiscountCodeCreateInput!): DiscountCode!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateOrderRow(data: OrderRowUpdateInput!, where: OrderRowWhereUniqueInput!): OrderRow
+  updateDiscountCode(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereUniqueInput!): DiscountCode
   deleteUser(where: UserWhereUniqueInput!): User
   deleteBrand(where: BrandWhereUniqueInput!): Brand
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteOrderRow(where: OrderRowWhereUniqueInput!): OrderRow
+  deleteDiscountCode(where: DiscountCodeWhereUniqueInput!): DiscountCode
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
+  upsertDiscountCode(where: DiscountCodeWhereUniqueInput!, create: DiscountCodeCreateInput!, update: DiscountCodeUpdateInput!): DiscountCode!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
   updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
   updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
+  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
   deleteManyBrands(where: BrandWhereInput!): BatchPayload!
   deleteManyProducts(where: ProductWhereInput!): BatchPayload!
   deleteManyOrders(where: OrderWhereInput!): BatchPayload!
   deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
+  deleteManyDiscountCodes(where: DiscountCodeWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -573,6 +1070,7 @@ type OrderConnection {
 input OrderCreateInput {
   rows: OrderRowCreateManyWithoutOrderInput
   user: UserCreateOneInput
+  discountCodes: DiscountCodeCreateManyInput
 }
 
 input OrderCreateOneWithoutRowsInput {
@@ -582,6 +1080,7 @@ input OrderCreateOneWithoutRowsInput {
 
 input OrderCreateWithoutRowsInput {
   user: UserCreateOneInput
+  discountCodes: DiscountCodeCreateManyInput
 }
 
 """
@@ -937,6 +1436,7 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   rows: OrderRowUpdateManyWithoutOrderInput
   user: UserUpdateOneInput
+  discountCodes: DiscountCodeUpdateManyInput
 }
 
 input OrderUpdateOneWithoutRowsInput {
@@ -950,6 +1450,7 @@ input OrderUpdateOneWithoutRowsInput {
 
 input OrderUpdateWithoutRowsDataInput {
   user: UserUpdateOneInput
+  discountCodes: DiscountCodeUpdateManyInput
 }
 
 input OrderUpdateWithoutRowsInput {
@@ -1087,6 +1588,9 @@ input OrderWhereInput {
   rows_some: OrderRowWhereInput
   rows_none: OrderRowWhereInput
   user: UserWhereInput
+  discountCodes_every: DiscountCodeWhereInput
+  discountCodes_some: DiscountCodeWhereInput
+  discountCodes_none: DiscountCodeWhereInput
 }
 
 input OrderWhereUniqueInput {
@@ -1577,16 +2081,19 @@ type Query {
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   orderRows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow]!
+  discountCodes(where: DiscountCodeWhereInput, orderBy: DiscountCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DiscountCode]!
   user(where: UserWhereUniqueInput!): User
   brand(where: BrandWhereUniqueInput!): Brand
   product(where: ProductWhereUniqueInput!): Product
   order(where: OrderWhereUniqueInput!): Order
   orderRow(where: OrderRowWhereUniqueInput!): OrderRow
+  discountCode(where: DiscountCodeWhereUniqueInput!): DiscountCode
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   orderRowsConnection(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderRowConnection!
+  discountCodesConnection(where: DiscountCodeWhereInput, orderBy: DiscountCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DiscountCodeConnection!
   """
   Fetches an object given its ID
   """
@@ -1602,6 +2109,7 @@ type Subscription {
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderRow(where: OrderRowSubscriptionWhereInput): OrderRowSubscriptionPayload
+  discountCode(where: DiscountCodeSubscriptionWhereInput): DiscountCodeSubscriptionPayload
 }
 
 """

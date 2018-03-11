@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import { Order, Product } from './generated/prisma';
-import { APIOrderRow, UpdateOrderRowResponse } from './schema';
+import { APIOrder, APIOrderRow, UpdateOrderRowResponse } from './schema';
 import server from './server';
 
 const {
@@ -78,7 +78,7 @@ const defaultOrderFragment = `
     }
   }
 `;
-async function createOrder(fragment = defaultOrderFragment): Promise<Order> {
+async function createOrder(fragment = defaultOrderFragment): Promise<APIOrder> {
   const query = `
     mutation {
       createOrder {
@@ -90,11 +90,10 @@ async function createOrder(fragment = defaultOrderFragment): Promise<Order> {
   const variables = {};
   const body = await graphqlRequest({query, variables});
 
-  const order: Order = body.data.createOrder;
-  return order;
+  return body.data.createOrder;
 }
 
-async function getOrder(id, fragment = defaultOrderFragment): Promise<Order> {
+async function getOrder(id, fragment = defaultOrderFragment): Promise<APIOrder> {
   const query = `
     query {
       order(id: "${id}") {
@@ -441,4 +440,53 @@ describe('mutation.updateOrderRow', () => {
     expect(res.order.rows).toHaveLength(1);
     expect(res.order.rows[0].id).toEqual(row2.id);
   });
+});
+
+describe('mutation.addDiscountCodeToOrder', () => {
+  let order: APIOrder;
+  let product1: Product;
+  let product2: Product;
+
+  beforeEach(async () => {
+    order = await createOrder();
+
+    [product1, product2] = await getProducts();
+
+    const opts1 = {
+      productId: product1.id,
+      orderId: order.id,
+    };
+    const opts2 = {
+      productId: product2.id,
+      orderId: order.id,
+    };
+    await addProductToOrder(opts1);
+    await addProductToOrder(opts2);
+
+    order = await getOrder(order.id);
+  });
+
+  it('adding DiscountCode FIRST gives 10% discount', async () => {
+    const subTotal = product1.price + product2.price;
+    const discountsTotal = subTotal * 0.1;
+    const total = subTotal - discountsTotal;
+
+    const query = `
+      mutation {
+        addDiscountCodeToOrder(orderId: "${order.id}" code: "first") {
+          subTotal
+          discountsTotal
+          total
+        }
+      }
+    `;
+
+    const variables = {};
+    const body = await graphqlRequest({query, variables});
+
+    order = body.data.addDiscountCodeToOrder;
+
+    expect(order).toEqual({subTotal, discountsTotal, total});
+  });
+
 });

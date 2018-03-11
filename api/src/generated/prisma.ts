@@ -11,12 +11,24 @@ type Brand implements Node {
   url: String!
 }
 
+type DiscountCode implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String!
+  type: DiscountCodeType!
+  amount: Float!
+}
+
 type Order implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   rows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow!]
   user(where: UserWhereInput): User
+  discountCodes(where: DiscountCodeWhereInput, orderBy: DiscountCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DiscountCode!]
 }
 
 type OrderRow implements Node {
@@ -47,6 +59,10 @@ type User implements Node {
 }
 
 type AggregateBrand {
+  count: Int!
+}
+
+type AggregateDiscountCode {
   count: Int!
 }
 
@@ -493,6 +509,481 @@ input BrandWhereUniqueInput {
 scalar DateTime
 
 """
+A connection to a list of items.
+"""
+type DiscountCodeConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [DiscountCodeEdge]!
+  aggregate: AggregateDiscountCode!
+}
+
+input DiscountCodeCreateInput {
+  code: String!
+  name: String!
+  description: String!
+  type: DiscountCodeType!
+  amount: Float!
+}
+
+input DiscountCodeCreateManyInput {
+  create: [DiscountCodeCreateInput!]
+  connect: [DiscountCodeWhereUniqueInput!]
+}
+
+"""
+An edge in a connection.
+"""
+type DiscountCodeEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: DiscountCode!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum DiscountCodeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  code_ASC
+  code_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  type_ASC
+  type_DESC
+  amount_ASC
+  amount_DESC
+}
+
+type DiscountCodePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String!
+  type: DiscountCodeType!
+  amount: Float!
+}
+
+type DiscountCodeSubscriptionPayload {
+  mutation: MutationType!
+  node: DiscountCode
+  updatedFields: [String!]
+  previousValues: DiscountCodePreviousValues
+}
+
+input DiscountCodeSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DiscountCodeSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DiscountCodeSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DiscountCodeWhereInput
+}
+
+enum DiscountCodeType {
+  Percentage
+}
+
+input DiscountCodeUpdateDataInput {
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
+}
+
+input DiscountCodeUpdateInput {
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
+}
+
+input DiscountCodeUpdateManyInput {
+  create: [DiscountCodeCreateInput!]
+  connect: [DiscountCodeWhereUniqueInput!]
+  disconnect: [DiscountCodeWhereUniqueInput!]
+  delete: [DiscountCodeWhereUniqueInput!]
+  update: [DiscountCodeUpdateNestedInput!]
+  upsert: [DiscountCodeUpsertNestedInput!]
+}
+
+input DiscountCodeUpdateNestedInput {
+  where: DiscountCodeWhereUniqueInput!
+  data: DiscountCodeUpdateDataInput!
+}
+
+input DiscountCodeUpsertNestedInput {
+  where: DiscountCodeWhereUniqueInput!
+  update: DiscountCodeUpdateDataInput!
+  create: DiscountCodeCreateInput!
+}
+
+input DiscountCodeWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DiscountCodeWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DiscountCodeWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
+  code: String
+  """
+  All values that are not equal to given value.
+  """
+  code_not: String
+  """
+  All values that are contained in given list.
+  """
+  code_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  code_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  code_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  code_lte: String
+  """
+  All values greater than the given value.
+  """
+  code_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  code_gte: String
+  """
+  All values containing the given string.
+  """
+  code_contains: String
+  """
+  All values not containing the given string.
+  """
+  code_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  code_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  code_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  code_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  code_not_ends_with: String
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  description: String
+  """
+  All values that are not equal to given value.
+  """
+  description_not: String
+  """
+  All values that are contained in given list.
+  """
+  description_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  description_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  description_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  description_lte: String
+  """
+  All values greater than the given value.
+  """
+  description_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  description_gte: String
+  """
+  All values containing the given string.
+  """
+  description_contains: String
+  """
+  All values not containing the given string.
+  """
+  description_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  description_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  description_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  description_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  description_not_ends_with: String
+  type: DiscountCodeType
+  """
+  All values that are not equal to given value.
+  """
+  type_not: DiscountCodeType
+  """
+  All values that are contained in given list.
+  """
+  type_in: [DiscountCodeType!]
+  """
+  All values that are not contained in given list.
+  """
+  type_not_in: [DiscountCodeType!]
+  amount: Float
+  """
+  All values that are not equal to given value.
+  """
+  amount_not: Float
+  """
+  All values that are contained in given list.
+  """
+  amount_in: [Float!]
+  """
+  All values that are not contained in given list.
+  """
+  amount_not_in: [Float!]
+  """
+  All values less than the given value.
+  """
+  amount_lt: Float
+  """
+  All values less than or equal the given value.
+  """
+  amount_lte: Float
+  """
+  All values greater than the given value.
+  """
+  amount_gt: Float
+  """
+  All values greater than or equal the given value.
+  """
+  amount_gte: Float
+}
+
+input DiscountCodeWhereUniqueInput {
+  id: ID
+  code: String
+}
+
+"""
 The 'Long' scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
@@ -532,6 +1023,7 @@ type OrderConnection {
 input OrderCreateInput {
   rows: OrderRowCreateManyWithoutOrderInput
   user: UserCreateOneInput
+  discountCodes: DiscountCodeCreateManyInput
 }
 
 input OrderCreateOneWithoutRowsInput {
@@ -541,6 +1033,7 @@ input OrderCreateOneWithoutRowsInput {
 
 input OrderCreateWithoutRowsInput {
   user: UserCreateOneInput
+  discountCodes: DiscountCodeCreateManyInput
 }
 
 """
@@ -896,6 +1389,7 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   rows: OrderRowUpdateManyWithoutOrderInput
   user: UserUpdateOneInput
+  discountCodes: DiscountCodeUpdateManyInput
 }
 
 input OrderUpdateOneWithoutRowsInput {
@@ -909,6 +1403,7 @@ input OrderUpdateOneWithoutRowsInput {
 
 input OrderUpdateWithoutRowsDataInput {
   user: UserUpdateOneInput
+  discountCodes: DiscountCodeUpdateManyInput
 }
 
 input OrderUpdateWithoutRowsInput {
@@ -1046,6 +1541,9 @@ input OrderWhereInput {
   rows_some: OrderRowWhereInput
   rows_none: OrderRowWhereInput
   user: UserWhereInput
+  discountCodes_every: DiscountCodeWhereInput
+  discountCodes_some: DiscountCodeWhereInput
+  discountCodes_none: DiscountCodeWhereInput
 }
 
 input OrderWhereUniqueInput {
@@ -1893,31 +2391,37 @@ type Mutation {
   createProduct(data: ProductCreateInput!): Product!
   createOrder(data: OrderCreateInput!): Order!
   createOrderRow(data: OrderRowCreateInput!): OrderRow!
+  createDiscountCode(data: DiscountCodeCreateInput!): DiscountCode!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateOrderRow(data: OrderRowUpdateInput!, where: OrderRowWhereUniqueInput!): OrderRow
+  updateDiscountCode(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereUniqueInput!): DiscountCode
   deleteUser(where: UserWhereUniqueInput!): User
   deleteBrand(where: BrandWhereUniqueInput!): Brand
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteOrderRow(where: OrderRowWhereUniqueInput!): OrderRow
+  deleteDiscountCode(where: DiscountCodeWhereUniqueInput!): DiscountCode
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
+  upsertDiscountCode(where: DiscountCodeWhereUniqueInput!, create: DiscountCodeCreateInput!, update: DiscountCodeUpdateInput!): DiscountCode!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
   updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
   updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
   updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
+  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput!): BatchPayload!
   deleteManyUsers(where: UserWhereInput!): BatchPayload!
   deleteManyBrands(where: BrandWhereInput!): BatchPayload!
   deleteManyProducts(where: ProductWhereInput!): BatchPayload!
   deleteManyOrders(where: OrderWhereInput!): BatchPayload!
   deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
+  deleteManyDiscountCodes(where: DiscountCodeWhereInput!): BatchPayload!
 }
 
 type Query {
@@ -1926,16 +2430,19 @@ type Query {
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   orderRows(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderRow]!
+  discountCodes(where: DiscountCodeWhereInput, orderBy: DiscountCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DiscountCode]!
   user(where: UserWhereUniqueInput!): User
   brand(where: BrandWhereUniqueInput!): Brand
   product(where: ProductWhereUniqueInput!): Product
   order(where: OrderWhereUniqueInput!): Order
   orderRow(where: OrderRowWhereUniqueInput!): OrderRow
+  discountCode(where: DiscountCodeWhereUniqueInput!): DiscountCode
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   orderRowsConnection(where: OrderRowWhereInput, orderBy: OrderRowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderRowConnection!
+  discountCodesConnection(where: DiscountCodeWhereInput, orderBy: DiscountCodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DiscountCodeConnection!
   """
   Fetches an object given its ID
   """
@@ -1951,6 +2458,7 @@ type Subscription {
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderRow(where: OrderRowSubscriptionWhereInput): OrderRowSubscriptionPayload
+  discountCode(where: DiscountCodeSubscriptionWhereInput): DiscountCodeSubscriptionPayload
 }
 `
 
@@ -1984,6 +2492,9 @@ export type ProductOrderByInput =
   'thumbnail_ASC' |
   'thumbnail_DESC'
 
+export type DiscountCodeType = 
+  'Percentage'
+
 export type OrderOrderByInput = 
   'id_ASC' |
   'id_DESC' |
@@ -2001,6 +2512,24 @@ export type OrderRowOrderByInput =
   'updatedAt_DESC' |
   'quantity_ASC' |
   'quantity_DESC'
+
+export type DiscountCodeOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'code_ASC' |
+  'code_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'description_ASC' |
+  'description_DESC' |
+  'type_ASC' |
+  'type_DESC' |
+  'amount_ASC' |
+  'amount_DESC'
 
 export type UserOrderByInput = 
   'id_ASC' |
@@ -2021,9 +2550,9 @@ export type MutationType =
   'UPDATED' |
   'DELETED'
 
-export interface OrderRowCreateWithoutOrderInput {
-  quantity?: Int
-  product: ProductCreateOneInput
+export interface ProductCreateOneInput {
+  create?: ProductCreateInput
+  connect?: ProductWhereUniqueInput
 }
 
 export interface UserWhereInput {
@@ -2087,16 +2616,96 @@ export interface UserWhereInput {
   name_not_ends_with?: String
 }
 
+export interface UserUpdateNestedInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateDataInput
+}
+
+export interface BrandUpsertNestedInput {
+  where: BrandWhereUniqueInput
+  update: BrandUpdateDataInput
+  create: BrandCreateInput
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput
+  delete?: UserWhereUniqueInput
+  update?: UserUpdateNestedInput
+  upsert?: UserUpsertNestedInput
+}
+
+export interface OrderCreateOneWithoutRowsInput {
+  create?: OrderCreateWithoutRowsInput
+  connect?: OrderWhereUniqueInput
+}
+
+export interface OrderRowUpsertWithoutOrderInput {
+  where: OrderRowWhereUniqueInput
+  update: OrderRowUpdateWithoutOrderDataInput
+  create: OrderRowCreateWithoutOrderInput
+}
+
+export interface OrderRowSubscriptionWhereInput {
+  AND?: OrderRowSubscriptionWhereInput[] | OrderRowSubscriptionWhereInput
+  OR?: OrderRowSubscriptionWhereInput[] | OrderRowSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: OrderRowWhereInput
+}
+
 export interface ProductUpsertNestedInput {
   where: ProductWhereUniqueInput
   update: ProductUpdateDataInput
   create: ProductCreateInput
 }
 
-export interface BrandUpdateDataInput {
-  name?: String
-  slug?: String
-  url?: String
+export interface OrderRowWhereInput {
+  AND?: OrderRowWhereInput[] | OrderRowWhereInput
+  OR?: OrderRowWhereInput[] | OrderRowWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  quantity?: Int
+  quantity_not?: Int
+  quantity_in?: Int[] | Int
+  quantity_not_in?: Int[] | Int
+  quantity_lt?: Int
+  quantity_lte?: Int
+  quantity_gt?: Int
+  quantity_gte?: Int
+  product?: ProductWhereInput
+  order?: OrderWhereInput
 }
 
 export interface ProductUpdateDataInput {
@@ -2107,14 +2716,380 @@ export interface ProductUpdateDataInput {
   brand?: BrandUpdateOneInput
 }
 
-export interface OrderCreateOneWithoutRowsInput {
-  create?: OrderCreateWithoutRowsInput
-  connect?: OrderWhereUniqueInput
+export interface BrandWhereInput {
+  AND?: BrandWhereInput[] | BrandWhereInput
+  OR?: BrandWhereInput[] | BrandWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  slug?: String
+  slug_not?: String
+  slug_in?: String[] | String
+  slug_not_in?: String[] | String
+  slug_lt?: String
+  slug_lte?: String
+  slug_gt?: String
+  slug_gte?: String
+  slug_contains?: String
+  slug_not_contains?: String
+  slug_starts_with?: String
+  slug_not_starts_with?: String
+  slug_ends_with?: String
+  slug_not_ends_with?: String
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
 }
 
 export interface ProductUpdateNestedInput {
   where: ProductWhereUniqueInput
   data: ProductUpdateDataInput
+}
+
+export interface BrandSubscriptionWhereInput {
+  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BrandWhereInput
+}
+
+export interface ProductUpdateOneInput {
+  create?: ProductCreateInput
+  connect?: ProductWhereUniqueInput
+  disconnect?: ProductWhereUniqueInput
+  delete?: ProductWhereUniqueInput
+  update?: ProductUpdateNestedInput
+  upsert?: ProductUpsertNestedInput
+}
+
+export interface DiscountCodeUpdateInput {
+  code?: String
+  name?: String
+  description?: String
+  type?: DiscountCodeType
+  amount?: Float
+}
+
+export interface OrderRowUpdateWithoutOrderDataInput {
+  quantity?: Int
+  product?: ProductUpdateOneInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+}
+
+export interface OrderRowUpdateWithoutOrderInput {
+  where: OrderRowWhereUniqueInput
+  data: OrderRowUpdateWithoutOrderDataInput
+}
+
+export interface ProductWhereUniqueInput {
+  id?: ID_Input
+  slug?: String
+}
+
+export interface OrderRowUpdateManyWithoutOrderInput {
+  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
+  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  disconnect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  delete?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  update?: OrderRowUpdateWithoutOrderInput[] | OrderRowUpdateWithoutOrderInput
+  upsert?: OrderRowUpsertWithoutOrderInput[] | OrderRowUpsertWithoutOrderInput
+}
+
+export interface OrderRowWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface UserCreateInput {
+  email: String
+  password: String
+  name: String
+}
+
+export interface OrderUpdateWithoutRowsDataInput {
+  user?: UserUpdateOneInput
+  discountCodes?: DiscountCodeUpdateManyInput
+}
+
+export interface BrandCreateInput {
+  name: String
+  slug: String
+  url: String
+}
+
+export interface OrderUpdateOneWithoutRowsInput {
+  create?: OrderCreateWithoutRowsInput
+  connect?: OrderWhereUniqueInput
+  disconnect?: OrderWhereUniqueInput
+  delete?: OrderWhereUniqueInput
+  update?: OrderUpdateWithoutRowsInput
+  upsert?: OrderUpsertWithoutRowsInput
+}
+
+export interface ProductCreateInput {
+  price: Int
+  name: String
+  slug: String
+  thumbnail: String
+  brand: BrandCreateOneInput
+}
+
+export interface DiscountCodeUpsertNestedInput {
+  where: DiscountCodeWhereUniqueInput
+  update: DiscountCodeUpdateDataInput
+  create: DiscountCodeCreateInput
+}
+
+export interface BrandCreateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+}
+
+export interface DiscountCodeUpdateNestedInput {
+  where: DiscountCodeWhereUniqueInput
+  data: DiscountCodeUpdateDataInput
+}
+
+export interface OrderCreateInput {
+  rows?: OrderRowCreateManyWithoutOrderInput
+  user?: UserCreateOneInput
+  discountCodes?: DiscountCodeCreateManyInput
+}
+
+export interface UserUpsertNestedInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  create: UserCreateInput
+}
+
+export interface OrderRowCreateManyWithoutOrderInput {
+  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
+  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+}
+
+export interface DiscountCodeSubscriptionWhereInput {
+  AND?: DiscountCodeSubscriptionWhereInput[] | DiscountCodeSubscriptionWhereInput
+  OR?: DiscountCodeSubscriptionWhereInput[] | DiscountCodeSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: DiscountCodeWhereInput
+}
+
+export interface OrderRowCreateWithoutOrderInput {
+  quantity?: Int
+  product: ProductCreateOneInput
+}
+
+export interface DiscountCodeWhereInput {
+  AND?: DiscountCodeWhereInput[] | DiscountCodeWhereInput
+  OR?: DiscountCodeWhereInput[] | DiscountCodeWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  code?: String
+  code_not?: String
+  code_in?: String[] | String
+  code_not_in?: String[] | String
+  code_lt?: String
+  code_lte?: String
+  code_gt?: String
+  code_gte?: String
+  code_contains?: String
+  code_not_contains?: String
+  code_starts_with?: String
+  code_not_starts_with?: String
+  code_ends_with?: String
+  code_not_ends_with?: String
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  description?: String
+  description_not?: String
+  description_in?: String[] | String
+  description_not_in?: String[] | String
+  description_lt?: String
+  description_lte?: String
+  description_gt?: String
+  description_gte?: String
+  description_contains?: String
+  description_not_contains?: String
+  description_starts_with?: String
+  description_not_starts_with?: String
+  description_ends_with?: String
+  description_not_ends_with?: String
+  type?: DiscountCodeType
+  type_not?: DiscountCodeType
+  type_in?: DiscountCodeType[] | DiscountCodeType
+  type_not_in?: DiscountCodeType[] | DiscountCodeType
+  amount?: Float
+  amount_not?: Float
+  amount_in?: Float[] | Float
+  amount_not_in?: Float[] | Float
+  amount_lt?: Float
+  amount_lte?: Float
+  amount_gt?: Float
+  amount_gte?: Float
+}
+
+export interface OrderUpdateInput {
+  rows?: OrderRowUpdateManyWithoutOrderInput
+  user?: UserUpdateOneInput
+  discountCodes?: DiscountCodeUpdateManyInput
+}
+
+export interface ProductSubscriptionWhereInput {
+  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ProductWhereInput
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+}
+
+export interface OrderUpsertWithoutRowsInput {
+  where: OrderWhereUniqueInput
+  update: OrderUpdateWithoutRowsDataInput
+  create: OrderCreateWithoutRowsInput
+}
+
+export interface DiscountCodeCreateManyInput {
+  create?: DiscountCodeCreateInput[] | DiscountCodeCreateInput
+  connect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+}
+
+export interface OrderWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface DiscountCodeCreateInput {
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
+}
+
+export interface OrderUpdateWithoutRowsInput {
+  where: OrderWhereUniqueInput
+  data: OrderUpdateWithoutRowsDataInput
+}
+
+export interface OrderRowCreateInput {
+  quantity?: Int
+  product: ProductCreateOneInput
+  order: OrderCreateOneWithoutRowsInput
+}
+
+export interface DiscountCodeUpdateDataInput {
+  code?: String
+  name?: String
+  description?: String
+  type?: DiscountCodeType
+  amount?: Float
 }
 
 export interface ProductWhereInput {
@@ -2203,13 +3178,15 @@ export interface ProductWhereInput {
   brand?: BrandWhereInput
 }
 
-export interface ProductUpdateOneInput {
-  create?: ProductCreateInput
-  connect?: ProductWhereUniqueInput
-  disconnect?: ProductWhereUniqueInput
-  delete?: ProductWhereUniqueInput
-  update?: ProductUpdateNestedInput
-  upsert?: ProductUpsertNestedInput
+export interface UserUpdateDataInput {
+  email?: String
+  password?: String
+  name?: String
+}
+
+export interface OrderCreateWithoutRowsInput {
+  user?: UserCreateOneInput
+  discountCodes?: DiscountCodeCreateManyInput
 }
 
 export interface OrderSubscriptionWhereInput {
@@ -2222,89 +3199,10 @@ export interface OrderSubscriptionWhereInput {
   node?: OrderWhereInput
 }
 
-export interface OrderRowUpdateWithoutOrderDataInput {
-  quantity?: Int
-  product?: ProductUpdateOneInput
-}
-
-export interface OrderRowWhereInput {
-  AND?: OrderRowWhereInput[] | OrderRowWhereInput
-  OR?: OrderRowWhereInput[] | OrderRowWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
-  quantity?: Int
-  quantity_not?: Int
-  quantity_in?: Int[] | Int
-  quantity_not_in?: Int[] | Int
-  quantity_lt?: Int
-  quantity_lte?: Int
-  quantity_gt?: Int
-  quantity_gte?: Int
-  product?: ProductWhereInput
-  order?: OrderWhereInput
-}
-
-export interface OrderRowUpdateWithoutOrderInput {
-  where: OrderRowWhereUniqueInput
-  data: OrderRowUpdateWithoutOrderDataInput
-}
-
-export interface BrandSubscriptionWhereInput {
-  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: BrandWhereInput
-}
-
-export interface OrderRowUpdateManyWithoutOrderInput {
-  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
-  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-  disconnect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-  delete?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-  update?: OrderRowUpdateWithoutOrderInput[] | OrderRowUpdateWithoutOrderInput
-  upsert?: OrderRowUpsertWithoutOrderInput[] | OrderRowUpsertWithoutOrderInput
-}
-
-export interface OrderUpsertWithoutRowsInput {
-  where: OrderWhereUniqueInput
-  update: OrderUpdateWithoutRowsDataInput
-  create: OrderCreateWithoutRowsInput
-}
-
-export interface OrderUpdateInput {
-  rows?: OrderRowUpdateManyWithoutOrderInput
-  user?: UserUpdateOneInput
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  name?: String
 }
 
 export interface BrandWhereUniqueInput {
@@ -2312,114 +3210,10 @@ export interface BrandWhereUniqueInput {
   slug?: String
 }
 
-export interface UserCreateInput {
-  email: String
-  password: String
-  name: String
-}
-
-export interface OrderWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface BrandCreateInput {
-  name: String
-  slug: String
-  url: String
-}
-
-export interface OrderUpdateWithoutRowsDataInput {
-  user?: UserUpdateOneInput
-}
-
-export interface ProductCreateInput {
-  price: Int
-  name: String
-  slug: String
-  thumbnail: String
-  brand: BrandCreateOneInput
-}
-
-export interface OrderUpdateOneWithoutRowsInput {
-  create?: OrderCreateWithoutRowsInput
-  connect?: OrderWhereUniqueInput
-  disconnect?: OrderWhereUniqueInput
-  delete?: OrderWhereUniqueInput
-  update?: OrderUpdateWithoutRowsInput
-  upsert?: OrderUpsertWithoutRowsInput
-}
-
-export interface BrandCreateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
-}
-
-export interface UserUpsertNestedInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateDataInput
-  create: UserCreateInput
-}
-
-export interface OrderCreateInput {
-  rows?: OrderRowCreateManyWithoutOrderInput
-  user?: UserCreateOneInput
-}
-
-export interface UserUpdateNestedInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateDataInput
-}
-
-export interface OrderRowCreateManyWithoutOrderInput {
-  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
-  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-}
-
-export interface OrderRowUpsertWithoutOrderInput {
-  where: OrderRowWhereUniqueInput
-  update: OrderRowUpdateWithoutOrderDataInput
-  create: OrderRowCreateWithoutOrderInput
-}
-
-export interface BrandUpsertNestedInput {
-  where: BrandWhereUniqueInput
-  update: BrandUpdateDataInput
-  create: BrandCreateInput
-}
-
-export interface ProductSubscriptionWhereInput {
-  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
-  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ProductWhereInput
-}
-
-export interface ProductCreateOneInput {
-  create?: ProductCreateInput
-  connect?: ProductWhereUniqueInput
-}
-
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
-}
-
-export interface UserCreateOneInput {
-  create?: UserCreateInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface OrderRowWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface OrderRowCreateInput {
-  quantity?: Int
-  product: ProductCreateOneInput
-  order: OrderCreateOneWithoutRowsInput
+export interface BrandUpdateInput {
+  name?: String
+  slug?: String
+  url?: String
 }
 
 export interface OrderRowUpdateInput {
@@ -2428,94 +3222,56 @@ export interface OrderRowUpdateInput {
   order?: OrderUpdateOneWithoutRowsInput
 }
 
-export interface BrandWhereInput {
-  AND?: BrandWhereInput[] | BrandWhereInput
-  OR?: BrandWhereInput[] | BrandWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
+export interface BrandUpdateDataInput {
   name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
   slug?: String
-  slug_not?: String
-  slug_in?: String[] | String
-  slug_not_in?: String[] | String
-  slug_lt?: String
-  slug_lte?: String
-  slug_gt?: String
-  slug_gte?: String
-  slug_contains?: String
-  slug_not_contains?: String
-  slug_starts_with?: String
-  slug_not_starts_with?: String
-  slug_ends_with?: String
-  slug_not_ends_with?: String
   url?: String
-  url_not?: String
-  url_in?: String[] | String
-  url_not_in?: String[] | String
-  url_lt?: String
-  url_lte?: String
-  url_gt?: String
-  url_gte?: String
-  url_contains?: String
-  url_not_contains?: String
-  url_starts_with?: String
-  url_not_starts_with?: String
-  url_ends_with?: String
-  url_not_ends_with?: String
 }
 
-export interface UserUpdateOneInput {
-  create?: UserCreateInput
-  connect?: UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput
-  delete?: UserWhereUniqueInput
-  update?: UserUpdateNestedInput
-  upsert?: UserUpsertNestedInput
+export interface BrandUpdateNestedInput {
+  where: BrandWhereUniqueInput
+  data: BrandUpdateDataInput
 }
 
-export interface OrderCreateWithoutRowsInput {
-  user?: UserCreateOneInput
+export interface BrandUpdateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+  disconnect?: BrandWhereUniqueInput
+  delete?: BrandWhereUniqueInput
+  update?: BrandUpdateNestedInput
+  upsert?: BrandUpsertNestedInput
+}
+
+export interface ProductUpdateInput {
+  price?: Int
+  name?: String
+  slug?: String
+  thumbnail?: String
+  brand?: BrandUpdateOneInput
+}
+
+export interface DiscountCodeUpdateManyInput {
+  create?: DiscountCodeCreateInput[] | DiscountCodeCreateInput
+  connect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+  disconnect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+  delete?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+  update?: DiscountCodeUpdateNestedInput[] | DiscountCodeUpdateNestedInput
+  upsert?: DiscountCodeUpsertNestedInput[] | DiscountCodeUpsertNestedInput
+}
+
+export interface DiscountCodeWhereUniqueInput {
+  id?: ID_Input
+  code?: String
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
 }
 
 export interface OrderWhereInput {
@@ -2555,76 +3311,9 @@ export interface OrderWhereInput {
   rows_some?: OrderRowWhereInput
   rows_none?: OrderRowWhereInput
   user?: UserWhereInput
-}
-
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  name?: String
-}
-
-export interface ProductWhereUniqueInput {
-  id?: ID_Input
-  slug?: String
-}
-
-export interface BrandUpdateNestedInput {
-  where: BrandWhereUniqueInput
-  data: BrandUpdateDataInput
-}
-
-export interface BrandUpdateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
-  disconnect?: BrandWhereUniqueInput
-  delete?: BrandWhereUniqueInput
-  update?: BrandUpdateNestedInput
-  upsert?: BrandUpsertNestedInput
-}
-
-export interface ProductUpdateInput {
-  price?: Int
-  name?: String
-  slug?: String
-  thumbnail?: String
-  brand?: BrandUpdateOneInput
-}
-
-export interface BrandUpdateInput {
-  name?: String
-  slug?: String
-  url?: String
-}
-
-export interface OrderUpdateWithoutRowsInput {
-  where: OrderWhereUniqueInput
-  data: OrderUpdateWithoutRowsDataInput
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface OrderRowSubscriptionWhereInput {
-  AND?: OrderRowSubscriptionWhereInput[] | OrderRowSubscriptionWhereInput
-  OR?: OrderRowSubscriptionWhereInput[] | OrderRowSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: OrderRowWhereInput
-}
-
-export interface UserUpdateDataInput {
-  email?: String
-  password?: String
-  name?: String
+  discountCodes_every?: DiscountCodeWhereInput
+  discountCodes_some?: DiscountCodeWhereInput
+  discountCodes_none?: DiscountCodeWhereInput
 }
 
 /*
@@ -2635,11 +3324,15 @@ export interface Node {
   id: ID_Output
 }
 
-export interface OrderRowPreviousValues {
+export interface DiscountCodePreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  quantity: Int
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
 }
 
 /*
@@ -2653,15 +3346,10 @@ export interface PageInfo {
   endCursor?: String
 }
 
-export interface Product extends Node {
+export interface OrderPreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  price: Int
-  brand: Brand
-  name: String
-  slug: String
-  thumbnail: String
 }
 
 /*
@@ -2674,6 +3362,74 @@ export interface UserConnection {
   aggregate: AggregateUser
 }
 
+export interface Brand extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  name: String
+  slug: String
+  url: String
+}
+
+export interface DiscountCode extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface DiscountCodeConnection {
+  pageInfo: PageInfo
+  edges: DiscountCodeEdge[]
+  aggregate: AggregateDiscountCode
+}
+
+export interface AggregateDiscountCode {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface OrderRowEdge {
+  node: OrderRow
+  cursor: String
+}
+
+export interface BatchPayload {
+  count: Long
+}
+
+export interface AggregateOrder {
+  count: Int
+}
+
+export interface OrderRowPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  quantity: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface OrderConnection {
+  pageInfo: PageInfo
+  edges: OrderEdge[]
+  aggregate: AggregateOrder
+}
+
 export interface OrderRow extends Node {
   id: ID_Output
   createdAt: DateTime
@@ -2683,8 +3439,80 @@ export interface OrderRow extends Node {
   order: Order
 }
 
-export interface AggregateOrderRow {
+/*
+ * An edge in a connection.
+
+ */
+export interface ProductEdge {
+  node: Product
+  cursor: String
+}
+
+export interface OrderRowSubscriptionPayload {
+  mutation: MutationType
+  node?: OrderRow
+  updatedFields?: String[]
+  previousValues?: OrderRowPreviousValues
+}
+
+export interface AggregateBrand {
   count: Int
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface BrandConnection {
+  pageInfo: PageInfo
+  edges: BrandEdge[]
+  aggregate: AggregateBrand
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  email: String
+  password: String
+  name: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface User extends Node {
+  id: ID_Output
+  email: String
+  password: String
+  name: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface DiscountCodeEdge {
+  node: DiscountCode
+  cursor: String
+}
+
+export interface BrandSubscriptionPayload {
+  mutation: MutationType
+  node?: Brand
+  updatedFields?: String[]
+  previousValues?: BrandPreviousValues
 }
 
 /*
@@ -2697,20 +3525,7 @@ export interface OrderRowConnection {
   aggregate: AggregateOrderRow
 }
 
-export interface BatchPayload {
-  count: Long
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface OrderEdge {
-  node: Order
-  cursor: String
-}
-
-export interface Brand extends Node {
+export interface BrandPreviousValues {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
@@ -2723,27 +3538,13 @@ export interface AggregateProduct {
   count: Int
 }
 
-export interface OrderPreviousValues {
+export interface Order extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface ProductConnection {
-  pageInfo: PageInfo
-  edges: ProductEdge[]
-  aggregate: AggregateProduct
-}
-
-export interface OrderSubscriptionPayload {
-  mutation: MutationType
-  node?: Order
-  updatedFields?: String[]
-  previousValues?: OrderPreviousValues
+  rows?: OrderRow[]
+  user?: User
+  discountCodes?: DiscountCode[]
 }
 
 /*
@@ -2755,67 +3556,29 @@ export interface BrandEdge {
   cursor: String
 }
 
-export interface UserSubscriptionPayload {
+export interface DiscountCodeSubscriptionPayload {
   mutation: MutationType
-  node?: User
+  node?: DiscountCode
   updatedFields?: String[]
-  previousValues?: UserPreviousValues
+  previousValues?: DiscountCodePreviousValues
 }
 
-export interface AggregateUser {
-  count: Int
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  email: String
-  password: String
-  name: String
-}
-
-export interface OrderRowSubscriptionPayload {
+export interface OrderSubscriptionPayload {
   mutation: MutationType
-  node?: OrderRow
+  node?: Order
   updatedFields?: String[]
-  previousValues?: OrderRowPreviousValues
+  previousValues?: OrderPreviousValues
 }
 
-export interface Order extends Node {
+export interface Product extends Node {
   id: ID_Output
   createdAt: DateTime
   updatedAt: DateTime
-  rows?: OrderRow[]
-  user?: User
-}
-
-export interface AggregateOrder {
-  count: Int
-}
-
-export interface BrandSubscriptionPayload {
-  mutation: MutationType
-  node?: Brand
-  updatedFields?: String[]
-  previousValues?: BrandPreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface ProductEdge {
-  node: Product
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface BrandConnection {
-  pageInfo: PageInfo
-  edges: BrandEdge[]
-  aggregate: AggregateBrand
+  price: Int
+  brand: Brand
+  name: String
+  slug: String
+  thumbnail: String
 }
 
 export interface ProductPreviousValues {
@@ -2835,32 +3598,11 @@ export interface ProductSubscriptionPayload {
   previousValues?: ProductPreviousValues
 }
 
-export interface User extends Node {
-  id: ID_Output
-  email: String
-  password: String
-  name: String
+export interface AggregateOrderRow {
+  count: Int
 }
 
-export interface BrandPreviousValues {
-  id: ID_Output
-  createdAt: DateTime
-  updatedAt: DateTime
-  name: String
-  slug: String
-  url: String
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
-}
-
-export interface AggregateBrand {
+export interface AggregateUser {
   count: Int
 }
 
@@ -2868,22 +3610,25 @@ export interface AggregateBrand {
  * A connection to a list of items.
 
  */
-export interface OrderConnection {
+export interface ProductConnection {
   pageInfo: PageInfo
-  edges: OrderEdge[]
-  aggregate: AggregateOrder
+  edges: ProductEdge[]
+  aggregate: AggregateProduct
 }
 
 /*
  * An edge in a connection.
 
  */
-export interface OrderRowEdge {
-  node: OrderRow
+export interface OrderEdge {
+  node: Order
   cursor: String
 }
 
-export type DateTime = string
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -2896,6 +3641,8 @@ The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean
 
+export type DateTime = string
+
 /*
 The 'Long' scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -2903,14 +3650,14 @@ Long can represent values between -(2^63) and 2^63 - 1.
 export type Long = string
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number
 
 export interface Schema {
   query: Query
@@ -2924,16 +3671,19 @@ export type Query = {
   products: (args: { where?: ProductWhereInput, orderBy?: ProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Product[]>
   orders: (args: { where?: OrderWhereInput, orderBy?: OrderOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<Order[]>
   orderRows: (args: { where?: OrderRowWhereInput, orderBy?: OrderRowOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderRow[]>
+  discountCodes: (args: { where?: DiscountCodeWhereInput, orderBy?: DiscountCodeOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode[]>
   user: (args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
   brand: (args: { where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
   product: (args: { where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
   order: (args: { where: OrderWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Order | null>
   orderRow: (args: { where: OrderRowWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow | null>
+  discountCode: (args: { where: DiscountCodeWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode | null>
   usersConnection: (args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<UserConnection>
   brandsConnection: (args: { where?: BrandWhereInput, orderBy?: BrandOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<BrandConnection>
   productsConnection: (args: { where?: ProductWhereInput, orderBy?: ProductOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<ProductConnection>
   ordersConnection: (args: { where?: OrderWhereInput, orderBy?: OrderOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderConnection>
   orderRowsConnection: (args: { where?: OrderRowWhereInput, orderBy?: OrderRowOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<OrderRowConnection>
+  discountCodesConnection: (args: { where?: DiscountCodeWhereInput, orderBy?: DiscountCodeOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string) => Promise<DiscountCodeConnection>
   node: (args: { id: ID_Output }, info?: GraphQLResolveInfo | string) => Promise<Node | null>
 }
 
@@ -2943,31 +3693,37 @@ export type Mutation = {
   createProduct: (args: { data: ProductCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Product>
   createOrder: (args: { data: OrderCreateInput }, info?: GraphQLResolveInfo | string) => Promise<Order>
   createOrderRow: (args: { data: OrderRowCreateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow>
+  createDiscountCode: (args: { data: DiscountCodeCreateInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode>
   updateUser: (args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
   updateBrand: (args: { data: BrandUpdateInput, where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
   updateProduct: (args: { data: ProductUpdateInput, where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
   updateOrder: (args: { data: OrderUpdateInput, where: OrderWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Order | null>
   updateOrderRow: (args: { data: OrderRowUpdateInput, where: OrderRowWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow | null>
+  updateDiscountCode: (args: { data: DiscountCodeUpdateInput, where: DiscountCodeWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode | null>
   deleteUser: (args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<User | null>
   deleteBrand: (args: { where: BrandWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Brand | null>
   deleteProduct: (args: { where: ProductWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Product | null>
   deleteOrder: (args: { where: OrderWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<Order | null>
   deleteOrderRow: (args: { where: OrderRowWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow | null>
+  deleteDiscountCode: (args: { where: DiscountCodeWhereUniqueInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode | null>
   upsertUser: (args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<User>
   upsertBrand: (args: { where: BrandWhereUniqueInput, create: BrandCreateInput, update: BrandUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Brand>
   upsertProduct: (args: { where: ProductWhereUniqueInput, create: ProductCreateInput, update: ProductUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Product>
   upsertOrder: (args: { where: OrderWhereUniqueInput, create: OrderCreateInput, update: OrderUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Order>
   upsertOrderRow: (args: { where: OrderRowWhereUniqueInput, create: OrderRowCreateInput, update: OrderRowUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow>
+  upsertDiscountCode: (args: { where: DiscountCodeWhereUniqueInput, create: DiscountCodeCreateInput, update: DiscountCodeUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode>
   updateManyUsers: (args: { data: UserUpdateInput, where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyBrands: (args: { data: BrandUpdateInput, where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyProducts: (args: { data: ProductUpdateInput, where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyOrders: (args: { data: OrderUpdateInput, where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   updateManyOrderRows: (args: { data: OrderRowUpdateInput, where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyDiscountCodes: (args: { data: DiscountCodeUpdateInput, where: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyUsers: (args: { where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyBrands: (args: { where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyProducts: (args: { where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyOrders: (args: { where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
   deleteManyOrderRows: (args: { where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyDiscountCodes: (args: { where: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
 }
 
 export type Subscription = {
@@ -2976,6 +3732,7 @@ export type Subscription = {
   product: (args: { where?: ProductSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<ProductSubscriptionPayload>>
   order: (args: { where?: OrderSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<OrderSubscriptionPayload>>
   orderRow: (args: { where?: OrderRowSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<OrderRowSubscriptionPayload>>
+  discountCode: (args: { where?: DiscountCodeSubscriptionWhereInput }, infoOrQuery?: GraphQLResolveInfo | string) => Promise<AsyncIterator<DiscountCodeSubscriptionPayload>>
 }
 
 export class Prisma extends BasePrisma {
@@ -2989,7 +3746,8 @@ export class Prisma extends BasePrisma {
     Brand: (where: BrandWhereInput): Promise<boolean> => super.existsDelegate('query', 'brands', { where }, {}, '{ id }'),
     Product: (where: ProductWhereInput): Promise<boolean> => super.existsDelegate('query', 'products', { where }, {}, '{ id }'),
     Order: (where: OrderWhereInput): Promise<boolean> => super.existsDelegate('query', 'orders', { where }, {}, '{ id }'),
-    OrderRow: (where: OrderRowWhereInput): Promise<boolean> => super.existsDelegate('query', 'orderRows', { where }, {}, '{ id }')
+    OrderRow: (where: OrderRowWhereInput): Promise<boolean> => super.existsDelegate('query', 'orderRows', { where }, {}, '{ id }'),
+    DiscountCode: (where: DiscountCodeWhereInput): Promise<boolean> => super.existsDelegate('query', 'discountCodes', { where }, {}, '{ id }')
   }
 
   query: Query = {
@@ -2998,16 +3756,19 @@ export class Prisma extends BasePrisma {
     products: (args, info): Promise<Product[]> => super.delegate('query', 'products', args, {}, info),
     orders: (args, info): Promise<Order[]> => super.delegate('query', 'orders', args, {}, info),
     orderRows: (args, info): Promise<OrderRow[]> => super.delegate('query', 'orderRows', args, {}, info),
+    discountCodes: (args, info): Promise<DiscountCode[]> => super.delegate('query', 'discountCodes', args, {}, info),
     user: (args, info): Promise<User | null> => super.delegate('query', 'user', args, {}, info),
     brand: (args, info): Promise<Brand | null> => super.delegate('query', 'brand', args, {}, info),
     product: (args, info): Promise<Product | null> => super.delegate('query', 'product', args, {}, info),
     order: (args, info): Promise<Order | null> => super.delegate('query', 'order', args, {}, info),
     orderRow: (args, info): Promise<OrderRow | null> => super.delegate('query', 'orderRow', args, {}, info),
+    discountCode: (args, info): Promise<DiscountCode | null> => super.delegate('query', 'discountCode', args, {}, info),
     usersConnection: (args, info): Promise<UserConnection> => super.delegate('query', 'usersConnection', args, {}, info),
     brandsConnection: (args, info): Promise<BrandConnection> => super.delegate('query', 'brandsConnection', args, {}, info),
     productsConnection: (args, info): Promise<ProductConnection> => super.delegate('query', 'productsConnection', args, {}, info),
     ordersConnection: (args, info): Promise<OrderConnection> => super.delegate('query', 'ordersConnection', args, {}, info),
     orderRowsConnection: (args, info): Promise<OrderRowConnection> => super.delegate('query', 'orderRowsConnection', args, {}, info),
+    discountCodesConnection: (args, info): Promise<DiscountCodeConnection> => super.delegate('query', 'discountCodesConnection', args, {}, info),
     node: (args, info): Promise<Node | null> => super.delegate('query', 'node', args, {}, info)
   }
 
@@ -3017,31 +3778,37 @@ export class Prisma extends BasePrisma {
     createProduct: (args, info): Promise<Product> => super.delegate('mutation', 'createProduct', args, {}, info),
     createOrder: (args, info): Promise<Order> => super.delegate('mutation', 'createOrder', args, {}, info),
     createOrderRow: (args, info): Promise<OrderRow> => super.delegate('mutation', 'createOrderRow', args, {}, info),
+    createDiscountCode: (args, info): Promise<DiscountCode> => super.delegate('mutation', 'createDiscountCode', args, {}, info),
     updateUser: (args, info): Promise<User | null> => super.delegate('mutation', 'updateUser', args, {}, info),
     updateBrand: (args, info): Promise<Brand | null> => super.delegate('mutation', 'updateBrand', args, {}, info),
     updateProduct: (args, info): Promise<Product | null> => super.delegate('mutation', 'updateProduct', args, {}, info),
     updateOrder: (args, info): Promise<Order | null> => super.delegate('mutation', 'updateOrder', args, {}, info),
     updateOrderRow: (args, info): Promise<OrderRow | null> => super.delegate('mutation', 'updateOrderRow', args, {}, info),
+    updateDiscountCode: (args, info): Promise<DiscountCode | null> => super.delegate('mutation', 'updateDiscountCode', args, {}, info),
     deleteUser: (args, info): Promise<User | null> => super.delegate('mutation', 'deleteUser', args, {}, info),
     deleteBrand: (args, info): Promise<Brand | null> => super.delegate('mutation', 'deleteBrand', args, {}, info),
     deleteProduct: (args, info): Promise<Product | null> => super.delegate('mutation', 'deleteProduct', args, {}, info),
     deleteOrder: (args, info): Promise<Order | null> => super.delegate('mutation', 'deleteOrder', args, {}, info),
     deleteOrderRow: (args, info): Promise<OrderRow | null> => super.delegate('mutation', 'deleteOrderRow', args, {}, info),
+    deleteDiscountCode: (args, info): Promise<DiscountCode | null> => super.delegate('mutation', 'deleteDiscountCode', args, {}, info),
     upsertUser: (args, info): Promise<User> => super.delegate('mutation', 'upsertUser', args, {}, info),
     upsertBrand: (args, info): Promise<Brand> => super.delegate('mutation', 'upsertBrand', args, {}, info),
     upsertProduct: (args, info): Promise<Product> => super.delegate('mutation', 'upsertProduct', args, {}, info),
     upsertOrder: (args, info): Promise<Order> => super.delegate('mutation', 'upsertOrder', args, {}, info),
     upsertOrderRow: (args, info): Promise<OrderRow> => super.delegate('mutation', 'upsertOrderRow', args, {}, info),
+    upsertDiscountCode: (args, info): Promise<DiscountCode> => super.delegate('mutation', 'upsertDiscountCode', args, {}, info),
     updateManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyUsers', args, {}, info),
     updateManyBrands: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyBrands', args, {}, info),
     updateManyProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyProducts', args, {}, info),
     updateManyOrders: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyOrders', args, {}, info),
     updateManyOrderRows: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyOrderRows', args, {}, info),
+    updateManyDiscountCodes: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'updateManyDiscountCodes', args, {}, info),
     deleteManyUsers: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyUsers', args, {}, info),
     deleteManyBrands: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyBrands', args, {}, info),
     deleteManyProducts: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyProducts', args, {}, info),
     deleteManyOrders: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyOrders', args, {}, info),
-    deleteManyOrderRows: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyOrderRows', args, {}, info)
+    deleteManyOrderRows: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyOrderRows', args, {}, info),
+    deleteManyDiscountCodes: (args, info): Promise<BatchPayload> => super.delegate('mutation', 'deleteManyDiscountCodes', args, {}, info)
   }
 
   subscription: Subscription = {
@@ -3049,6 +3816,7 @@ export class Prisma extends BasePrisma {
     brand: (args, infoOrQuery): Promise<AsyncIterator<BrandSubscriptionPayload>> => super.delegateSubscription('brand', args, {}, infoOrQuery),
     product: (args, infoOrQuery): Promise<AsyncIterator<ProductSubscriptionPayload>> => super.delegateSubscription('product', args, {}, infoOrQuery),
     order: (args, infoOrQuery): Promise<AsyncIterator<OrderSubscriptionPayload>> => super.delegateSubscription('order', args, {}, infoOrQuery),
-    orderRow: (args, infoOrQuery): Promise<AsyncIterator<OrderRowSubscriptionPayload>> => super.delegateSubscription('orderRow', args, {}, infoOrQuery)
+    orderRow: (args, infoOrQuery): Promise<AsyncIterator<OrderRowSubscriptionPayload>> => super.delegateSubscription('orderRow', args, {}, infoOrQuery),
+    discountCode: (args, infoOrQuery): Promise<AsyncIterator<DiscountCodeSubscriptionPayload>> => super.delegateSubscription('discountCode', args, {}, infoOrQuery)
   }
 }

@@ -11,6 +11,8 @@ export interface APIOrderRow extends OrderRow {
 
 export interface APIOrder extends Order {
   subTotal: number;
+  total: number;
+  discountsTotal: number;
   rows: APIOrderRow[];
 }
 
@@ -28,4 +30,9 @@ export interface AddProductToOrderVariables {
   orderId: string;
   productId: string;
   quantity?: number;
+}
+
+export interface AddDiscountCodeToOrderVariables {
+  orderId: string;
+  code: string;
 }

@@ -1,6 +1,7 @@
 import { extractFragmentReplacements } from 'prisma-binding';
-import { Order, OrderRow } from '../generated/prisma';
-import { APIOrder, UpdateOrderRowResponse } from '../schema';
+import { DiscountCodeType, Order, OrderRow } from '../generated/prisma';
+import { getOrderTotals, getOrderTotalsFragment } from '../lib/getOrderTotals';
+import { APIOrder, APIOrderRow, UpdateOrderRowResponse } from '../schema';
 import { Context } from '../utils';
 import Mutation from './Mutation';
 import Query from './Query';
@@ -19,11 +20,21 @@ export const resolvers = {
   },
   Order: {
     subTotal: {
-      fragment: 'fragment OrderFragment on Order { rows { quantity, product { price } } }',
+      fragment: getOrderTotalsFragment('subTotal'),
       resolve: (source: Order, args, context, info): number => {
-        return source.rows.reduce((total, product) => (
-          total + product.quantity * product.product.price
-        ), 0);
+        return getOrderTotals(source).subTotal;
+      },
+    },
+    discountsTotal: {
+      fragment: getOrderTotalsFragment('discountsTotal'),
+      resolve: (source: Order, args, context, info): number => {
+        return getOrderTotals(source).discountsTotal;
+      },
+    },
+    total: {
+      fragment: getOrderTotalsFragment('total'),
+      resolve: (source: Order, args, context, info): number => {
+        return getOrderTotals(source).total;
       },
     },
   },
