@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "9"
+sudo: required
+services:
+  - docker
+
+install:
+  - yarn setup
+
+script:
+  - yarn test:api
