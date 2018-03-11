@@ -46,6 +46,15 @@ type Order implements Node {
   subTotal: Int!
   discountsTotal: Int!
   total: Int!
+  discountCodes(
+    where: DiscountCodeWhereInput
+    orderBy: DiscountCodeOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [DiscountCode!]
 }
 
 type OrderRow implements Node {

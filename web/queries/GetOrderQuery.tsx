@@ -3,42 +3,48 @@ import { APIOrder } from 'lib/prisma';
 import { ReactElement, ReactNode } from 'react';
 import { compose, graphql, QueryProps } from 'react-apollo';
 
-export const GetOrderProductFragment = gql`
-  fragment GetOrderProductFragment on Product {
+export const GetOrderProductFields = `
+  __typename
+  id
+  name
+  price
+  brand { name }
+  thumbnail
+`;
+
+export const GetOrderFields = `
+  __typename
+  id
+  subTotal
+  total
+  discountsTotal
+  discountCodes {
     __typename
     id
     name
-    price
-    brand { name }
-    thumbnail
+    amount
+    type
+    code
+    description
   }
-`;
 
-export const GetOrderFragment = gql`
-  fragment GetOrderFragment on Order {
+  rows {
     __typename
     id
-    subTotal
-    rows {
-      __typename
-      id
-      quantity
-      total
-      product {
-        ...GetOrderProductFragment
-      }
+    quantity
+    total
+    product {
+      ${GetOrderProductFields}
     }
   }
-  ${GetOrderProductFragment}
 `;
 
 export const GetOrderQueryAST = gql`
   query GetOrderQuery($id: ID!) {
     order(id: $id) {
-      ...GetOrderFragment
+      ${GetOrderFields}
     }
   }
-  ${GetOrderFragment}
 `;
 
 interface InputProps {

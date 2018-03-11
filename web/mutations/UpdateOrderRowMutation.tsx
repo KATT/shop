@@ -3,7 +3,7 @@ import {print as printSource} from 'graphql/language/printer';
 import React, { ReactNode } from 'react';
 import { graphql } from 'react-apollo';
 import { APIOrder, UpdateOrderRowVariables } from '../lib/prisma';
-import { GetOrderFragment } from '../queries/GetOrderQuery';
+import { GetOrderFields } from '../queries/GetOrderQuery';
 import { calculateTotals } from './AddProductToOrderMutation';
 
 type updateOrderRowMutationFn = (variables: UpdateOrderRowVariables) => {};
@@ -46,11 +46,10 @@ export const updateOrderRowQuery: any = gql`
   mutation updateOrderRow ($id: ID! $quantity: Int) {
     updateOrderRow (id: $id quantity: $quantity) {
       order {
-        ...GetOrderFragment
+        ${GetOrderFields}
       }
     }
   }
-  ${GetOrderFragment}
 `;
 
 function isFunction(obj: any) {

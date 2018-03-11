@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import { SingletonRouter } from 'next/router';
 import { graphql, QueryProps } from 'react-apollo';
 import { Product } from '../lib/prisma';
-import { GetOrderProductFragment } from '../queries/GetOrderQuery';
+import { GetOrderProductFields } from '../queries/GetOrderQuery';
 import { ProductCardFragment } from './ProductCard';
 import ProductList from './ProductList';
 
@@ -51,11 +51,10 @@ const productsQuery: any = gql`
       name
       price
       ...ProductCardFragment
-      ...GetOrderProductFragment
+      ${GetOrderProductFields}
     }
   }
   ${ProductCardFragment}
-  ${GetOrderProductFragment}
 `;
 export default graphql<Response, InputProps>(productsQuery, {
   name: 'productsData',

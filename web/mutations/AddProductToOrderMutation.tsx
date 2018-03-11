@@ -3,22 +3,35 @@ import {print as printSource} from 'graphql/language/printer';
 import React, { ReactNode } from 'react';
 import { compose, graphql } from 'react-apollo';
 import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
-import { GetOrderFragment, GetOrderQueryAST } from '../queries/GetOrderQuery';
+import { GetOrderFields, GetOrderQueryAST } from '../queries/GetOrderQuery';
 
 type addProductToOrderMutationFn = (product: Product) => {};
 
 export function calculateTotals(order: Partial<APIOrder>) {
   const rows = order.rows.map((row) => ({
     ...row,
-    total: row.quantity * row.product.price,
+    subTotal: row.quantity * row.product.price,
   }));
 
-  const total = rows.reduce((sum, row) => sum + row.total, 0);
+  const subTotal = rows.reduce((sum, row) => sum + row.subTotal, 0);
+
+  const discountsTotal = order.discountCodes && order.discountCodes.reduce((sum, {type, amount}) => {
+    let ret = sum;
+    if (type === 'Percentage') {
+      ret += subTotal * (amount / 100);
+    }
+
+    return ret;
+  }, 0);
+
+  const total = Math.max(subTotal - discountsTotal, 0);
 
   return {
     ...order,
     rows,
+    subTotal,
     total,
+    discountsTotal,
   };
 }
 
@@ -108,11 +121,10 @@ export const AddProductToOrderAST: any = gql`
   mutation addProductToOrder ($orderId: String! $productId: String! $quantity: Int) {
     addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
       order {
-        ...GetOrderFragment
+        ${GetOrderFields}
       }
     }
   }
-  ${GetOrderFragment}
 `;
 
 export const AddProductToOrderMutation = compose(

@@ -26,7 +26,7 @@ function OrderRowList(props: Props) {
 
   return (
     <ul>
-      {rows.map(({id, quantity, total, product: {name, brand, thumbnail}}) => (
+      {rows.map(({id, quantity, product: {name, price, brand, thumbnail}}) => (
         <article key={id} itemProp="itemListElement" itemScope itemType="http://schema.org/Product">
           <div className="image">
             <img src={thumbnail} alt={`${name} picture`} />
@@ -36,6 +36,7 @@ function OrderRowList(props: Props) {
             <div>By: {brand.name}</div>
           </div>
 
+          <div className="total-price">{formatPrice(price)}</div>
           <div className="quantity">
             <UpdateOrderRowMutation
               {...orderRowMutationProps}
@@ -62,7 +63,6 @@ function OrderRowList(props: Props) {
               <input type="submit" value="+" aria-label={`Add 1 ${name} to cart`} />
             </UpdateOrderRowMutation>
           </div>
-          <div className="total-price">{formatPrice(total)}</div>
           <div className="delete">
             <UpdateOrderRowMutation
               {...orderRowMutationProps}
