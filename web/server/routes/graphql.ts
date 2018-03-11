@@ -27,6 +27,9 @@ function parseValue(value: string, type: string) {
   if (type === 'Int') {
     return parseInt(value, 10);
   }
+  if (type === 'String') {
+    return value;
+  }
   throw new Error(`Unknown type '${type}'`);
 }
 

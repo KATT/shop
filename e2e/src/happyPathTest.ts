@@ -5,6 +5,7 @@ const priceSelector = '[itemProp="price"]';
 const nameSelector = '[itemProp="name"]';
 const productSelector = '[itemType="http://schema.org/Product"]';
 const quantitySelector = '[name="variables:quantity:value"]';
+const discountCodeSelector = '[name="variables:code:value"]';
 
 const firstProductSelector =  `${productSelector}:first-child`;
 
@@ -55,6 +56,16 @@ export = {
       .clearValue(quantitySelector)
       .setValue(quantitySelector, '10')
       .submitForm(quantitySelector)
-      .assert.value(quantitySelector, '10')
+      .assert.value(quantitySelector, '10');
+  },
+
+  AddDiscount(client: NightwatchBrowser) {
+    client
+      .assert.elementNotPresent('.CheckoutDiscountsList')
+      .clearValue(discountCodeSelector)
+      .setValue(discountCodeSelector, 'first')
+      .submitForm(discountCodeSelector)
+      .waitForElementVisible('.CheckoutDiscountsList', 1000)
+      .assert.containsText('.CheckoutDiscountsList', 'As a first time shopper you get discount on your first order');
   },
 };
