@@ -5,15 +5,58 @@ interface ReqBodyOrQuery {
   variables: object | string;
   query: string;
   redirect?: string;
+  [key: string]: any;
 }
 interface Variables {
   [key: string]: any;
+}
+interface VariableOverrides {
+  [key: string]: {
+    type?: string;
+    value?: string;
+  };
 }
 interface Params {
   variables: Variables;
   method: string;
   query: string;
   redirect: string;
+}
+
+function parseValue(value: string, type: string) {
+  if (type === 'Int') {
+    return parseInt(value, 10);
+  }
+  throw new Error(`Unknown type '${type}'`);
+}
+
+/**
+ * Gets "overrides" from the default variables
+ * As a browser without JS can't dynamically update the JSON we send we use this to override variables with HTML inputs
+ * Example:
+ *   <input name="variables:quantity:type" type="hidden" value="Int" />
+ *   <input name="variables:quantity:value" type="number" min="0" step="1" value={quantity} />
+ */
+function getOverrides(dataSource: ReqBodyOrQuery): Variables {
+  const extras: VariableOverrides = Object.keys(dataSource).reduce((result, key: string) => {
+    if (key.startsWith('variables:')) {
+      const [, path, valueOrType] = key.split(':');
+
+      return {
+        ...result,
+        [path]: {
+          ...(result[path] || {}),
+          [valueOrType]: dataSource[key],
+        },
+      };
+    }
+    return result;
+  }, {});
+
+  return Object.keys(extras).reduce((res, key) => {
+    const {type, value} = extras[key];
+    return {...res, [key]: parseValue(value, type)};
+  }, {});
 }
 
 function getVariables(dataSource: ReqBodyOrQuery): Variables {
@@ -26,7 +69,9 @@ function getVariables(dataSource: ReqBodyOrQuery): Variables {
     }
   }
 
-  return variables;
+  const overrides = getOverrides(dataSource);
+
+  return {...variables, ...overrides};
 }
 
 function getParams(req: express.Request): Params {
@@ -39,6 +84,8 @@ function getParams(req: express.Request): Params {
 
   const {query, redirect = '/'} = dataSource;
   const variables = getVariables(dataSource);
+
+  console.log('dataSource', dataSource);
 
   return {
     method,

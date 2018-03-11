@@ -4,6 +4,7 @@ import {NightwatchBrowser} from 'nightwatch';
 const priceSelector = '[itemProp="price"]';
 const nameSelector = '[itemProp="name"]';
 const productSelector = '[itemType="http://schema.org/Product"]';
+const quantitySelector = '[name="variables:quantity:value"]';
 
 const firstProductSelector =  `${productSelector}:first-child`;
 
@@ -38,20 +39,22 @@ export = {
   VerifyOnlyItemInCart(client: NightwatchBrowser) {
     client.elements('css selector', `.Checkout ${productSelector}`, result => {
       client.assert.equal(result.value.length, 1, 'Only one OrderRow');
-
-      client.getText('[aria-label^="Quantity:"]', quantityResult => {
-        client.assert.equal(quantityResult.value, '1', 'OrderRow.quantity === 1');
-      });
+      client.assert.value(quantitySelector, '1');
     });
   },
 
   AddTwoRemoveOne(client: NightwatchBrowser) {
-    client.click('.Checkout [aria-label^="Add 1"]');
-    client.click('.Checkout [aria-label^="Add 1"]');
-    client.click('.Checkout [aria-label^="Remove 1"]');
+    client.click('.Checkout [aria-label^="Add 1"]')
+      .click('.Checkout [aria-label^="Add 1"]')
+      .click('.Checkout [aria-label^="Remove 1"]')
+      .assert.value(quantitySelector, '2');
+  },
 
-    client.getText('[aria-label^="Quantity:"]', quantityResult => {
-      client.assert.equal(quantityResult.value, '2', 'OrderRow.quantity === 2');
-    });
+  UpdateQuantity(client: NightwatchBrowser) {
+    client
+      .clearValue(quantitySelector)
+      .setValue(quantitySelector, '10')
+      .submitForm(quantitySelector)
+      .assert.value(quantitySelector, '10')
   },
 };

@@ -1,6 +1,7 @@
 
 import Link from 'next/link';
 import { Fragment } from 'react';
+import { APIOrder } from '../lib/prisma';
 import GetOrderQuery from '../queries/GetOrderQuery';
 import { MouseCallback } from './Layout';
 
@@ -11,7 +12,11 @@ interface Props {
   openCheckoutModal: MouseCallback;
 }
 
-export default ({orderId, openCheckoutModal}) => (
+function getNumberOfItems(order: Partial<APIOrder>) {
+  return order.rows.reduce((sum, {quantity}) => sum + quantity, 0);
+}
+
+export default ({orderId, openCheckoutModal}: Props) => (
   <Fragment>
     <header>
       <nav>
@@ -24,7 +29,7 @@ export default ({orderId, openCheckoutModal}) => (
         <a href="/checkout" onClick={openCheckoutModal}>
           Checkout
           <GetOrderQuery {...{orderId}}>{
-            ({order}) => order && <Fragment>{` (${order.total})`}</Fragment>
+            ({order}) => order && <Fragment> ({getNumberOfItems(order)})</Fragment>
           }</GetOrderQuery>
         </a>
       </nav>

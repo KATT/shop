@@ -1,5 +1,6 @@
 import { SingletonRouter } from 'next/router';
 import { Fragment } from 'react';
+import { formatPrice } from '../lib/utils';
 import GetOrderQuery from '../queries/GetOrderQuery';
 import OrderRowList from './OrderRowList';
 
@@ -18,10 +19,10 @@ function Checkout({orderId, url}: Props) {
           <Fragment>
             {loading && <div>Loading..</div>}
             {order && (
-              <div>
+              <Fragment>
                 <OrderRowList {...{order, url}} />
-                <div>Order total: {order.total}</div>
-              </div>
+                <div>Order total: {formatPrice(order.total)}</div>
+              </Fragment>
             )}
           </Fragment>
         )

@@ -1,18 +1,26 @@
 import gql from 'graphql-tag';
 import {print as printSource} from 'graphql/language/printer';
-import { APIOrder, APIOrderRow, ID_Input, UpdateOrderRowVariables } from 'lib/prisma';
 import React, { ReactNode } from 'react';
-import { compose, graphql, QueryProps } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import { APIOrder, UpdateOrderRowVariables } from '../lib/prisma';
 import { GetOrderFragment } from '../queries/GetOrderQuery';
 import { calculateTotals } from './addProductToOrder';
 
+type updateOrderRowMutationFn = (variables: UpdateOrderRowVariables) => {};
+
+interface RenderCallbackProps {
+  updateOrderRowMutation: updateOrderRowMutationFn;
+}
+
+type RenderCallback = (props: RenderCallbackProps) => JSX.Element;
+
 export interface Props {
   className?: string;
-  children: ReactNode;
+  children: ReactNode | RenderCallback;
   order: Partial<APIOrder>;
   variables: UpdateOrderRowVariables;
   redirect: string;
-  updateOrderRowMutation?: () => {};
+  updateOrderRowMutation?: updateOrderRowMutationFn;
   style?;
 }
 
@@ -45,6 +53,10 @@ export const updateOrderRowQuery: any = gql`
   ${GetOrderFragment}
 `;
 
+function isFunction(obj: any) {
+  return typeof obj === 'function';
+}
+
 export const UpdateOrderRow = ({ children, redirect, variables, updateOrderRowMutation, style }: Props) => (
   <form
     action={'/_gql/m'}
@@ -53,20 +65,20 @@ export const UpdateOrderRow = ({ children, redirect, variables, updateOrderRowMu
     onSubmit={(e) => {
       e.preventDefault();
 
-      updateOrderRowMutation();
+      updateOrderRowMutation(variables);
     }}
     >
       <input type="hidden" name="query" value={printSource(updateOrderRowQuery)} />
       <input type="hidden" name="redirect" value={redirect} />
       <input type="hidden" name="variables" value={JSON.stringify(variables)} />
-      {children}
+      {isFunction(children) ? (children as RenderCallback)({updateOrderRowMutation}) : children}
   </form>
 );
 
 export const updateOrderRowGraphQL = graphql<Response, Props>(updateOrderRowQuery, {
   props: (props) => ({
-    updateOrderRowMutation: () => {
-      const {order, variables} = props.ownProps;
+    updateOrderRowMutation: (variables: UpdateOrderRowVariables) => {
+      const {order} = props.ownProps;
       return props.mutate({
         variables,
         optimisticResponse: ({

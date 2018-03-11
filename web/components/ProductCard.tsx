@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
-import { Product } from 'lib/prisma';
-import { AddProductToOrderNoJSProps } from 'mutations/addProductToOrder';
+import { Product } from '../lib/prisma';
+import { formatPrice } from '../lib/utils';
+import { AddProductToOrderNoJSProps } from '../mutations/addProductToOrder';
 
 interface Props  {
   product: Product;
@@ -8,10 +9,6 @@ interface Props  {
   fallback: AddProductToOrderNoJSProps;
 
   addProductToOrder: (product: Product) => {};
-}
-
-function formatPrice(price: number) {
-  return Math.round(price / 100) + ' SEK';
 }
 
 export const ProductCardFragment = gql`
