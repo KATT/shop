@@ -37,7 +37,11 @@ export default class Layout extends Component<LayoutProps> {
             background: #e5e5e5;
             font: 10px;
             color: #000;
-          }¨
+            font-family: 'Roboto', sans-serif;
+          }
+          input[type="submit"], button {
+            cursor: pointer;
+          }
         `}</style>
         <Header {...{orderId, openCheckoutModal: this.openCheckoutModal}} />
         <main>

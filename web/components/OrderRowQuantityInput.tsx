@@ -49,6 +49,18 @@ export default class OrderRowQuantityInput extends Component<Props, State> {
           value={value}
           onChange={this.handleChange}
         />
+        <style jsx>{`
+          input[type='number'] {
+            width: 2.5rem;
+            text-align: center;
+          }
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+              /* display: none; <- Crashes Chrome on hover */
+              -webkit-appearance: none;
+              margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+          }
+        `}</style>
       </Fragment>
     );
   }

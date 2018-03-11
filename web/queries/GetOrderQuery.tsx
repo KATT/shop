@@ -10,6 +10,7 @@ export const GetOrderProductFragment = gql`
     name
     price
     brand { name }
+    thumbnail
   }
 `;
 
