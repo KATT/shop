@@ -85,8 +85,6 @@ function getParams(req: express.Request): Params {
   const {query, redirect = '/'} = dataSource;
   const variables = getVariables(dataSource);
 
-  console.log('dataSource', dataSource);
-
   return {
     method,
     variables,
