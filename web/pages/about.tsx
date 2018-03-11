@@ -4,6 +4,7 @@ import withOrder from '../lib/withOrder';
 
 export default withOrder(props => (
   <Layout {...props} title="About">
-    About us
+    <h1>About</h1>
+    <a href="https://github.com/KATT/shop">https://github.com/KATT/shop</a>
   </Layout>
 ));
