@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 import { SingletonRouter } from 'next/router';
-import { compose, graphql, QueryProps } from 'react-apollo';
+import { graphql, QueryProps } from 'react-apollo';
 import { Product } from '../lib/prisma';
-import { addProductToOrderGraphQL, fragments } from '../mutations/addProductToOrder';
+import { GetOrderProductFragment } from '../queries/GetOrderQuery';
 import { ProductCardFragment } from './ProductCard';
 import ProductList from './ProductList';
 
@@ -17,17 +17,14 @@ interface InputProps {
 
 interface Props extends InputProps {
   productsData: ProductsData;
-  addProductToOrder: any;
   loadMoreProducts: any;
-  addProductToOrderFallback;
 }
 
 function ProductSection(props: Props) {
   const {
     productsData: { loading, error, products },
-    addProductToOrder,
-    addProductToOrderFallback,
     url,
+    orderId,
   } = props;
 
   if (error) {
@@ -36,7 +33,7 @@ function ProductSection(props: Props) {
 
   return (
     <section>
-      {products && <ProductList {...{products, addProductToOrder, addProductToOrderFallback, url}} />}
+      {products && <ProductList {...{products, url, orderId}} />}
       <style jsx>{`
         section {
           padding-bottom: 20px;
@@ -53,16 +50,13 @@ const productsQuery: any = gql`
       id
       name
       price
-      ...GetOrderProductFragment
       ...ProductCardFragment
+      ...GetOrderProductFragment
     }
   }
-  ${fragments.Product}
   ${ProductCardFragment}
+  ${GetOrderProductFragment}
 `;
-export default compose(
-  graphql<Response, InputProps>(productsQuery, {
-    name: 'productsData',
-  }),
-  addProductToOrderGraphQL,
-)(ProductSection);
+export default graphql<Response, InputProps>(productsQuery, {
+  name: 'productsData',
+})(ProductSection);

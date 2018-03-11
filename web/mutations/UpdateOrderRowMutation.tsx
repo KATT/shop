@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import { graphql } from 'react-apollo';
 import { APIOrder, UpdateOrderRowVariables } from '../lib/prisma';
 import { GetOrderFragment } from '../queries/GetOrderQuery';
-import { calculateTotals } from './addProductToOrder';
+import { calculateTotals } from './AddProductToOrderMutation';
 
 type updateOrderRowMutationFn = (variables: UpdateOrderRowVariables) => {};
 

@@ -1,14 +1,14 @@
 import gql from 'graphql-tag';
+import { SingletonRouter } from 'next/router';
 import { Product } from '../lib/prisma';
 import { formatPrice } from '../lib/utils';
 import { AddProductToOrderNoJSProps } from '../mutations/addProductToOrder';
+import AddProductToOrderMutation from '../mutations/AddProductToOrderMutation';
 
 interface Props  {
   product: Product;
-
-  fallback: AddProductToOrderNoJSProps;
-
-  addProductToOrder: (product: Product) => {};
+  orderId: string;
+  url: SingletonRouter;
 }
 
 export const ProductCardFragment = gql`
@@ -19,7 +19,7 @@ export const ProductCardFragment = gql`
   }
 `;
 
-export default ({product, fallback, addProductToOrder}: Props) => (
+export default ({product, orderId, url}: Props) => (
   <article className="ProductCard" itemProp="itemListElement" itemScope itemType="http://schema.org/Product">
     <div className="image">
       <img src={product.thumbnail} alt={product.name} itemProp="image" />
@@ -28,17 +28,10 @@ export default ({product, fallback, addProductToOrder}: Props) => (
     <div itemProp="offers" itemScope itemType="http://schema.org/Offer">
       <span itemProp="price">{formatPrice(product.price)}</span>
     </div>
+    <AddProductToOrderMutation orderId={orderId} productId={product.id} product={product} redirect={url.asPath}>
+      <button type="submit">Add to order</button>
+    </AddProductToOrderMutation>
 
-    <form
-      action={'/_gql/m'}
-      method="post"
-      onSubmit={(e) => e.preventDefault() && addProductToOrder(product)}
-      >
-        <input type="hidden" name="redirect" value={fallback.redirect} />
-        <input type="hidden" name="query" value={fallback.query} />
-        <input type="hidden" name="variables" value={JSON.stringify(fallback.variables)} />
-        <button type="submit" onClick={() => addProductToOrder(product)}>Add to order</button>
-    </form>
     <style jsx>{`
       article {
         padding: 2%;
