@@ -39,7 +39,11 @@
 
     "nojs": {
       "desiredCapabilities": {
-        "javascriptEnabled": false
+        "chromeOptions": {
+          "prefs": {
+            "profile.managed_default_content_settings.javascript": 2
+          }
+        }
       }
     },
 
