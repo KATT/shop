@@ -54,6 +54,7 @@ export = {
   UpdateQuantity(client: NightwatchBrowser) {
     client
       .clearValue(quantitySelector)
+      .pause(10)
       .setValue(quantitySelector, '10')
       .submitForm(quantitySelector)
       .assert.value(quantitySelector, '10');
@@ -67,5 +68,18 @@ export = {
       .submitForm(discountCodeSelector)
       .waitForElementVisible('.CheckoutDiscountsList', 10000)
       .assert.containsText('.CheckoutDiscountsList', 'As a first time shopper you get discount on your first order');
+  },
+
+  ClearCart(client: NightwatchBrowser) {
+    client
+      .url(client.launch_url)
+      .waitForElementNotPresent('.Checkout', 10000)
+      .click('header a[href="?clearOrderId"]')
+      .click('header a[href="/checkout"]')
+      .waitForElementNotPresent('.CheckoutDiscountsList', 10000);
+  },
+
+  after(client: NightwatchBrowser) {
+    client.end();
   },
 };

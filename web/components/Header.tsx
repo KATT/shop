@@ -32,6 +32,7 @@ export default ({orderId, openCheckoutModal}: Props) => (
             ({order}) => order && <Fragment> ({getNumberOfItems(order)})</Fragment>
           }</GetOrderQuery>
         </a>
+        <a href="?clearOrderId">Clear cart</a>
       </nav>
     </header>
     <div className="placeholder" />
