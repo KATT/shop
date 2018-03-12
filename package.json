@@ -29,7 +29,7 @@
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}!api/src/generated/*.ts": ["tslint --fix", "git add"]
+    "*.{ts,tsx}": ["tslint --fix", "git add"]
   },
   "devDependencies": {
     "husky": "^0.14.3",
