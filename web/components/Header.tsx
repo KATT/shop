@@ -1,7 +1,9 @@
 
 import Link from 'next/link';
+import Router from 'next/router';
 import { Fragment } from 'react';
 import { APIOrder } from '../lib/prisma';
+import { saveOrderId } from '../lib/withOrder';
 import GetOrderQuery from '../queries/GetOrderQuery';
 import { MouseCallback } from './Layout';
 
@@ -32,7 +34,11 @@ export default ({orderId, openCheckoutModal}: Props) => (
             ({order}) => order && <Fragment> ({getNumberOfItems(order)})</Fragment>
           }</GetOrderQuery>
         </a>
-        <a href="?clearOrderId">Clear cart</a>
+        <a href="?clearOrderId" onClick={e => {
+          e.preventDefault();
+          saveOrderId(undefined, {isBrowser: true});
+          Router.reload(Router.route);
+        }}>Clear cart</a>
       </nav>
     </header>
     <div className="placeholder" />
