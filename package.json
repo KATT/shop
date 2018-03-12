@@ -8,8 +8,7 @@
     "build:api": "cd api && yarn build",
     "build:web": "cd web && yarn build",
     "build:e2e": "cd e2e && yarn build",
-    "setup:api":
-      "cd api && yarn install && yarn deploy:local && yarn seed:local",
+    "setup:api": "cd api && yarn install && yarn deploy:local && yarn seed:local",
     "setup:web": "cd web && yarn install",
     "setup:e2e": "cd e2e && yarn install",
     "setup": "yarn install && npm-run-all setup:*",
@@ -29,12 +28,17 @@
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint --fix", "git add"]
+    "*.{ts,tsx}": [
+      "prettier --parser typescript --write",
+      "tslint --fix",
+      "git add"
+    ]
   },
   "devDependencies": {
     "husky": "^0.14.3",
     "lint-staged": "^6.1.0",
     "npm-run-all": "^4.1.2",
+    "prettier": "^1.11.1",
     "tslint": "^5.9.1",
     "typescript": "^2.6.2"
   }

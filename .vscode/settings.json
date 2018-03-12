@@ -1,7 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "prettier.eslintIntegration": false,
-  "prettier.semi": true,
   "tslint.autoFixOnSave": true,
   "files.exclude": {
     "**/*(!.config).js": true
