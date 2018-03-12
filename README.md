@@ -56,7 +56,7 @@ If everything goes smoothly you should be able to access the below:
 ### API Gateway
 
 ```sh
-cd api && yarn test
+yarn test:api
 ```
 
 ### Web
