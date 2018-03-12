@@ -19,7 +19,14 @@ app.prepare()
     server.use(bodyParser.urlencoded({extended: false}));
 
     server.use('/_gql', routeGraphql());
-
+    server.get('*', (req, res, callback) => {
+      if (req.query.hasOwnProperty('clearOrderId')) {
+        res.clearCookie('orderId');
+        res.redirect(303, '/') ;
+        return;
+      }
+      callback();
+    });
     server.get('*', (req, res) => {
       handle(req, res);
     });
