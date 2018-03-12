@@ -54,7 +54,7 @@ export = {
   UpdateQuantity(client: NightwatchBrowser) {
     client
       .clearValue(quantitySelector)
-      .pause(10)
+      .clearValue(quantitySelector)
       .setValue(quantitySelector, '10')
       .submitForm(quantitySelector)
       .assert.value(quantitySelector, '10');
