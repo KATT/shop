@@ -87,7 +87,7 @@ brew cask install java
 
 #### `./web`
 
-* 🚧 WIP - `./mutations` and `./queries` are intended to expose render prop components for easy handling of data loading / rendering
+* `./mutations` and `./queries` exposes render prop components for easy handling of data loading / rendering
 * .. _TBC_
 
 ## What's next?
