@@ -1,0 +1,5 @@
+{
+  "eslintIntegration": false,
+  "semi": true,
+  "trailingComma": "all"
+}
