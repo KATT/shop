@@ -20,6 +20,7 @@
 * Product list from GraphQL
 * Add/edit products to/in cart
 * Open checkout modal
+* Discount code support (try code "first")
 * Server-rendered, code splitting etc, thanks to Next.js
 * Optimistic Apollo updates
 * Pessimistic™ updates: Everything on page works without JS enabled
@@ -42,9 +43,9 @@
 
 ## Development
 
-`yarn dev` starts the API Gateway, the Next.js `./web`, and a TypeScript watcher for `./e2e` in parallell.
+`yarn dev` starts the `./api` Gateway, the Next.js `./web`, and a TypeScript watcher for `./e2e` in parallell.
 
-If you prefer separate output, navigate to `./api./` or `./web` in separate shells and run `yarn dev`
+If you prefer separate output, navigate to `./api` or `./web` in separate shells and run `yarn dev`
 
 If everything goes smoothly you should be able to access the below:
 
