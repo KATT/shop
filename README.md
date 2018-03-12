@@ -1,6 +1,6 @@
 # React/Prisma/TS/GraphQL E-Commerce Example
 
-[![Build Status](https://img.shields.io/travis/KATT/shop.svg)](https://travis-ci.org/KATT/shop)
+[![Build Status](https://travis-ci.org/KATT/shop.svg?branch=master)](https://travis-ci.org/KATT/shop)
 
 * [shop.kattcorp.co.uk](https://shop.kattcorp.co.uk)
 * [shop-api.kattcorp.co.uk](https://shop-api.kattcorp.co.uk)
