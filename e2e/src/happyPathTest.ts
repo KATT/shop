@@ -15,7 +15,7 @@ export = {
   before(client: NightwatchBrowser) {
     client
       .url(client.launch_url)
-      .waitForElementVisible('body', 1000);
+      .waitForElementVisible('body', 10000);
   },
 
   AddItemToCart(client: NightwatchBrowser) {
@@ -30,7 +30,7 @@ export = {
     client
       .assert.elementNotPresent('.Checkout')
       .click('header a[href="/checkout"]')
-      .waitForElementVisible('.Checkout', 1000);
+      .waitForElementVisible('.Checkout', 10000);
   },
 
   VerifyItemInCart(client: NightwatchBrowser) {
@@ -65,7 +65,7 @@ export = {
       .clearValue(discountCodeSelector)
       .setValue(discountCodeSelector, 'first')
       .submitForm(discountCodeSelector)
-      .waitForElementVisible('.CheckoutDiscountsList', 1000)
+      .waitForElementVisible('.CheckoutDiscountsList', 10000)
       .assert.containsText('.CheckoutDiscountsList', 'As a first time shopper you get discount on your first order');
   },
 };
