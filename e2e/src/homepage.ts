@@ -4,7 +4,7 @@ export = {
   before(client: NightwatchBrowser) {
     client
       .url(client.launch_url)
-      .waitForElementVisible('body', 1000);
+      .waitForElementVisible('body', 10000);
   },
 
   ProductList(client: NightwatchBrowser) {
@@ -16,9 +16,9 @@ export = {
     client
       .assert.elementNotPresent('.Checkout')
       .click('header a[href="/checkout"]')
-      .waitForElementVisible('.Checkout', 1000)
+      .waitForElementVisible('.Checkout', 10000)
       .back()
-      .waitForElementNotPresent('.Checkout', 1000);
+      .waitForElementNotPresent('.Checkout', 10000);
   },
 
   after(client: NightwatchBrowser) {
