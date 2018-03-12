@@ -31,9 +31,9 @@ function getOrderId(ctx: NextJSPageContext): ID_Output {
   return orderId as string;
 }
 
-function saveOrderId(orderId: ID_Output, ctx: NextJSPageContext) {
-  if (!ctx.isBrowser) {
-    ctx.res.cookie('orderId', orderId);
+export function saveOrderId(orderId: ID_Output, {isBrowser, res}: {isBrowser: true, res?: any}) {
+  if (!isBrowser) {
+    res.cookie('orderId', orderId);
     return;
   }
   const cookies = {
