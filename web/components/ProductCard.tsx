@@ -2,10 +2,9 @@ import gql from 'graphql-tag';
 import { SingletonRouter } from 'next/router';
 import { Product } from '../lib/prisma';
 import { formatPrice } from '../lib/utils';
-import { AddProductToOrderNoJSProps } from '../mutations/addProductToOrder';
 import AddProductToOrderMutation from '../mutations/AddProductToOrderMutation';
 
-interface Props  {
+interface Props {
   product: Product;
   orderId: string;
   url: SingletonRouter;
@@ -19,8 +18,13 @@ export const ProductCardFragment = gql`
   }
 `;
 
-export default ({product, orderId, url}: Props) => (
-  <article className="ProductCard" itemProp="itemListElement" itemScope itemType="http://schema.org/Product">
+export default ({ product, orderId, url }: Props) => (
+  <article
+    className="ProductCard"
+    itemProp="itemListElement"
+    itemScope
+    itemType="http://schema.org/Product"
+  >
     <div className="image">
       <img src={product.thumbnail} alt={product.name} itemProp="image" />
     </div>
@@ -28,7 +32,12 @@ export default ({product, orderId, url}: Props) => (
     <div itemProp="offers" itemScope itemType="http://schema.org/Offer">
       <span itemProp="price">{formatPrice(product.price)}</span>
     </div>
-    <AddProductToOrderMutation orderId={orderId} productId={product.id} product={product} redirect={url.asPath}>
+    <AddProductToOrderMutation
+      orderId={orderId}
+      productId={product.id}
+      product={product}
+      redirect={url.asPath}
+    >
       <button type="submit">Add to order</button>
     </AddProductToOrderMutation>
 
