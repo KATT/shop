@@ -6,7 +6,8 @@
     "quotemark": [true, "single", "jsx-double"],
     "object-literal-sort-keys": false,
     "arrow-parens": false,
-    "interface-name": false
+    "interface-name": false,
+    "object-literal-key-quotes": false
   },
   "rulesDirectory": []
 }
