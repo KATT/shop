@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2017",
     "moduleResolution": "node",
     "module": "commonjs",
     "sourceMap": true,
     "rootDir": "src",
     "outDir": "dist",
-    "lib": [
-      "esnext", "dom"
-    ]
+    "lib": ["esnext", "dom"]
   }
 }
