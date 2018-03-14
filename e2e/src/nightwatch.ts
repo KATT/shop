@@ -1,8 +1,19 @@
 const {
-  LAUNCH_URL = 'http://localhost:5000',
+  NIGHTWATCH_LAUNCH_URL = 'http://localhost:5000',
   SELENIUM_HOST = 'localhost',
   SELENIUM_PORT = 4444,
+  SAUCE_USERNAME,
+  SAUCE_ACCESS_KEY,
+  TRAVIS_JOB_NUMBER,
 } = process.env;
+
+// tslint:disable-next-line:no-console
+console.log({
+  SELENIUM_HOST,
+  SAUCE_USERNAME,
+  TRAVIS_JOB_NUMBER,
+  NIGHTWATCH_LAUNCH_URL,
+});
 
 export = {
   src_folders: ['dist/tests'],
@@ -30,21 +41,35 @@ export = {
 
   test_settings: {
     default: {
-      launch_url: LAUNCH_URL,
-      selenium_port: SELENIUM_PORT,
+      launch_url: NIGHTWATCH_LAUNCH_URL,
       selenium_host: SELENIUM_HOST,
+      selenium_port: SELENIUM_PORT,
       silent: true,
       screenshots: {
         enabled: false,
         path: '',
       },
+      username: SAUCE_USERNAME,
+      access_key: SAUCE_ACCESS_KEY,
+      globals: {
+        waitForConditionTimeout: 10000,
+      },
+      desiredCapabilities: {
+        build: `build-${TRAVIS_JOB_NUMBER}`,
+        'tunnel-identifier': TRAVIS_JOB_NUMBER,
+        browserName: 'chrome',
+      },
+    },
+
+    chrome: {
       desiredCapabilities: {
         browserName: 'chrome',
       },
     },
 
-    nojs: {
+    'chrome:nojs': {
       desiredCapabilities: {
+        browserName: 'chrome',
         chromeOptions: {
           prefs: {
             'profile.managed_default_content_settings.javascript': 2,

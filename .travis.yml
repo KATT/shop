@@ -4,6 +4,8 @@ node_js:
 sudo: required
 services:
 - docker
+addons:
+  sauce_connect: true
 cache:
   yarn: true
   directories:
@@ -18,3 +20,14 @@ before_script:
 - yarn build
 script:
 - yarn test:api
+- yarn start:api &
+- yarn start:web &
+- yarn wait-port 4000
+- yarn wait-port 5000
+- cd e2e && yarn start -- --env chrome,chrome:nojs,firefox,edge
+env:
+  global:
+  - SELENIUM_HOST='ondemand.saucelabs.com'
+  - SELENIUM_PORT=80
+  - secure: Qy9nNfPaPcO/04FYSfl92CPAil4afKlIQD6leDYkc1seToIFr6+vAauvcMkTt0AnRBWalaLcjbAhirnDTbgos1/LG9XKqxeY6kYILZTgsRyBkDLsRf8Q1K/k4bvW49A/JQb28SinfkVFXQcuLPDyZahcBvSTL3JtoUQXbkFgdI+meGhhIJ9i03ZBgzD1a/LuknQw12ySrUUUjM/h9xMVre80FUolrpJo5YsZU+NjgXz0BTy9T/VcYacKfoM4Lf44egVxAHaQAFpZeZld6UbpQVJu5RUBBf+YjMTocqVHGmnj1LcaoABEo1yeksS4nwj/QOUDh48cMDUd+eVxAXsUQFs66WmeTzgqBbPFvk6NCHbfrc95VhRxjsApTo6xfd3IFgEg8JjUfkRp6vddalJdEp2RlFAhdErr6eaSJhow4r7Yn5EsL/BNEwyaSINMC/YULeICFKnfdJ62czRQDUUioVDbh+bjouFkIVrxyKFYgF8B6+OqyK9doyW5MdzCayUF4Yb66Jbi8BCn7Q3VrWusiSF356ESqUsLQl4f8A3FYRTcCSK+Q526ZLojzKAmMVdgGMlWEZwUC2mpB4Nl5lj59HjuCQL8jTYiH2Gz5slRWzpAp/EacgYUYYFunIGj6xeZUrr+LZgrGDXfVJm2SD8IKpVOtffAcVioyhYJadvT16c=
+  - secure: HL/bE7xjD3rS20h1XDso7GtfDqgjXZLllVeq+Y31YZMn1ql629YIVtKazc2sCZO1O2bx762mrqPnszgr8RWl2Cucbjhag5NgznsqUga7hbehZctV3zLNyOqh/8gDLiWjyvnHJB0NuWq9FvBnIleJkC39CQEPUUg0tWR+e8S+8YW2UNgSc4jmb2EqZH0Zh2StUTVTbfje5SrvkZm5Iu9/m1js547kXPf8LeI10C6lBD4DbjopTXGjxswDXW4NP9LfnRujNd3X9RQgTaCC7DH394o7lAydXiqOpj1lueKF1JbMNHqsMU+CoDWt0BpVy/fipk6CQdOHX9ockeN81vFoJtb8ZMV/HJ8zB6irwQvxoHrUP/5mi/Zn0Y1jkw0s/PHef4zTS3Z6wN8RuSLx8Xt1gUzEBShlbap2Lm/IEDxWYtfQ1me+X7fi9kHcbg/kuW7TQKoOeLXL+0WHY7JKzYx8JoTmg94CLskVc6sD2poXYeMA/4wJufTxI6pnPUlzCwVL6XAbSJMbuOB13Ay5oWPR/T7GU8Z2KK67jLWXtbROwexw71E3LSZYuz7YHgUy5j+dzQWc90U9QPCDcG3pwkVMqxxaElkkWiXCkE1ELu+zKBzkMt54llsYUpizJ8wbP5M2c/M1Tzsn5KfecvhbE6FynSwCAu/yBwXWvil3j0MBs9Y=
