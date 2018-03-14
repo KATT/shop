@@ -13,9 +13,21 @@ cache:
   - api/node_modules
   - web/node_modules
   - e2e/node_modules
+  - docker
 install:
 - yarn install
-- yarn setup:prisma
+- |
+  if [[ -e ./docker/prisma.tar ]];
+  then
+    docker load -i ./docker/prisma.tar;
+    docker load -i ./docker/mysql.tar;
+    yarn start:prisma;
+  else
+    yarn setup:prisma;
+    mkdir -p ./docker;
+    docker save prismagraphql/prisma > ./docker/prisma.tar;
+    docker save mysql > ./docker/mysql.tar;
+  fi
 before_script:
 - yarn build
 script:
