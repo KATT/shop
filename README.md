@@ -12,7 +12,7 @@
 * [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`./web`)
 * [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`./e2e`)
 * [Jest](https://facebook.github.io/jest/) for the other testing
-* [Travis CI](travis-ci.org)
+* [Travis CI](travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
 
 ## Features
 
@@ -79,9 +79,9 @@ brew cask install java
 1.  Run selenium: `yarn selenium`
 1.  Setup + start apps: `yarn setup && yarn build && yarn dev`
 1.  Run tests: `yarn start:e2e`
-    * Will start 2 environments in parallel
-      * Chrome: javascript enabled
-      * Chrome: javascript disabled
+    * Will run E2E in Chrome with JS enabled
+    * To run without js: `yarn start:e2e -- --env chrome:nojs`
+    * See [nightwatch.ts](./e2e/src/nightwatch.ts) for all envs
 
 ### Conventions, how to write etc
 
