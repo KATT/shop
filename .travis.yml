@@ -19,8 +19,8 @@ install:
 - |
   if [[ -e ./docker/prisma.tar ]];
   then
-    docker load -i ./docker/prisma.tar;
     docker load -i ./docker/mysql.tar;
+    docker load -i ./docker/prisma.tar;
     yarn start:prisma;
   else
     yarn setup:prisma;
