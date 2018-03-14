@@ -90,6 +90,10 @@ brew cask install java
 * `./mutations` and `./queries` exposes render prop components for easy handling of data loading / rendering
 * .. _TBC_
 
-## What's next?
+## What's next / questions
 
-This is a bit of a playground for bleeding-edge web tech for me. I'm still developing it & I gather a list of things I'd like to do in [#2](https://github.com/KATT/react-prisma-graphql-shopping-cart/issues/2). PRs/forks welcome.
+This is a bit of a playground for web tech for me. I'm still developing it & I gather a list of things I'd like to do in [#2](https://github.com/KATT/react-prisma-graphql-shopping-cart/issues/2).
+
+If you have issues running it, ideas of things to add, things you want me to explain / elaborate on, or need help to build a product - [open an issue](https://github.com/KATT/shop/issues/new) or reach out to me [on Twitter](https://twitter.com/alexheartjs).
+
+Feel free to fork it and make a pull request of something cool!
