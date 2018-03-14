@@ -1,20 +1,17 @@
-import {NightwatchBrowser} from 'nightwatch';
+import { NightwatchBrowser } from 'nightwatch';
 
 export = {
   before(client: NightwatchBrowser) {
-    client
-      .url(client.launch_url)
-      .waitForElementVisible('body', 10000);
+    client.url(client.launch_url).waitForElementVisible('body', 10000);
   },
 
   ProductList(client: NightwatchBrowser) {
-    client
-      .assert.containsText('body', 'Neko Bus');
+    client.assert.containsText('body', 'Neko Bus');
   },
 
   ToggleCheckout(client: NightwatchBrowser) {
-    client
-      .assert.elementNotPresent('.Checkout')
+    client.assert
+      .elementNotPresent('.Checkout')
       .click('header a[href="/checkout"]')
       .waitForElementVisible('.Checkout', 10000)
       .back()
