@@ -32,14 +32,13 @@
 1.  Install Docker - `brew cask install docker`
 1.  Install yarn - `npm install -g yarn`
 1.  Start Docker
-1.  Setup local prisma cluster: `yarn start:prisma`
-1.  _Magic_ - `yarn setup`
+1.  `yarn install`
     * Installs deps for
       * `./`
       * `./api`
       * `./web`
       * `./e2e`
-    * Deploys Prisma backend to local cluster
+1.  Start Prisma + seed DB `yarn setup:prisma`
 
 ## Development
 
