@@ -24,7 +24,7 @@ script:
 - yarn start:web &
 - yarn wait-port 4000
 - yarn wait-port 5000
-- cd e2e && yarn start -- --env chrome,chrome:nojs,firefox,edge
+- cd e2e && yarn start -- --env chrome,chrome:nojs,edge
 env:
   global:
   - SELENIUM_HOST='ondemand.saucelabs.com'
