@@ -7,14 +7,6 @@ const {
   TRAVIS_JOB_NUMBER,
 } = process.env;
 
-// tslint:disable-next-line:no-console
-console.log({
-  SELENIUM_HOST,
-  SAUCE_USERNAME,
-  TRAVIS_JOB_NUMBER,
-  NIGHTWATCH_LAUNCH_URL,
-});
-
 export = {
   src_folders: ['dist/tests'],
   output_folder: 'reports',
