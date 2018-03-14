@@ -79,9 +79,9 @@ brew cask install java
 1.  Run selenium: `yarn selenium`
 1.  Setup + start apps: `yarn setup && yarn build && yarn dev`
 1.  Run tests: `yarn start:e2e`
-    * Will start 2 environments in parallel
-      * Chrome: javascript enabled
-      * Chrome: javascript disabled
+    * Will run E2E in Chrome with JS enabled
+    * To run without js: `yarn start:e2e -- --env chrome:nojs`
+    * See [nightwatch.ts](./e2e/src/nightwatch.ts) for all envs
 
 ### Conventions, how to write etc
 
