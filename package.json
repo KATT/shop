@@ -28,7 +28,7 @@
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "*.{ts,tsx}!api/src/generated/*.ts": [
       "prettier --parser typescript --write",
       "tslint --fix",
       "git add"
