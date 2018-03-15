@@ -1,28 +1,30 @@
 import gql from 'graphql-tag';
-import {print as printSource} from 'graphql/language/printer';
+import { print as printSource } from 'graphql/language/printer';
 import React, { ReactNode } from 'react';
 import { compose, graphql } from 'react-apollo';
-import { APIOrder, APIOrderRow, Product } from '../lib/prisma';
+import { Order, OrderRow, Product } from '../lib/prisma';
 import { GetOrderFields, GetOrderQueryAST } from '../queries/GetOrderQuery';
 
 type addProductToOrderMutationFn = (product: Product) => {};
 
-export function calculateTotals(order: Partial<APIOrder>) {
-  const rows = order.rows.map((row) => ({
+export function calculateTotals(order: Partial<Order>) {
+  const rows = order.rows.map(row => ({
     ...row,
     subTotal: row.quantity * row.product.price,
   }));
 
   const subTotal = rows.reduce((sum, row) => sum + row.subTotal, 0);
 
-  const discountsTotal = order.discountCodes && order.discountCodes.reduce((sum, {type, amount}) => {
-    let ret = sum;
-    if (type === 'Percentage') {
-      ret += subTotal * (amount / 100);
-    }
+  const discountsTotal =
+    order.discountCodes &&
+    order.discountCodes.reduce((sum, { type, amount }) => {
+      let ret = sum;
+      if (type === 'Percentage') {
+        ret += subTotal * (amount / 100);
+      }
 
-    return ret;
-  }, 0);
+      return ret;
+    }, 0);
 
   const total = Math.max(subTotal - discountsTotal, 0);
 
@@ -50,7 +52,7 @@ interface InputProps {
 }
 
 interface Props extends InputProps {
-  order: Partial<APIOrder>;
+  order: Partial<Order>;
   addProductToOrderMutation?: addProductToOrderMutationFn;
   style?;
 }
@@ -60,11 +62,11 @@ function isFunction(obj: any) {
 }
 
 export function addProductToOrderReducer(
-  order: Partial<APIOrder>,
+  order: Partial<Order>,
   product: Product,
-): Partial<APIOrder> {
+): Partial<Order> {
   const rows = [...order.rows];
-  const index = order.rows.findIndex((row) => row.product.id === product.id);
+  const index = order.rows.findIndex(row => row.product.id === product.id);
 
   if (index > -1) {
     const row = rows[index];
@@ -83,7 +85,7 @@ export function addProductToOrderReducer(
       createdAt: new Date().toJSON(),
       updatedAt: new Date().toJSON(),
       order,
-    } as APIOrderRow);
+    } as OrderRow);
   }
   const newOrder = {
     ...order,
@@ -104,16 +106,22 @@ export const AddProductToOrder = ({
   <form
     action={'/_gql/m'}
     method="post"
-    onSubmit={(e) => {
+    onSubmit={e => {
       e.preventDefault();
 
       addProductToOrderMutation(product);
     }}
-    >
-      <input type="hidden" name="redirect" value={redirect} />
-      <input type="hidden" name="query" value={AddProductToOrderASTString}  />
-      <input type="hidden" name="variables" value={JSON.stringify({orderId, productId})} />
-      {isFunction(children) ? (children as RenderCallback)({addProductToOrderMutation}) : children}
+  >
+    <input type="hidden" name="redirect" value={redirect} />
+    <input type="hidden" name="query" value={AddProductToOrderASTString} />
+    <input
+      type="hidden"
+      name="variables"
+      value={JSON.stringify({ orderId, productId })}
+    />
+    {isFunction(children)
+      ? (children as RenderCallback)({ addProductToOrderMutation })
+      : children}
   </form>
 );
 
@@ -141,7 +149,7 @@ export const AddProductToOrderMutation = compose(
     name: 'addProductToOrder',
     props: (props: any) => ({
       addProductToOrderMutation: (product: Product) => {
-        const {order} = props.ownProps.orderData;
+        const { order } = props.ownProps.orderData;
         const variables = {
           orderId: order.id,
           productId: product.id,

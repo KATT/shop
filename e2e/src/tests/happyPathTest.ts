@@ -1,4 +1,5 @@
 import { NightwatchBrowser } from 'nightwatch';
+import Browser from '../browser';
 
 // Not sure if this is the right way to share props..
 const priceSelector = '[itemProp="price"]';
@@ -50,14 +51,9 @@ export = {
       .assert.value(quantitySelector, '2');
   },
 
-  UpdateQuantity(client: NightwatchBrowser) {
+  UpdateQuantity(client: Browser) {
     client
-      .clearValue(quantitySelector)
-      .pause(10)
-      .clearValue(quantitySelector)
-      .pause(10)
-      .setValue(quantitySelector, '10')
-      .pause(10)
+      .setSelectorValue(quantitySelector, '10')
       .submitForm(quantitySelector)
       .assert.value(quantitySelector, '10');
   },
@@ -71,7 +67,7 @@ export = {
       .waitForElementVisible('.CheckoutDiscountsList', 10000)
       .assert.containsText(
         '.CheckoutDiscountsList',
-        'As a first time shopper you get discount on your first order'
+        'As a first time shopper you get discount on your first order',
       );
   },
 

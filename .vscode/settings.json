@@ -1,6 +1,9 @@
 {
   "editor.formatOnSave": true,
   "tslint.autoFixOnSave": true,
+  "prettier.trailingComma": "all",
+  "prettier.eslintIntegration": false,
+  "prettier.singleQuote": true,
   "files.exclude": {
     "**/*(!.config).js": true
   }

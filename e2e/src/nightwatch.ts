@@ -10,14 +10,10 @@ const {
 export = {
   src_folders: ['dist/tests'],
   output_folder: 'reports',
-  custom_commands_path: '',
+  custom_commands_path: 'dist/commands',
   custom_assertions_path: '',
   page_objects_path: '',
   globals_path: '',
-  test_workers: {
-    enabled: true,
-    workers: 'auto',
-  },
 
   selenium: {
     start_process: false,
