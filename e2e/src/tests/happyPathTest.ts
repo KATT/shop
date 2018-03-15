@@ -11,6 +11,20 @@ const firstProductSelector = `${productSelector}:first-child`;
 
 let productName: string;
 
+function setSelectorValue(selector: string, value: any) {
+  const input: any = document.querySelector(selector);
+  const lastValue = input.value;
+  input.value = value;
+  const event = new Event('input', { bubbles: true });
+
+  // hack from https://github.com/facebook/react/issues/11488#issuecomment-347775628
+  const tracker = input._valueTracker;
+  if (tracker) {
+    tracker.setValue(lastValue);
+  }
+  input.dispatchEvent(event);
+}
+
 export = {
   before(client: NightwatchBrowser) {
     client.url(client.launch_url).waitForElementVisible('body', 10000);
@@ -52,12 +66,7 @@ export = {
 
   UpdateQuantity(client: NightwatchBrowser) {
     client
-      .clearValue(quantitySelector)
-      .pause(10)
-      .clearValue(quantitySelector)
-      .pause(10)
-      .setValue(quantitySelector, '10')
-      .pause(10)
+      .execute(setSelectorValue, [quantitySelector, '10'])
       .submitForm(quantitySelector)
       .assert.value(quantitySelector, '10');
   },
