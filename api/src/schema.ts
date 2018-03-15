@@ -1,5 +1,5 @@
 export * from './generated/api';
-
+export { getOrderWithTotals } from './lib/getOrderTotals';
 export interface UpdateOrderRowVariables {
   id: string;
   quantity?: number;
