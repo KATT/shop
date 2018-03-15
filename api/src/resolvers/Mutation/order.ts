@@ -4,6 +4,7 @@ import { GraphQLError } from 'graphql';
 import * as Prisma from '../../generated/prisma';
 import * as API from '../../schema';
 
+import { UpdateOrderRowResponseSource } from '..';
 import { Context } from '../../utils';
 
 const lock = new AsyncLock();
@@ -91,7 +92,12 @@ export default {
     });
   },
 
-  async updateOrderRow(parent, args, ctx: Context, info): Promise<any> {
+  async updateOrderRow(
+    parent,
+    args: API.UpdateOrderRowVariables,
+    ctx: Context,
+    info,
+  ): Promise<UpdateOrderRowResponseSource> {
     if (args.quantity < 0) {
       throw new GraphQLError('quantity must be greater or equal to 0');
     }
