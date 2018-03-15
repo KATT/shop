@@ -1,6 +1,9 @@
 import * as AsyncLock from 'async-lock';
 import { GraphQLError } from 'graphql';
-import { AddDiscountCodeToOrderVariables, APIOrderRow, Order, OrderRow, UpdateOrderRowResponse } from '../../schema';
+
+import * as Prisma from '../../generated/prisma';
+import * as API from '../../schema';
+
 import { Context } from '../../utils';
 
 const lock = new AsyncLock();
@@ -14,8 +17,13 @@ export default {
       info,
     );
   },
-  async addProductToOrder(parent, args, ctx: Context, info): Promise<OrderRow> {
-    const {quantity = 1, orderId, productId} = args;
+  async addProductToOrder(
+    parent,
+    args: API.AddProductToOrderVariables,
+    ctx: Context,
+    info,
+  ): Promise<Prisma.OrderRow> {
+    const { quantity = 1, orderId, productId } = args;
     if (quantity < 1) {
       throw new GraphQLError('quantity must be greater than 0');
     }
@@ -35,40 +43,51 @@ export default {
         }
       `;
 
-      const order = await ctx.db.query.order({
-        where: {
-          id: args.orderId,
+      const order = await ctx.db.query.order(
+        {
+          where: {
+            id: args.orderId,
+          },
         },
-      }, fragment);
+        fragment,
+      );
 
-      const orderRow = order.rows.find(({product}) => product.id === productId);
+      const orderRow = order.rows.find(
+        ({ product }) => product.id === productId,
+      );
 
       if (orderRow) {
-        return ctx.db.mutation.updateOrderRow({
-          data: {
-            quantity: quantity + orderRow.quantity,
-          },
-          where: {
-            id: orderRow.id,
-          },
-        }, info);
-      }
-
-      return ctx.db.mutation.createOrderRow({
-        data: {
-          quantity,
-          product: {
-            connect: {
-              id: productId,
+        return ctx.db.mutation.updateOrderRow(
+          {
+            data: {
+              quantity: quantity + orderRow.quantity,
+            },
+            where: {
+              id: orderRow.id,
             },
           },
-          order: {
-            connect: {
-              id: orderId,
+          info,
+        );
+      }
+
+      return ctx.db.mutation.createOrderRow(
+        {
+          data: {
+            quantity,
+            product: {
+              connect: {
+                id: productId,
+              },
+            },
+            order: {
+              connect: {
+                id: orderId,
+              },
             },
           },
         },
-      }, info);
+        info,
+      );
     });
   },
 
@@ -76,10 +95,7 @@ export default {
     if (args.quantity < 0) {
       throw new GraphQLError('quantity must be greater or equal to 0');
     }
-    const {
-      id,
-      ...data,
-    } = args;
+    const { id, ...data } = args;
 
     const fragment = `
       {
@@ -90,15 +106,18 @@ export default {
       }
     `;
 
-    const row = await ctx.db.query.orderRow({
-      where: {
-        id,
+    const row = await ctx.db.query.orderRow(
+      {
+        where: {
+          id,
+        },
       },
-    }, fragment);
+      fragment,
+    );
     if (!row) {
       throw new Error(`Could not find row id '${id}'`);
     }
-    const {order} = row;
+    const { order } = row;
 
     const key = ['Order', order.id].join('-');
 
@@ -110,12 +129,15 @@ export default {
           },
         });
       }
-      return ctx.db.mutation.updateOrderRow({
-        data,
-        where: {
-          id,
+      return ctx.db.mutation.updateOrderRow(
+        {
+          data,
+          where: {
+            id,
+          },
         },
-      }, info);
+        info,
+      );
     });
 
     return {
@@ -126,21 +148,24 @@ export default {
 
   async addDiscountCodeToOrder(
     parent,
-    {code, orderId}: AddDiscountCodeToOrderVariables,
+    { code, orderId }: API.AddDiscountCodeToOrderVariables,
     ctx: Context,
     info,
-  ): Promise<Order> {
-    return ctx.db.mutation.updateOrder({
-      data: {
-        discountCodes: {
-          connect: {
-            code,
+  ): Promise<Prisma.Order> {
+    return ctx.db.mutation.updateOrder(
+      {
+        data: {
+          discountCodes: {
+            connect: {
+              code,
+            },
           },
         },
+        where: {
+          id: orderId,
+        },
       },
-      where: {
-        id: orderId,
-      },
-    }, info);
+      info,
+    );
   },
 };

@@ -3,8 +3,12 @@
 import { readFileSync } from 'fs';
 import * as _ from 'lodash';
 import * as ProgressBar from 'progress';
-import { BrandCreateInput } from '../schema';
-import { Prisma, Product, ProductCreateInput } from './../generated/prisma';
+import {
+  BrandCreateInput,
+  Prisma,
+  Product,
+  ProductCreateInput,
+} from './../generated/prisma';
 /*
 1. Goto http://www.teefury.com/collections/cats-collection
 2. Write:
@@ -35,19 +39,21 @@ const prisma = new Prisma({
 let bar: ProgressBar;
 
 async function main() {
-  const seed: Product[] = JSON.parse(readFileSync(`${__dirname}/seed.json`, 'utf8'));
+  const seed: Product[] = JSON.parse(
+    readFileSync(`${__dirname}/seed.json`, 'utf8'),
+  );
 
   const existingProducts = await prisma.query.products({});
   if (existingProducts.length) {
     throw new Error('There are already products in the db.');
   }
 
-  const brands: BrandCreateInput[]  = _(seed)
+  const brands: BrandCreateInput[] = _(seed)
     .map(({ brand }) => brand)
     .uniqBy(({ slug }) => slug)
     .valueOf();
 
-  const products: ProductCreateInput[] = seed.map((product) => {
+  const products: ProductCreateInput[] = seed.map(product => {
     const input: ProductCreateInput = {
       ..._.pick(product, ['name', 'price', 'slug', 'thumbnail']),
       brand: {
@@ -82,11 +88,13 @@ async function main() {
   console.log('\n');
 }
 
-main().then(() => {
-  console.log('🎉  Seed successful');
-  process.exit(0);
-}).catch(e => {
-  console.error(e);
-  console.error('\n❌  Seed failed. See above.');
-  process.exit(1);
-});
+main()
+  .then(() => {
+    console.log('🎉  Seed successful');
+    process.exit(0);
+  })
+  .catch(e => {
+    console.error(e);
+    console.error('\n❌  Seed failed. See above.');
+    process.exit(1);
+  });

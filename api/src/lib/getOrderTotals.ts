@@ -1,4 +1,5 @@
-import { APIOrder, Order } from '../schema';
+import * as Prisma from '../generated/prisma';
+import * as API from '../schema';
 
 export const getOrderTotalsFragment = (node: string) => `
   fragment OrderTotalsFragment_${node} on Order {
@@ -13,23 +14,24 @@ export const getOrderTotalsFragment = (node: string) => `
   }
 `;
 
+export interface OrderRowTotals {
+  total: number;
+}
 export interface OrderTotals {
   discountsTotal: number;
   subTotal: number;
   total: number;
+  rows: OrderRowTotals[];
 }
 
-export function getOrderTotals(order: Order): APIOrder {
-  const rows: any = order.rows.map(row => ({
-    ...row,
+export function getOrderTotals(order: Prisma.Order): OrderTotals {
+  const rows: OrderRowTotals[] = order.rows.map(row => ({
     total: row.quantity * row.product.price,
   }));
 
-  const subTotal = order.rows.reduce((sum, row) => (
-    sum + row.quantity * row.product.price
-  ), 0);
+  const subTotal = rows.reduce((sum, row) => sum + row.total, 0);
 
-  const discountsTotal = order.discountCodes.reduce((sum, {type, amount}) => {
+  const discountsTotal = order.discountCodes.reduce((sum, { type, amount }) => {
     let ret = sum;
     if (type === 'Percentage') {
       ret += subTotal * (amount / 100);
@@ -41,7 +43,6 @@ export function getOrderTotals(order: Order): APIOrder {
   const total = Math.max(subTotal - discountsTotal, 0);
 
   return {
-    ...order,
     rows,
     subTotal,
     discountsTotal,
