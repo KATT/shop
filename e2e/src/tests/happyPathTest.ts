@@ -1,4 +1,5 @@
 import { NightwatchBrowser } from 'nightwatch';
+import Browser from '../browser';
 
 // Not sure if this is the right way to share props..
 const priceSelector = '[itemProp="price"]';
@@ -10,20 +11,6 @@ const discountCodeSelector = '[name="variables:code:value"]';
 const firstProductSelector = `${productSelector}:first-child`;
 
 let productName: string;
-
-function setSelectorValue(selector: string, value: any) {
-  const input: any = document.querySelector(selector);
-  const lastValue = input.value;
-  input.value = value;
-  const event = new Event('input', { bubbles: true });
-
-  // hack from https://github.com/facebook/react/issues/11488#issuecomment-347775628
-  const tracker = input._valueTracker;
-  if (tracker) {
-    tracker.setValue(lastValue);
-  }
-  input.dispatchEvent(event);
-}
 
 export = {
   before(client: NightwatchBrowser) {
@@ -64,9 +51,9 @@ export = {
       .assert.value(quantitySelector, '2');
   },
 
-  UpdateQuantity(client: NightwatchBrowser) {
+  UpdateQuantity(client: Browser) {
     client
-      .execute(setSelectorValue, [quantitySelector, '10'])
+      .setSelectorValue(quantitySelector, '10')
       .submitForm(quantitySelector)
       .assert.value(quantitySelector, '10');
   },
@@ -80,7 +67,7 @@ export = {
       .waitForElementVisible('.CheckoutDiscountsList', 10000)
       .assert.containsText(
         '.CheckoutDiscountsList',
-        'As a first time shopper you get discount on your first order'
+        'As a first time shopper you get discount on your first order',
       );
   },
 
