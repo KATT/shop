@@ -12,7 +12,7 @@
 * [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`./web`)
 * [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`./e2e`)
 * [Jest](https://facebook.github.io/jest/) for the other testing
-* [Travis CI](travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
+* [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
 
 ## Features
 
