@@ -1,7 +1,6 @@
 import { Order, OrderRow } from './generated/api';
 
 export * from './generated/api';
-export { Order as APIOrder, OrderRow as APIOrderRow };
 
 export interface UpdateOrderRowVariables {
   id: string;

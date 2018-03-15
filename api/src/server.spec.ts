@@ -1,13 +1,9 @@
 import * as request from 'supertest';
-import { Order, Product } from './generated/prisma';
-import { APIOrder, APIOrderRow, UpdateOrderRowResponse } from './schema';
+import * as Prisma from './generated/prisma';
+import * as API from './schema';
 import server from './server';
 
-const {
-  PRISMA_DEBUG,
-  PRISMA_ENDPOINT,
-  PRISMA_SECRET,
-} = process.env;
+const { PRISMA_DEBUG, PRISMA_ENDPOINT, PRISMA_SECRET } = process.env;
 
 let app;
 
@@ -16,8 +12,8 @@ interface Body {
   errors?: Error[];
 }
 
-async function graphqlRequest({variables, query}): Promise<Body> {
-  const {body} = await request(app)
+async function graphqlRequest({ variables, query }): Promise<Body> {
+  const { body } = await request(app)
     .post('/')
     .send({
       query,
@@ -35,7 +31,7 @@ async function graphqlRequest({variables, query}): Promise<Body> {
   return body;
 }
 
-async function getProducts(): Promise<Product[]> {
+async function getProducts(): Promise<API.Product[]> {
   const query = `
     query {
       products {
@@ -47,7 +43,7 @@ async function getProducts(): Promise<Product[]> {
   `;
 
   const variables = {};
-  const body = await graphqlRequest({query, variables});
+  const body = await graphqlRequest({ query, variables });
 
   expect(Array.isArray(body.data.products)).toBeTruthy();
 
@@ -59,7 +55,7 @@ beforeAll(async () => {
     PRISMA_ENDPOINT,
     PRISMA_SECRET,
     PRISMA_DEBUG: false,
-  }).start({port: 4010});
+  }).start({ port: 4010 });
 });
 afterAll(() => app.close());
 
@@ -78,7 +74,9 @@ const defaultOrderFragment = `
     }
   }
 `;
-async function createOrder(fragment = defaultOrderFragment): Promise<APIOrder> {
+async function createOrder(
+  fragment = defaultOrderFragment,
+): Promise<API.Order> {
   const query = `
     mutation {
       createOrder {
@@ -88,12 +86,15 @@ async function createOrder(fragment = defaultOrderFragment): Promise<APIOrder> {
   `;
 
   const variables = {};
-  const body = await graphqlRequest({query, variables});
+  const body = await graphqlRequest({ query, variables });
 
   return body.data.createOrder;
 }
 
-async function getOrder(id, fragment = defaultOrderFragment): Promise<APIOrder> {
+async function getOrder(
+  id,
+  fragment = defaultOrderFragment,
+): Promise<API.Order> {
   const query = `
     query {
       order(id: "${id}") {
@@ -103,7 +104,7 @@ async function getOrder(id, fragment = defaultOrderFragment): Promise<APIOrder> 
   `;
 
   const variables = {};
-  const body = await graphqlRequest({query, variables});
+  const body = await graphqlRequest({ query, variables });
 
   expect(typeof body.data.order).toEqual('object');
 
@@ -141,7 +142,7 @@ const defaultOrderRowFragment = `
 async function addProductToOrder(
   variables: AddProductToOrderVariables,
   fragment = defaultOrderRowFragment,
-): Promise<APIOrderRow> {
+): Promise<API.OrderRow> {
   const query = `
     mutation ($orderId: String! $productId: String! $quantity: Int) {
       addProductToOrder (orderId: $orderId productId: $productId quantity: $quantity) {
@@ -150,9 +151,9 @@ async function addProductToOrder(
     }
   `;
 
-  const body = await graphqlRequest({query, variables});
+  const body = await graphqlRequest({ query, variables });
 
-  const row: APIOrderRow = body.data.addProductToOrder;
+  const row: API.OrderRow = body.data.addProductToOrder;
   return row;
 }
 
@@ -162,7 +163,7 @@ interface UpdateOrderRowVariables {
 }
 async function updateOrderRow(
   variables: UpdateOrderRowVariables,
-): Promise<UpdateOrderRowResponse> {
+): Promise<API.UpdateOrderRowResponse> {
   const query = `
     mutation ($id: ID! $quantity: Int) {
       updateOrderRow (id: $id, quantity: $quantity) {
@@ -176,14 +177,14 @@ async function updateOrderRow(
     }
   `;
 
-  const body = await graphqlRequest({query, variables});
+  const body = await graphqlRequest({ query, variables });
 
-  const response: UpdateOrderRowResponse = body.data.updateOrderRow;
+  const response: API.UpdateOrderRowResponse = body.data.updateOrderRow;
   return response;
 }
 
 describe('mutation.addProductToOrder', () => {
-  let products: Product[];
+  let products: API.Product[];
 
   beforeAll(async () => {
     products = await getProducts();
@@ -240,9 +241,9 @@ describe('mutation.addProductToOrder', () => {
     };
 
     await Promise.all(
-      Array(9).fill(null).map(() =>
-        addProductToOrder(opts),
-      ),
+      Array(9)
+        .fill(null)
+        .map(() => addProductToOrder(opts)),
     );
 
     const row = await addProductToOrder(opts);
@@ -325,7 +326,7 @@ describe('mutation.addProductToOrder', () => {
 });
 
 describe('query.order', () => {
-  let products: Product[];
+  let products: API.Product[];
 
   beforeAll(async () => {
     products = await getProducts();
@@ -346,7 +347,7 @@ describe('query.order', () => {
       orderId: order.id,
       quantity,
     };
-    const fragment =  `total, order { rows { total } }`;
+    const fragment = `total, order { rows { total } }`;
     const row = await addProductToOrder(opts, fragment);
 
     expect(row.total).toEqual(product.price * quantity);
@@ -370,7 +371,7 @@ describe('query.order', () => {
       orderId: order.id,
       quantity: 2,
     };
-    const fragment =  `order { subTotal }`;
+    const fragment = `order { subTotal }`;
 
     const row1 = await addProductToOrder(opts1, fragment);
     expect(row1.order.subTotal).toEqual(product1.price);
@@ -382,7 +383,7 @@ describe('query.order', () => {
 });
 
 describe('mutation.updateOrderRow', () => {
-  let products: Product[];
+  let products: API.Product[];
 
   beforeAll(async () => {
     products = await getProducts();
@@ -443,9 +444,9 @@ describe('mutation.updateOrderRow', () => {
 });
 
 describe('mutation.addDiscountCodeToOrder', () => {
-  let order: APIOrder;
-  let product1: Product;
-  let product2: Product;
+  let order: API.Order;
+  let product1: API.Product;
+  let product2: API.Product;
 
   beforeEach(async () => {
     order = await createOrder();
@@ -482,11 +483,10 @@ describe('mutation.addDiscountCodeToOrder', () => {
     `;
 
     const variables = {};
-    const body = await graphqlRequest({query, variables});
+    const body = await graphqlRequest({ query, variables });
 
     order = body.data.addDiscountCodeToOrder;
 
-    expect(order).toEqual({subTotal, discountsTotal, total});
+    expect(order).toEqual({ subTotal, discountsTotal, total });
   });
-
 });

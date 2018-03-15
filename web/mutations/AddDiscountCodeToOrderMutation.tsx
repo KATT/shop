@@ -1,11 +1,13 @@
 import gql from 'graphql-tag';
-import {print as printSource} from 'graphql/language/printer';
+import { print as printSource } from 'graphql/language/printer';
 import React, { ReactNode } from 'react';
 import { graphql } from 'react-apollo';
-import { AddDiscountCodeToOrderVariables, APIOrder } from '../lib/prisma';
+import { AddDiscountCodeToOrderVariables, Order } from '../lib/prisma';
 import { GetOrderFields } from '../queries/GetOrderQuery';
 
-type addDiscountCodeToOrderMutationFn = (variables: AddDiscountCodeToOrderVariables) => Promise<any>;
+type addDiscountCodeToOrderMutationFn = (
+  variables: AddDiscountCodeToOrderVariables,
+) => Promise<any>;
 
 interface RenderCallbackProps {
   addDiscountCodeToOrderMutation: addDiscountCodeToOrderMutationFn;
@@ -41,29 +43,36 @@ export const AddDiscountCodeToOrder = ({
   redirect,
   addDiscountCodeToOrderMutation,
   submit,
- }: Props) => (
+}: Props) => (
   <form
     action={'/_gql/m'}
     method="post"
-    onSubmit={(e) => {
+    onSubmit={e => {
       e.preventDefault();
       submit(addDiscountCodeToOrderMutation);
     }}
-    >
-      <input type="hidden" name="query" value={AddDiscountToOrderASTString} />
-      <input type="hidden" name="redirect" value={redirect} />
-      {isFunction(children) ? (children as RenderCallback)({addDiscountCodeToOrderMutation}) : children}
+  >
+    <input type="hidden" name="query" value={AddDiscountToOrderASTString} />
+    <input type="hidden" name="redirect" value={redirect} />
+    {isFunction(children)
+      ? (children as RenderCallback)({ addDiscountCodeToOrderMutation })
+      : children}
   </form>
 );
 
-export const AddDiscountCodeToOrderMutation = graphql<Response, Props>(AddDiscountToOrderAST, {
-  props: (props) => ({
-    addDiscountCodeToOrderMutation: (variables: AddDiscountCodeToOrderVariables) => {
-      return props.mutate({
-        variables,
-      });
-    },
-  }),
-})(AddDiscountCodeToOrder);
+export const AddDiscountCodeToOrderMutation = graphql<Response, Props>(
+  AddDiscountToOrderAST,
+  {
+    props: props => ({
+      addDiscountCodeToOrderMutation: (
+        variables: AddDiscountCodeToOrderVariables,
+      ) => {
+        return props.mutate({
+          variables,
+        });
+      },
+    }),
+  },
+)(AddDiscountCodeToOrder);
 
 export default AddDiscountCodeToOrderMutation;
