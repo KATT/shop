@@ -9,8 +9,7 @@
     "delete:dev": "prisma delete -e .env.dev --force",
     "delete:local": "prisma delete --force",
     "deploy:local": "prisma deploy && graphql prepare",
-    "deploy:dev":
-      "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev -- now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
+    "deploy:dev": "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev -- now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
     "alias": "now alias",
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
   },
@@ -18,11 +17,17 @@
     "node": "9.x.x"
   },
   "jest": {
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
     },
-    "testMatch": ["**/*.spec.(ts|tsx)"]
+    "testMatch": [
+      "**/*.spec.(ts|tsx)"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -46,7 +51,7 @@
     "lodash": "^4.17.5",
     "nodemon": "1.17.1",
     "npm-run-all": "4.1.2",
-    "prisma": "1.3.2",
+    "prisma": "^1.5.0-beta.0",
     "progress": "^2.0.0",
     "rimraf": "2.6.2",
     "supertest": "^3.0.0",
