@@ -1,5 +1,3 @@
-import { Order, OrderRow } from './generated/api';
-
 export * from './generated/api';
 
 export interface UpdateOrderRowVariables {
