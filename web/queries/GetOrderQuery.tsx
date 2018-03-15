@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { APIOrder } from 'lib/prisma';
+import { Order } from 'lib/prisma';
 import { ReactElement } from 'react';
 import { graphql, QueryProps } from 'react-apollo';
 
@@ -53,16 +53,15 @@ interface InputProps {
 }
 
 export interface OrderData extends QueryProps {
-  order?: Partial<APIOrder>;
+  order?: Partial<Order>;
 }
 
 interface IntermediateProps extends InputProps {
   data?: OrderData;
 }
 
-export const GetOrderComponent = ({ children, data }: IntermediateProps) => (
-  children({...data})
-);
+export const GetOrderComponent = ({ children, data }: IntermediateProps) =>
+  children({ ...data });
 
 export default graphql<Response, InputProps>(GetOrderQueryAST, {
   options: ({ orderId }) => ({

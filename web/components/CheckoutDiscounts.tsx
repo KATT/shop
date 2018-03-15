@@ -1,4 +1,4 @@
-import { APIOrder } from 'lib/prisma';
+import { Order } from 'lib/prisma';
 import { SingletonRouter } from 'next/router';
 import { Component } from 'react';
 import { AddDiscountCodeToOrderMutation } from '../mutations/AddDiscountCodeToOrderMutation';
@@ -8,7 +8,7 @@ enum SubmitState {
   LOADING,
 }
 interface Props {
-  order: Partial<APIOrder>;
+  order: Partial<Order>;
   url: SingletonRouter;
 }
 interface State {
@@ -92,14 +92,14 @@ class CheckoutDiscounts extends Component<Props, State> {
       code: '',
       submitState: SubmitState.INIT,
     }));
-  };
+  }
   private handleError = e => {
     alert('Invalid code!');
 
     this.setState(() => ({
       submitState: SubmitState.INIT,
     }));
-  };
+  }
 }
 
 export default CheckoutDiscounts;
