@@ -29,7 +29,6 @@
       "**/*.spec.(ts|tsx)"
     ]
   },
-  "private": true,
   "dependencies": {
     "async-lock": "^1.1.2",
     "bcryptjs": "2.4.3",
@@ -65,5 +64,6 @@
       "shop-api.kattcorp.co.uk",
       "shop-api.kattcorp.com"
     ]
-  }
+  },
+  "version": "1.0.0-0"
 }
