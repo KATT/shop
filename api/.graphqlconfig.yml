@@ -5,13 +5,13 @@ projects:
       endpoints:
         default: "http://localhost:4000"
       prepare-binding:
-        output: src/generated/api.ts
+        output: ../lib/src/generated/api.ts
         generator: prisma-ts
   database:
     schemaPath: "src/generated/prisma.graphql"
     extensions:
       prisma: database/prisma.yml
       prepare-binding:
-        output: src/generated/prisma.ts
+        output: ../lib/src/generated/prisma.ts
         generator: prisma-ts
 

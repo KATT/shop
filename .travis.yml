@@ -12,9 +12,10 @@ cache:
   - node_modules
 install:
 - yarn install
-- yarn setup:prisma
 before_script:
+- yarn lerna link
 - yarn build
+- yarn setup:prisma
 script:
 - yarn test:api
 - yarn start:api &

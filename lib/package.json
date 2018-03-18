@@ -1,0 +1,29 @@
+{
+  "name": "@katt/shop-lib",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "dev": "tsc --watch"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "directories": {
+    "lib": "./dist"
+  },
+  "files": ["dist/*"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "prepublishOnly": "yarn build",
+  "engines": {
+    "node": "9.x.x"
+  },
+  "dependencies": {
+    "graphql": "^0.13.2",
+    "prisma-binding": "^1.5.15"
+  },
+  "devDependencies": {
+    "rimraf": "2.6.2",
+    "typescript": "2.7.2"
+  },
+  "version": "1.0.0-11"
+}

@@ -1,5 +1,5 @@
-import * as Prisma from '../generated/prisma';
-import * as API from '../schema';
+import * as Prisma from './generated/prisma';
+import * as API from './schema';
 
 export const getOrderTotalsFragment = (node: string) => `
   fragment OrderTotalsFragment_${node} on Order {

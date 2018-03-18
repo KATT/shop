@@ -14,6 +14,14 @@
     "alias": "now alias",
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
   },
+  "main": "./dist/lib/index.js",
+  "directories": {
+    "lib": "./dist/lib"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "prepublishOnly": "yarn build",
   "engines": {
     "node": "9.x.x"
   },
@@ -32,12 +40,12 @@
   },
   "private": true,
   "dependencies": {
+    "@katt/shop-lib": "^1.0.0-11",
     "async-lock": "^1.1.2",
     "bcryptjs": "2.4.3",
     "graphql-yoga": "1.4.3",
     "jsonwebtoken": "8.1.1",
-    "now": "^10.1.0",
-    "prisma-binding": "1.5.15"
+    "prisma-binding": "^1.5.15"
   },
   "devDependencies": {
     "@types/async-lock": "^1.1.0",
@@ -51,6 +59,7 @@
     "jest": "^22.4.2",
     "lodash": "^4.17.5",
     "nodemon": "1.17.1",
+    "now": "^10.1.0",
     "npm-run-all": "4.1.2",
     "prisma": "^1.5.0-beta.0",
     "progress": "^2.0.0",

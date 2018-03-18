@@ -1,6 +1,5 @@
+import { API, Prisma } from '@katt/shop-lib';
 import * as request from 'supertest';
-import * as Prisma from './generated/prisma';
-import * as API from './schema';
 import server from './server';
 
 const { PRISMA_DEBUG, PRISMA_ENDPOINT, PRISMA_SECRET } = process.env;
