@@ -1,4 +1,5 @@
 {
+  "name": "@katt/shop-e2e",
   "private": true,
   "scripts": {
     "build": "rimraf dist && tsc",
