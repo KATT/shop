@@ -1,14 +1,9 @@
 // tslint:disable:no-console
 
+import { API, Prisma } from '@katt/shop-lib';
 import { readFileSync } from 'fs';
 import * as _ from 'lodash';
 import * as ProgressBar from 'progress';
-import {
-  BrandCreateInput,
-  Prisma,
-  Product,
-  ProductCreateInput,
-} from './../generated/prisma';
 /*
 1. Goto http://www.teefury.com/collections/cats-collection
 2. Write:
@@ -29,8 +24,7 @@ copy([...document.querySelectorAll('.item')].map((node) => {
 }));
 ```
 */
-
-const prisma = new Prisma({
+const prisma = new Prisma.Prisma({
   endpoint: process.env.PRISMA_ENDPOINT, // the endpoint of the Prisma DB service (value is set in .env)
   secret: process.env.PRISMA_SECRET, // taken from database/prisma.yml (value is set in .env)
   debug: false, // log all GraphQL queries & mutations
@@ -39,7 +33,7 @@ const prisma = new Prisma({
 let bar: ProgressBar;
 
 async function main() {
-  const seed: Product[] = JSON.parse(
+  const seed: Prisma.Product[] = JSON.parse(
     readFileSync(`${__dirname}/seed.json`, 'utf8'),
   );
 
@@ -48,13 +42,13 @@ async function main() {
     throw new Error('There are already products in the db.');
   }
 
-  const brands: BrandCreateInput[] = _(seed)
+  const brands: Prisma.BrandCreateInput[] = _(seed)
     .map(({ brand }) => brand)
     .uniqBy(({ slug }) => slug)
     .valueOf();
 
-  const products: ProductCreateInput[] = seed.map(product => {
-    const input: ProductCreateInput = {
+  const products: Prisma.ProductCreateInput[] = seed.map(product => {
+    const input: Prisma.ProductCreateInput = {
       ..._.pick(product, ['name', 'price', 'slug', 'thumbnail']),
       brand: {
         connect: {

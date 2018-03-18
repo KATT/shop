@@ -1,14 +1,12 @@
+import { API, Prisma } from '@katt/shop-lib';
+import * as LIB from '@katt/shop-lib';
 import * as AsyncLock from 'async-lock';
 import { GraphQLError } from 'graphql';
-
-import * as Prisma from '../../generated/prisma';
-import * as API from '../../schema';
 
 import { UpdateOrderRowResponseSource } from '..';
 import { Context } from '../../utils';
 
 const lock = new AsyncLock();
-
 export default {
   async createOrder(parent, args, ctx: Context, info) {
     return ctx.db.mutation.createOrder(
@@ -28,7 +26,6 @@ export default {
     if (quantity < 1) {
       throw new GraphQLError('quantity must be greater than 0');
     }
-
     const key = ['Order', orderId].join('-');
     return lock.acquire(key, async () => {
       const fragment = `

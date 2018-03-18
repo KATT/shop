@@ -208,22 +208,15 @@ input BrandUpdateInput {
   url: String
 }
 
-input BrandUpdateNestedInput {
-  where: BrandWhereUniqueInput!
-  data: BrandUpdateDataInput!
-}
-
 input BrandUpdateOneInput {
   create: BrandCreateInput
   connect: BrandWhereUniqueInput
-  disconnect: BrandWhereUniqueInput
-  delete: BrandWhereUniqueInput
-  update: BrandUpdateNestedInput
+  delete: Boolean
+  update: BrandUpdateDataInput
   upsert: BrandUpsertNestedInput
 }
 
 input BrandUpsertNestedInput {
-  where: BrandWhereUniqueInput!
   update: BrandUpdateDataInput!
   create: BrandCreateInput!
 }
@@ -648,16 +641,16 @@ input DiscountCodeUpdateManyInput {
   connect: [DiscountCodeWhereUniqueInput!]
   disconnect: [DiscountCodeWhereUniqueInput!]
   delete: [DiscountCodeWhereUniqueInput!]
-  update: [DiscountCodeUpdateNestedInput!]
-  upsert: [DiscountCodeUpsertNestedInput!]
+  update: [DiscountCodeUpdateWithWhereUniqueNestedInput!]
+  upsert: [DiscountCodeUpsertWithWhereUniqueNestedInput!]
 }
 
-input DiscountCodeUpdateNestedInput {
+input DiscountCodeUpdateWithWhereUniqueNestedInput {
   where: DiscountCodeWhereUniqueInput!
   data: DiscountCodeUpdateDataInput!
 }
 
-input DiscountCodeUpsertNestedInput {
+input DiscountCodeUpsertWithWhereUniqueNestedInput {
   where: DiscountCodeWhereUniqueInput!
   update: DiscountCodeUpdateDataInput!
   create: DiscountCodeCreateInput!
@@ -1221,8 +1214,8 @@ input OrderRowUpdateManyWithoutOrderInput {
   connect: [OrderRowWhereUniqueInput!]
   disconnect: [OrderRowWhereUniqueInput!]
   delete: [OrderRowWhereUniqueInput!]
-  update: [OrderRowUpdateWithoutOrderInput!]
-  upsert: [OrderRowUpsertWithoutOrderInput!]
+  update: [OrderRowUpdateWithWhereUniqueWithoutOrderInput!]
+  upsert: [OrderRowUpsertWithWhereUniqueWithoutOrderInput!]
 }
 
 input OrderRowUpdateWithoutOrderDataInput {
@@ -1230,12 +1223,12 @@ input OrderRowUpdateWithoutOrderDataInput {
   product: ProductUpdateOneInput
 }
 
-input OrderRowUpdateWithoutOrderInput {
+input OrderRowUpdateWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   data: OrderRowUpdateWithoutOrderDataInput!
 }
 
-input OrderRowUpsertWithoutOrderInput {
+input OrderRowUpsertWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   update: OrderRowUpdateWithoutOrderDataInput!
   create: OrderRowCreateWithoutOrderInput!
@@ -1442,9 +1435,8 @@ input OrderUpdateInput {
 input OrderUpdateOneWithoutRowsInput {
   create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
-  disconnect: OrderWhereUniqueInput
-  delete: OrderWhereUniqueInput
-  update: OrderUpdateWithoutRowsInput
+  delete: Boolean
+  update: OrderUpdateWithoutRowsDataInput
   upsert: OrderUpsertWithoutRowsInput
 }
 
@@ -1453,13 +1445,7 @@ input OrderUpdateWithoutRowsDataInput {
   discountCodes: DiscountCodeUpdateManyInput
 }
 
-input OrderUpdateWithoutRowsInput {
-  where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutRowsDataInput!
-}
-
 input OrderUpsertWithoutRowsInput {
-  where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutRowsDataInput!
   create: OrderCreateWithoutRowsInput!
 }
@@ -1739,22 +1725,15 @@ input ProductUpdateInput {
   brand: BrandUpdateOneInput
 }
 
-input ProductUpdateNestedInput {
-  where: ProductWhereUniqueInput!
-  data: ProductUpdateDataInput!
-}
-
 input ProductUpdateOneInput {
   create: ProductCreateInput
   connect: ProductWhereUniqueInput
-  disconnect: ProductWhereUniqueInput
-  delete: ProductWhereUniqueInput
-  update: ProductUpdateNestedInput
+  delete: Boolean
+  update: ProductUpdateDataInput
   upsert: ProductUpsertNestedInput
 }
 
 input ProductUpsertNestedInput {
-  where: ProductWhereUniqueInput!
   update: ProductUpdateDataInput!
   create: ProductCreateInput!
 }
@@ -2221,22 +2200,16 @@ input UserUpdateInput {
   name: String
 }
 
-input UserUpdateNestedInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
-}
-
 input UserUpdateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  delete: UserWhereUniqueInput
-  update: UserUpdateNestedInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
 }
 
 input UserUpsertNestedInput {
-  where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
 }

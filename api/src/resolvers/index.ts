@@ -1,7 +1,10 @@
+import {
+  API,
+  getOrderTotals,
+  getOrderTotalsFragment,
+  Prisma,
+} from '@katt/shop-lib';
 import { extractFragmentReplacements } from 'prisma-binding';
-import * as Prisma from '../generated/prisma';
-import { getOrderTotals, getOrderTotalsFragment } from '../lib/getOrderTotals';
-import { Order, OrderRow, UpdateOrderRowResponse } from '../schema';
 import { Context } from '../utils';
 import Mutation from './Mutation';
 import Query from './Query';

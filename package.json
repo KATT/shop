@@ -5,32 +5,31 @@
   "author": "KATT",
   "scripts": {
     "precommit": "lint-staged",
+    "build:lib": "cd lib && yarn build",
     "build:api": "cd api && yarn build",
     "build:web": "cd web && yarn build",
     "build:e2e": "cd e2e && yarn build",
-    "install:api": "cd api && yarn install",
-    "install:web": "cd web && yarn install",
-    "install:e2e": "cd e2e && yarn install",
-    "postinstall": "npm-run-all install:*",
+    "postinstall": "lerna bootstrap",
+    "delete:prisma": "cd api && yarn delete:local",
     "setup:prisma": "cd api && yarn deploy:local && yarn seed:local",
-    "build": "npm-run-all --parallel build:*",
+    "build": "npm-run-all build:*",
     "start:api": "cd api && yarn start",
     "start:web": "cd web && yarn start -- -p 5000",
     "start:e2e": "cd e2e && yarn start",
     "start:prisma": "cd api && yarn prisma local start",
     "dev:api": "cd api && yarn dev",
-    "dev:web": "cd e2e && yarn dev",
-    "dev:e2e": "cd web && yarn dev",
-    "dev": "npm-run-all --parallel dev:*",
+    "dev:web": "cd web && yarn dev",
+    "dev:e2e": "cd e2e && yarn dev",
+    "dev:lib": "cd lib && yarn dev",
+    "dev": "yarn build:lib && lerna link && npm-run-all --parallel dev:*",
     "test:api": "cd api && yarn test",
     "test:e2e": "yarn start:e2e",
     "test": "npm-run-all --parallel test:*",
-    "selenium": "selenium-server -port 4444",
-    "wait-ports": "yarn wait-port 4000 && yarn wait-port 5000"
+    "selenium": "selenium-server -port 4444"
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}!api/src/generated/*.ts": [
+    "*.{ts,tsx}!**/generated/*.ts": [
       "prettier --parser typescript --write",
       "tslint --fix",
       "git add"
@@ -38,6 +37,7 @@
   },
   "devDependencies": {
     "husky": "^0.14.3",
+    "lerna": "^2.9.0",
     "lint-staged": "^6.1.0",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.11.1",
