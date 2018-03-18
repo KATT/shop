@@ -16,6 +16,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "prepublishOnly": "yarn build",
   "engines": {
     "node": "9.x.x"
   },
@@ -68,5 +69,5 @@
       "shop-api.kattcorp.com"
     ]
   },
-  "version": "1.0.2-0"
+  "version": "1.0.3-0"
 }
