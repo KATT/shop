@@ -1,7 +1,7 @@
 {
   "name": "@katt/shop-web",
   "private": true,
-  "version": "1.0.1-0",
+  "version": "1.0.2-0",
   "scripts": {
     "dev": "dotenv -- nodemon server/index.ts",
     "build": "tsc --project tsconfig.server.json && dotenv -- next build",

@@ -13,6 +13,9 @@
     "alias": "now alias",
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": "9.x.x"
   },
@@ -65,5 +68,5 @@
       "shop-api.kattcorp.com"
     ]
   },
-  "version": "1.0.1-0"
+  "version": "1.0.2-0"
 }
