@@ -74,5 +74,6 @@
       "shop-api.kattcorp.co.uk",
       "shop-api.kattcorp.com"
     ]
-  }
+  },
+  "version": "1.0.0-11"
 }

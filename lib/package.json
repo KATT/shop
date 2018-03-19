@@ -9,7 +9,9 @@
   "directories": {
     "lib": "./dist"
   },
-  "files": ["dist/*"],
+  "files": [
+    "dist/*"
+  ],
   "publishConfig": {
     "access": "public"
   },
