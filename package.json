@@ -35,6 +35,7 @@
       "git add"
     ]
   },
+  "workspaces": ["api", "e2e", "web", "lib"],
   "devDependencies": {
     "husky": "^0.14.3",
     "lerna": "^2.9.0",
