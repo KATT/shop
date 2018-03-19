@@ -24,8 +24,8 @@
     "prisma-binding": "^1.5.15"
   },
   "devDependencies": {
-    "rimraf": "2.6.2",
-    "typescript": "2.7.2"
+    "rimraf": "^2.6.2",
+    "typescript": "^2.7.2"
   },
   "version": "1.0.0-11"
 }

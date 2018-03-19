@@ -53,19 +53,19 @@
     "@types/lodash": "^4.14.104",
     "@types/progress": "^2.0.1",
     "@types/supertest": "^2.0.4",
-    "dotenv-cli": "1.4.0",
-    "graphql-cli": "2.15.8",
+    "dotenv-cli": "^1.4.0",
+    "graphql-cli": "^2.15.8",
     "jest": "^22.4.2",
     "lodash": "^4.17.5",
-    "nodemon": "1.17.1",
+    "nodemon": "^1.17.1",
     "now": "^10.1.0",
     "npm-run-all": "4.1.2",
     "prisma": "^1.5.0-beta.0",
     "progress": "^2.0.0",
-    "rimraf": "2.6.2",
+    "rimraf": "^2.6.2",
     "supertest": "^3.0.0",
-    "ts-node": "5.0.0",
-    "typescript": "2.7.2"
+    "ts-node": "^5.0.0",
+    "typescript": "^2.7.2"
   },
   "now": {
     "alias": [

@@ -9,7 +9,6 @@
     "build:api": "cd api && yarn build",
     "build:web": "cd web && yarn build",
     "build:e2e": "cd e2e && yarn build",
-    "postinstall": "lerna bootstrap",
     "delete:prisma": "cd api && yarn delete:local",
     "setup:prisma": "cd api && yarn deploy:local && yarn seed:local",
     "build": "npm-run-all build:*",
@@ -35,6 +34,7 @@
       "git add"
     ]
   },
+  "workspaces": ["api", "e2e", "web", "lib"],
   "devDependencies": {
     "husky": "^0.14.3",
     "lerna": "^2.9.0",
