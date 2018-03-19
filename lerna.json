@@ -1,6 +1,11 @@
 {
   "lerna": "2.9.0",
-  "packages": ["api", "e2e", "lib", "web"],
-  "version": "1.0.0-10",
+  "packages": [
+    "api",
+    "e2e",
+    "lib",
+    "web"
+  ],
+  "version": "1.0.0-11",
   "npmClient": "yarn"
 }
