@@ -2,17 +2,20 @@
 
 [![Build Status](https://travis-ci.org/KATT/shop.svg?branch=master)](https://travis-ci.org/KATT/shop) [![Maintainability](https://api.codeclimate.com/v1/badges/073d5e009a2b0cd2d0b9/maintainability)](https://codeclimate.com/github/KATT/shop/maintainability)
 
+Goal is to be a reference project for a lot of common React/Prisma/GraphQL challenges.
+
 * [shop.kattcorp.co.uk](https://shop.kattcorp.co.uk)
 * [shop-api.kattcorp.co.uk](https://shop-api.kattcorp.co.uk)
 
 ## Tech
 
 * [TypeScript](typescriptlang.org) (we have `*.js` in `.gitignore`!)
-* [GraphQL](http://graphql.org/) API Gateway in front of [Prisma](https://prismagraphql.com) (`./api`)
-* [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`./web`)
-* [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`./e2e`)
+* [GraphQL](http://graphql.org/) API Gateway in front of [Prisma](https://prismagraphql.com) (`/api`)
+* [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/) (`/web`)
+* [Nightwatch.js](http://nightwatchjs.org/) E2E testing (`/e2e`)
 * [Jest](https://facebook.github.io/jest/) for the other testing
 * [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
+* [LernaJS](https://lernajs.io) for monorepo setup (`/lib` is an npm module used in both `api` and)
 
 ## Features
 
@@ -34,17 +37,23 @@
 1.  Start Docker
 1.  `yarn install`
     * Installs deps for
-      * `./`
-      * `./api`
-      * `./web`
-      * `./e2e`
+      * `/`
+      * `/api`
+      * `/web`
+      * `/e2e`
+      * `/lib`
 1.  Start Prisma + seed DB `yarn setup:prisma`
 
 ## Development
 
-`yarn dev` starts the `./api` Gateway, the Next.js `./web`, and a TypeScript watcher for `./e2e` in parallell.
+`yarn dev` starts...
 
-If you prefer separate output, navigate to `./api` or `./web` in separate shells and run `yarn dev`
+* API Gateway `/api` Gateway in
+* Next.JS React app in `/web`
+* TypeScript watcher for `/e2e`
+* TypeScript watcher for `/lib`
+
+If you prefer separate output, navigate to `/api` or `/web` in separate shells and run `yarn dev`
 
 If everything goes smoothly you should be able to access the below:
 
@@ -61,7 +70,7 @@ yarn test:api
 
 ### Web
 
-`./web` has no tests _(yet)_.
+`/web` has no tests _(yet)_.
 
 ### E2E
 
@@ -81,13 +90,13 @@ brew cask install java
 1.  Run tests: `yarn start:e2e`
     * Will run E2E in Chrome with JS enabled
     * To run without js: `yarn start:e2e -- --env chrome:nojs`
-    * See [nightwatch.ts](./e2e/src/nightwatch.ts) for all envs
+    * See [nightwatch.ts](/e2e/src/nightwatch.ts) for all envs
 
 ### Conventions, how to write etc
 
-#### `./web`
+#### `/web`
 
-* `./mutations` and `./queries` exposes render prop components for easy handling of data loading / rendering
+* `/mutations` and `/queries` exposes render prop components for easy handling of data loading / rendering
 * .. _TBC_
 
 ## What's next / questions
