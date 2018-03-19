@@ -13,6 +13,10 @@
     "alias": "now alias",
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
   },
+  "main": "./dist/lib/index.js",
+  "directories": {
+    "lib": "./dist/lib"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -67,5 +71,5 @@
       "shop-api.kattcorp.com"
     ]
   },
-  "version": "1.0.5-0"
+  "version": "1.0.6-0"
 }
