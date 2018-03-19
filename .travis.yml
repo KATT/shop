@@ -13,7 +13,6 @@ cache:
 install:
 - yarn install
 before_script:
-- yarn lerna link
 - yarn build
 - yarn setup:prisma
 script:
