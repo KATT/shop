@@ -10,9 +10,10 @@ Attempt to create a great reference project with an amazing developer experience
 ## Tech
 
 * [TypeScript](typescriptlang.org) (we have `*.js` in `.gitignore`!)
-* Monorepo setup with a few different projects
+* [LernaJS](https://lernajs.io) monorepo setup setup with a few different projects
   * `/api` - [GraphQL](http://graphql.org/) API Gateway in front of [Prisma](https://prismagraphql.com)
   * `/web` - [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/)
+  * `/lib` is an npm module used in both `api` and `web`. Contains API TypeScript defs & utility functions.
   * `/e2e` - [Nightwatch.js](http://nightwatchjs.org/) E2E testing
 * [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
 
@@ -35,20 +36,28 @@ Attempt to create a great reference project with an amazing developer experience
 1.  Install yarn - `npm install -g yarn`
 1.  Start Docker
 1.  `yarn install`
-    * Installs deps for
-      * `/`
-      * `/api`
-      * `/web`
-      * `/e2e`
+    _ Installs deps for
+    _ `/`
+    _ `/api`
+    _ `/web`
+    _ `/e2e`
+    _ `/lib`
 1.  Start Prisma + seed DB `yarn setup:prisma`
 
 ## Development
+
+<<<<<<< HEAD
 
 ```sh
 yarn dev
 ```
 
-Starts the `/api` Gateway, the Next.js `/web`, and a TypeScript watcher for `/e2e` in parallell.
+... Starts
+
+* API Gateway `/api`
+* Next.JS React app in `/web`
+* TypeScript watcher for `/e2e`
+* TypeScript watcher for `/lib`
 
 If you prefer separate output, navigate to `/api`, etc in separate shells and run `yarn dev`
 
@@ -89,7 +98,7 @@ brew cask install java
 1.  Run tests: `yarn start:e2e`
     * Will run E2E in Chrome with JS enabled
     * To run without js: `yarn start:e2e -- --env chrome:nojs`
-    * See [nightwatch.ts](./e2e/src/nightwatch.ts) for all envs
+    * See [nightwatch.ts](/e2e/src/nightwatch.ts) for all envs
 
 ### Conventions, how to write etc
 
