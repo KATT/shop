@@ -1,3 +1,4 @@
+import { getOrderWithTotals } from '@katt/shop-lib';
 import gql from 'graphql-tag';
 import { print as printSource } from 'graphql/language/printer';
 import React, { ReactNode } from 'react';
@@ -6,36 +7,6 @@ import { Order, OrderRow, Product } from '../lib/prisma';
 import { GetOrderFields, GetOrderQueryAST } from '../queries/GetOrderQuery';
 
 type addProductToOrderMutationFn = (product: Product) => {};
-
-export function calculateTotals(order: Partial<Order>) {
-  const rows = order.rows.map(row => ({
-    ...row,
-    subTotal: row.quantity * row.product.price,
-  }));
-
-  const subTotal = rows.reduce((sum, row) => sum + row.subTotal, 0);
-
-  const discountsTotal =
-    order.discountCodes &&
-    order.discountCodes.reduce((sum, { type, amount }) => {
-      let ret = sum;
-      if (type === 'Percentage') {
-        ret += subTotal * (amount / 100);
-      }
-
-      return ret;
-    }, 0);
-
-  const total = Math.max(subTotal - discountsTotal, 0);
-
-  return {
-    ...order,
-    rows,
-    subTotal,
-    total,
-    discountsTotal,
-  };
-}
 
 interface RenderCallbackProps {
   addProductToOrderMutation: addProductToOrderMutationFn;
@@ -92,7 +63,7 @@ export function addProductToOrderReducer(
     rows,
   };
 
-  return calculateTotals(newOrder);
+  return getOrderWithTotals(newOrder);
 }
 
 export const AddProductToOrder = ({
