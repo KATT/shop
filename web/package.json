@@ -1,7 +1,7 @@
 {
   "name": "@katt/shop-web",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "scripts": {
     "dev": "dotenv -- nodemon server/index.ts",
     "build": "tsc --project tsconfig.server.json && dotenv -- next build",
@@ -13,7 +13,7 @@
     "node": "9.x.x"
   },
   "dependencies": {
-    "@katt/shop-lib": "^1.0.0",
+    "@katt/shop-lib": "^1.0.1-0",
     "apollo-client-preset": "^1.0.8",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-transform-inline-environment-variables": "^0.3.0",
