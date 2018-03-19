@@ -40,7 +40,7 @@
   },
   "private": true,
   "dependencies": {
-    "@katt/shop-lib": "^1.0.0-11",
+    "@katt/shop-lib": "^1.0.0",
     "async-lock": "^1.1.2",
     "bcryptjs": "2.4.3",
     "graphql-yoga": "1.4.3",
@@ -76,5 +76,5 @@
       "shop-api.kattcorp.com"
     ]
   },
-  "version": "1.0.0-11"
+  "version": "1.0.0"
 }
