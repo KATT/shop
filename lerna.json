@@ -6,7 +6,12 @@
     "lib",
     "web"
   ],
-  "version": "1.0.1-0",
+  "version": "1.0.1-1",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "commands": {
+    "publish": {
+      "message": "🔖 %s"
+    }
+  }
 }
