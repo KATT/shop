@@ -1,5 +1,4 @@
 import { API, Prisma } from '@katt/shop-lib';
-import * as LIB from '@katt/shop-lib';
 import * as AsyncLock from 'async-lock';
 import { GraphQLError } from 'graphql';
 
