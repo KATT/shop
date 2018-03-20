@@ -24,12 +24,8 @@ export interface OrderTotals {
   rows: OrderRowTotals[];
 }
 
-export function getOrderTotals(
-  order: Partial<API.Order | Prisma.Order>,
-): OrderTotals {
-  const orderRows = order.rows as Prisma.OrderRow[];
-
-  const rows: OrderRowTotals[] = orderRows.map(row => ({
+export function getOrderTotals(order: Prisma.Order): OrderTotals {
+  const rows: OrderRowTotals[] = order.rows.map(row => ({
     total: row.quantity * row.product.price,
   }));
 
@@ -54,17 +50,4 @@ export function getOrderTotals(
   };
 }
 
-export function getOrderWithTotals(
-  order: Partial<API.Order>,
-): Partial<API.Order> {
-  const totals = getOrderTotals(order);
-
-  return {
-    ...order,
-    ...totals,
-    rows: order.rows.map((row, index) => ({
-      ...row,
-      ...totals.rows[index],
-    })),
-  };
-}
+export default getOrderTotals;

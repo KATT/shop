@@ -1,10 +1,10 @@
-import { getOrderWithTotals } from '@katt/shop-lib';
 import gql from 'graphql-tag';
 import { print as printSource } from 'graphql/language/printer';
 import React, { ReactNode } from 'react';
 import { graphql } from 'react-apollo';
 import { Order, UpdateOrderRowVariables } from '../lib/prisma';
 import { GetOrderFields } from '../queries/GetOrderQuery';
+import { calculateTotals } from './AddProductToOrderMutation';
 
 type updateOrderRowMutationFn = (variables: UpdateOrderRowVariables) => {};
 
@@ -42,7 +42,7 @@ export function orderReducerUpdateOrderRow(
     }, []),
   };
 
-  return getOrderWithTotals(newOrder);
+  return calculateTotals(newOrder);
 }
 
 export const updateOrderRowQuery: any = gql`
