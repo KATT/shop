@@ -1,6 +1,6 @@
 {
   "name": "@katt/shop-api",
-  "version": "0.0.0",
+  "version": "1.0.1-2",
   "scripts": {
     "start": "dotenv -- node dist/",
     "dev": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
@@ -40,7 +40,7 @@
   },
   "private": true,
   "dependencies": {
-    "@katt/shop-lib": "^1.0.1-1",
+    "@katt/shop-lib": "^1.0.1-2",
     "async-lock": "^1.1.2",
     "bcryptjs": "2.4.3",
     "graphql-yoga": "1.4.3",
@@ -75,6 +75,5 @@
       "shop-api.kattcorp.co.uk",
       "shop-api.kattcorp.com"
     ]
-  },
-  "version": "1.0.1-1"
+  }
 }
