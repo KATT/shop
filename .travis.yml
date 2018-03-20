@@ -10,9 +10,6 @@ cache:
   yarn: true
   directories:
   - node_modules
-  - api/node_modules
-  - web/node_modules
-  - e2e/node_modules
 install:
 - yarn install
 - yarn setup:prisma
