@@ -33,7 +33,7 @@
     "test": "npm-run-all --parallel test:*",
     "selenium": "selenium-server -port 4444"
   },
-  "workspaces": ["api", "e2e", "web"],
+  "workspaces": ["api", "e2e", "web", "lib"],
   "private": true,
   "lint-staged": {
     "*.{ts,tsx}!**/generated/*.ts": [
@@ -42,7 +42,6 @@
       "git add"
     ]
   },
-  "workspaces": ["api", "e2e", "web", "lib"],
   "devDependencies": {
     "husky": "^0.14.3",
     "lerna": "^2.9.0",
