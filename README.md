@@ -13,7 +13,7 @@ Attempt to create a great reference project with an amazing developer experience
 * [LernaJS](https://lernajs.io) monorepo setup setup with a few different projects
   * `/api` - [GraphQL](http://graphql.org/) API Gateway in front of [Prisma](https://prismagraphql.com)
   * `/web` - [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/)
-  * `/lib` is an npm module used in both `api` and `web`. Contains API TypeScript defs & utility functions.
+  * `/lib` - is an npm module used in both `api` and `web`. Contains API TypeScript defs & utility functions.
   * `/e2e` - [Nightwatch.js](http://nightwatchjs.org/) E2E testing
 * [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
 
