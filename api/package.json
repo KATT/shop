@@ -1,5 +1,6 @@
 {
   "name": "@katt/shop-api",
+  "version": "0.0.0",
   "scripts": {
     "start": "dotenv -- node dist/",
     "dev": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",

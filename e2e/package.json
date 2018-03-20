@@ -1,4 +1,6 @@
 {
+  "name": "@katt/shop-e2e",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "rimraf dist && tsc",
