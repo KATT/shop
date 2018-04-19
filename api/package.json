@@ -48,7 +48,7 @@
     "@types/supertest": "^2.0.4",
     "dotenv-cli": "1.4.0",
     "graphql-cli": "2.15.9",
-    "jest": "^22.4.2",
+    "jest": "^22.4.3",
     "lodash": "^4.17.5",
     "nodemon": "1.17.3",
     "npm-run-all": "4.1.2",
