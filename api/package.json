@@ -50,7 +50,7 @@
     "graphql-cli": "2.15.8",
     "jest": "^22.4.2",
     "lodash": "^4.17.5",
-    "nodemon": "1.17.1",
+    "nodemon": "1.17.3",
     "npm-run-all": "4.1.2",
     "prisma": "^1.5.0-beta.0",
     "progress": "^2.0.0",
