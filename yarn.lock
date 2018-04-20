@@ -128,9 +128,9 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/nightwatch@^0.9.7":
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.7.tgz#690993008374228a0c825d3920bdfe3721c079fe"
+"@types/nightwatch@^0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.8.tgz#ae38fe9922e1541aabb40730771aec5944961786"
 
 "@types/node@*", "@types/node@^9.4.7":
   version "9.4.7"

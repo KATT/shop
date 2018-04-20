@@ -9,7 +9,7 @@
     "test": "yarn start"
   },
   "devDependencies": {
-    "@types/nightwatch": "^0.9.7",
+    "@types/nightwatch": "^0.9.8",
     "@types/node": "^9.4.7",
     "nightwatch": "^0.9.19",
     "rimraf": "^2.6.2",
