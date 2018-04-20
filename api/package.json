@@ -33,31 +33,31 @@
   "private": true,
   "dependencies": {
     "async-lock": "^1.1.2",
-    "bcryptjs": "2.4.3",
-    "graphql-yoga": "1.4.3",
-    "jsonwebtoken": "8.1.1",
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.4.3",
+    "jsonwebtoken": "^8.1.1",
     "now": "^10.1.0",
-    "prisma-binding": "1.5.17"
+    "prisma-binding": "^1.5.17"
   },
   "devDependencies": {
     "@types/async-lock": "^1.1.0",
-    "@types/bcryptjs": "2.4.1",
+    "@types/bcryptjs": "^2.4.1",
     "@types/jest": "*",
     "@types/lodash": "^4.14.107",
     "@types/progress": "^2.0.1",
     "@types/supertest": "^2.0.4",
-    "dotenv-cli": "1.4.0",
-    "graphql-cli": "2.15.9",
+    "dotenv-cli": "^1.4.0",
+    "graphql-cli": "^2.15.9",
     "jest": "^22.4.3",
     "lodash": "^4.17.5",
-    "nodemon": "1.17.3",
-    "npm-run-all": "4.1.2",
+    "nodemon": "^1.17.3",
+    "npm-run-all": "^4.1.2",
     "prisma": "^1.5.0-beta.0",
     "progress": "^2.0.0",
-    "rimraf": "2.6.2",
+    "rimraf": "^2.6.2",
     "supertest": "^3.0.0",
-    "ts-node": "5.0.0",
-    "typescript": "2.8.3"
+    "ts-node": "^5.0.0",
+    "typescript": "^2.8.3"
   },
   "now": {
     "alias": [
