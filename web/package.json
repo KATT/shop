@@ -21,7 +21,7 @@
     "express": "^4.16.2",
     "graphql": "^0.13.1",
     "graphql-anywhere": "^4.1.8",
-    "graphql-tag": "^2.8.0",
+    "graphql-tag": "^2.9.1",
     "isomorphic-fetch": "^2.2.1",
     "next": "^5.0.0",
     "react": "^16.2.0",
