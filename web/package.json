@@ -13,6 +13,7 @@
     "node": "9.x.x"
   },
   "dependencies": {
+    "apollo-client": "^2.2.8",
     "apollo-client-preset": "^1.0.8",
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-transform-inline-environment-variables": "^0.3.0",

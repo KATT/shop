@@ -396,7 +396,7 @@ apollo-client-preset@^1.0.8:
     apollo-link-http "^1.3.1"
     graphql-tag "^2.4.2"
 
-apollo-client@^2.2.2:
+apollo-client@^2.2.2, apollo-client@^2.2.8:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.2.8.tgz#b604d31ab2d2dd00db3105d8793b93ee02ce567e"
   dependencies:
