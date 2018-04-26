@@ -3765,9 +3765,9 @@ graphql-cli@2.15.7:
     update-notifier "^2.3.0"
     yargs "11.0.0"
 
-graphql-cli@^2.15.10:
-  version "2.15.10"
-  resolved "https://registry.yarnpkg.com/graphql-cli/-/graphql-cli-2.15.10.tgz#8c9fcbd7ef689591e121a124ec321c2a1b76126d"
+graphql-cli@^2.15.11:
+  version "2.15.11"
+  resolved "https://registry.yarnpkg.com/graphql-cli/-/graphql-cli-2.15.11.tgz#2a0d016cc2a8cd40d1ca02c38e384e3017e53862"
   dependencies:
     adm-zip "^0.4.7"
     chalk "^2.3.1"
