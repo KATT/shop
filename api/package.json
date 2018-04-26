@@ -38,7 +38,7 @@
     "graphql-yoga": "^1.4.3",
     "jsonwebtoken": "^8.1.1",
     "now": "^10.1.0",
-    "prisma-binding": "^1.5.17"
+    "prisma-binding": "^1.5.18"
   },
   "devDependencies": {
     "@types/async-lock": "^1.1.0",

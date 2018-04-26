@@ -6822,9 +6822,9 @@ pretty-format@^22.4.3:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
-prisma-binding@^1.5.17:
-  version "1.5.17"
-  resolved "https://registry.yarnpkg.com/prisma-binding/-/prisma-binding-1.5.17.tgz#ed18ed3e7b8e4001270a96b162e687b7682e88cd"
+prisma-binding@^1.5.18:
+  version "1.5.18"
+  resolved "https://registry.yarnpkg.com/prisma-binding/-/prisma-binding-1.5.18.tgz#cbdfb7bb8c1599542fc83c84fef51621cba376ca"
   dependencies:
     apollo-link "1.2.1"
     apollo-link-error "1.0.7"
