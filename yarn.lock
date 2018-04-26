@@ -53,11 +53,17 @@
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.1.tgz#7fb63922b5b106edacdcfe084cd38850f78aacfc"
 
-"@types/body-parser@*", "@types/body-parser@^1.16.8":
-  version "1.16.8"
-  resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.16.8.tgz#687ec34140624a3bec2b1a8ea9268478ae8f3be3"
+"@types/body-parser@*", "@types/body-parser@^1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.17.0.tgz#9f5c9d9bd04bb54be32d5eb9fc0d8c974e6cf58c"
   dependencies:
-    "@types/express" "*"
+    "@types/connect" "*"
+    "@types/node" "*"
+
+"@types/connect@*":
+  version "3.4.32"
+  resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.32.tgz#aa0e9616b9435ccad02bc52b5b454ffc2c70ba28"
+  dependencies:
     "@types/node" "*"
 
 "@types/cookie-parser@^1.4.1":
