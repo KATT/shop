@@ -6,5 +6,6 @@
     "packagePattern": ".*",
     "groupName": "all",
     "automerge": true
-  }]
+  }],
+  "commitMessagePrefix": "⬆️ "
 }
