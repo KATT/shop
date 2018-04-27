@@ -200,22 +200,15 @@ input BrandUpdateInput {
   url: String
 }
 
-input BrandUpdateNestedInput {
-  where: BrandWhereUniqueInput!
-  data: BrandUpdateDataInput!
-}
-
 input BrandUpdateOneInput {
   create: BrandCreateInput
   connect: BrandWhereUniqueInput
-  disconnect: BrandWhereUniqueInput
-  delete: BrandWhereUniqueInput
-  update: BrandUpdateNestedInput
+  delete: Boolean
+  update: BrandUpdateDataInput
   upsert: BrandUpsertNestedInput
 }
 
 input BrandUpsertNestedInput {
-  where: BrandWhereUniqueInput!
   update: BrandUpdateDataInput!
   create: BrandCreateInput!
 }
@@ -640,16 +633,16 @@ input DiscountCodeUpdateManyInput {
   connect: [DiscountCodeWhereUniqueInput!]
   disconnect: [DiscountCodeWhereUniqueInput!]
   delete: [DiscountCodeWhereUniqueInput!]
-  update: [DiscountCodeUpdateNestedInput!]
-  upsert: [DiscountCodeUpsertNestedInput!]
+  update: [DiscountCodeUpdateWithWhereUniqueNestedInput!]
+  upsert: [DiscountCodeUpsertWithWhereUniqueNestedInput!]
 }
 
-input DiscountCodeUpdateNestedInput {
+input DiscountCodeUpdateWithWhereUniqueNestedInput {
   where: DiscountCodeWhereUniqueInput!
   data: DiscountCodeUpdateDataInput!
 }
 
-input DiscountCodeUpsertNestedInput {
+input DiscountCodeUpsertWithWhereUniqueNestedInput {
   where: DiscountCodeWhereUniqueInput!
   update: DiscountCodeUpdateDataInput!
   create: DiscountCodeCreateInput!
@@ -1174,8 +1167,8 @@ input OrderRowUpdateManyWithoutOrderInput {
   connect: [OrderRowWhereUniqueInput!]
   disconnect: [OrderRowWhereUniqueInput!]
   delete: [OrderRowWhereUniqueInput!]
-  update: [OrderRowUpdateWithoutOrderInput!]
-  upsert: [OrderRowUpsertWithoutOrderInput!]
+  update: [OrderRowUpdateWithWhereUniqueWithoutOrderInput!]
+  upsert: [OrderRowUpsertWithWhereUniqueWithoutOrderInput!]
 }
 
 input OrderRowUpdateWithoutOrderDataInput {
@@ -1183,12 +1176,12 @@ input OrderRowUpdateWithoutOrderDataInput {
   product: ProductUpdateOneInput
 }
 
-input OrderRowUpdateWithoutOrderInput {
+input OrderRowUpdateWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   data: OrderRowUpdateWithoutOrderDataInput!
 }
 
-input OrderRowUpsertWithoutOrderInput {
+input OrderRowUpsertWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput!
   update: OrderRowUpdateWithoutOrderDataInput!
   create: OrderRowCreateWithoutOrderInput!
@@ -1395,9 +1388,8 @@ input OrderUpdateInput {
 input OrderUpdateOneWithoutRowsInput {
   create: OrderCreateWithoutRowsInput
   connect: OrderWhereUniqueInput
-  disconnect: OrderWhereUniqueInput
-  delete: OrderWhereUniqueInput
-  update: OrderUpdateWithoutRowsInput
+  delete: Boolean
+  update: OrderUpdateWithoutRowsDataInput
   upsert: OrderUpsertWithoutRowsInput
 }
 
@@ -1406,13 +1398,7 @@ input OrderUpdateWithoutRowsDataInput {
   discountCodes: DiscountCodeUpdateManyInput
 }
 
-input OrderUpdateWithoutRowsInput {
-  where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutRowsDataInput!
-}
-
 input OrderUpsertWithoutRowsInput {
-  where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutRowsDataInput!
   create: OrderCreateWithoutRowsInput!
 }
@@ -1692,22 +1678,15 @@ input ProductUpdateInput {
   brand: BrandUpdateOneInput
 }
 
-input ProductUpdateNestedInput {
-  where: ProductWhereUniqueInput!
-  data: ProductUpdateDataInput!
-}
-
 input ProductUpdateOneInput {
   create: ProductCreateInput
   connect: ProductWhereUniqueInput
-  disconnect: ProductWhereUniqueInput
-  delete: ProductWhereUniqueInput
-  update: ProductUpdateNestedInput
+  delete: Boolean
+  update: ProductUpdateDataInput
   upsert: ProductUpsertNestedInput
 }
 
 input ProductUpsertNestedInput {
-  where: ProductWhereUniqueInput!
   update: ProductUpdateDataInput!
   create: ProductCreateInput!
 }
@@ -2137,22 +2116,16 @@ input UserUpdateInput {
   name: String
 }
 
-input UserUpdateNestedInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
-}
-
 input UserUpdateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: UserWhereUniqueInput
-  delete: UserWhereUniqueInput
-  update: UserUpdateNestedInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
 }
 
 input UserUpsertNestedInput {
-  where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
 }
@@ -2410,18 +2383,18 @@ type Mutation {
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
   upsertDiscountCode(where: DiscountCodeWhereUniqueInput!, create: DiscountCodeCreateInput!, update: DiscountCodeUpdateInput!): DiscountCode!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
-  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
-  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
-  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
-  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
-  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput!): BatchPayload!
-  deleteManyUsers(where: UserWhereInput!): BatchPayload!
-  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
-  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
-  deleteManyOrders(where: OrderWhereInput!): BatchPayload!
-  deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
-  deleteManyDiscountCodes(where: DiscountCodeWhereInput!): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput): BatchPayload!
+  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput): BatchPayload!
+  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput): BatchPayload!
+  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput): BatchPayload!
+  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyBrands(where: BrandWhereInput): BatchPayload!
+  deleteManyProducts(where: ProductWhereInput): BatchPayload!
+  deleteManyOrders(where: OrderWhereInput): BatchPayload!
+  deleteManyOrderRows(where: OrderRowWhereInput): BatchPayload!
+  deleteManyDiscountCodes(where: DiscountCodeWhereInput): BatchPayload!
 }
 
 type Query {
@@ -2550,9 +2523,9 @@ export type MutationType =
   'UPDATED' |
   'DELETED'
 
-export interface ProductCreateOneInput {
-  create?: ProductCreateInput
-  connect?: ProductWhereUniqueInput
+export interface OrderRowCreateManyWithoutOrderInput {
+  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
+  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
 }
 
 export interface UserWhereInput {
@@ -2616,32 +2589,38 @@ export interface UserWhereInput {
   name_not_ends_with?: String
 }
 
-export interface UserUpdateNestedInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateDataInput
+export interface UserUpdateDataInput {
+  email?: String
+  password?: String
+  name?: String
 }
 
-export interface BrandUpsertNestedInput {
-  where: BrandWhereUniqueInput
-  update: BrandUpdateDataInput
-  create: BrandCreateInput
+export interface ProductUpdateInput {
+  price?: Int
+  name?: String
+  slug?: String
+  thumbnail?: String
+  brand?: BrandUpdateOneInput
 }
 
 export interface UserUpdateOneInput {
   create?: UserCreateInput
   connect?: UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput
-  delete?: UserWhereUniqueInput
-  update?: UserUpdateNestedInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: UserUpdateDataInput
   upsert?: UserUpsertNestedInput
 }
 
-export interface OrderCreateOneWithoutRowsInput {
-  create?: OrderCreateWithoutRowsInput
-  connect?: OrderWhereUniqueInput
+export interface DiscountCodeCreateInput {
+  code: String
+  name: String
+  description: String
+  type: DiscountCodeType
+  amount: Float
 }
 
-export interface OrderRowUpsertWithoutOrderInput {
+export interface OrderRowUpsertWithWhereUniqueWithoutOrderInput {
   where: OrderRowWhereUniqueInput
   update: OrderRowUpdateWithoutOrderDataInput
   create: OrderRowCreateWithoutOrderInput
@@ -2658,7 +2637,6 @@ export interface OrderRowSubscriptionWhereInput {
 }
 
 export interface ProductUpsertNestedInput {
-  where: ProductWhereUniqueInput
   update: ProductUpdateDataInput
   create: ProductCreateInput
 }
@@ -2793,9 +2771,12 @@ export interface BrandWhereInput {
   url_not_ends_with?: String
 }
 
-export interface ProductUpdateNestedInput {
-  where: ProductWhereUniqueInput
-  data: ProductUpdateDataInput
+export interface ProductUpdateOneInput {
+  create?: ProductCreateInput
+  connect?: ProductWhereUniqueInput
+  delete?: Boolean
+  update?: ProductUpdateDataInput
+  upsert?: ProductUpsertNestedInput
 }
 
 export interface BrandSubscriptionWhereInput {
@@ -2808,13 +2789,9 @@ export interface BrandSubscriptionWhereInput {
   node?: BrandWhereInput
 }
 
-export interface ProductUpdateOneInput {
-  create?: ProductCreateInput
-  connect?: ProductWhereUniqueInput
-  disconnect?: ProductWhereUniqueInput
-  delete?: ProductWhereUniqueInput
-  update?: ProductUpdateNestedInput
-  upsert?: ProductUpsertNestedInput
+export interface OrderRowUpdateWithoutOrderDataInput {
+  quantity?: Int
+  product?: ProductUpdateOneInput
 }
 
 export interface DiscountCodeUpdateInput {
@@ -2825,9 +2802,9 @@ export interface DiscountCodeUpdateInput {
   amount?: Float
 }
 
-export interface OrderRowUpdateWithoutOrderDataInput {
-  quantity?: Int
-  product?: ProductUpdateOneInput
+export interface OrderRowUpdateWithWhereUniqueWithoutOrderInput {
+  where: OrderRowWhereUniqueInput
+  data: OrderRowUpdateWithoutOrderDataInput
 }
 
 export interface UserWhereUniqueInput {
@@ -2835,9 +2812,13 @@ export interface UserWhereUniqueInput {
   email?: String
 }
 
-export interface OrderRowUpdateWithoutOrderInput {
-  where: OrderRowWhereUniqueInput
-  data: OrderRowUpdateWithoutOrderDataInput
+export interface OrderRowUpdateManyWithoutOrderInput {
+  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
+  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  disconnect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  delete?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
+  update?: OrderRowUpdateWithWhereUniqueWithoutOrderInput[] | OrderRowUpdateWithWhereUniqueWithoutOrderInput
+  upsert?: OrderRowUpsertWithWhereUniqueWithoutOrderInput[] | OrderRowUpsertWithWhereUniqueWithoutOrderInput
 }
 
 export interface ProductWhereUniqueInput {
@@ -2845,17 +2826,36 @@ export interface ProductWhereUniqueInput {
   slug?: String
 }
 
-export interface OrderRowUpdateManyWithoutOrderInput {
-  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
-  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-  disconnect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-  delete?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
-  update?: OrderRowUpdateWithoutOrderInput[] | OrderRowUpdateWithoutOrderInput
-  upsert?: OrderRowUpsertWithoutOrderInput[] | OrderRowUpsertWithoutOrderInput
+export interface OrderUpdateInput {
+  rows?: OrderRowUpdateManyWithoutOrderInput
+  user?: UserUpdateOneInput
+  discountCodes?: DiscountCodeUpdateManyInput
 }
 
 export interface OrderRowWhereUniqueInput {
   id?: ID_Input
+}
+
+export interface BrandUpsertNestedInput {
+  update: BrandUpdateDataInput
+  create: BrandCreateInput
+}
+
+export interface OrderUpdateWithoutRowsDataInput {
+  user?: UserUpdateOneInput
+  discountCodes?: DiscountCodeUpdateManyInput
+}
+
+export interface BrandUpdateDataInput {
+  name?: String
+  slug?: String
+  url?: String
+}
+
+export interface OrderRowUpdateInput {
+  quantity?: Int
+  product?: ProductUpdateOneInput
+  order?: OrderUpdateOneWithoutRowsInput
 }
 
 export interface UserCreateInput {
@@ -2864,9 +2864,12 @@ export interface UserCreateInput {
   name: String
 }
 
-export interface OrderUpdateWithoutRowsDataInput {
-  user?: UserUpdateOneInput
-  discountCodes?: DiscountCodeUpdateManyInput
+export interface DiscountCodeUpdateDataInput {
+  code?: String
+  name?: String
+  description?: String
+  type?: DiscountCodeType
+  amount?: Float
 }
 
 export interface BrandCreateInput {
@@ -2875,13 +2878,13 @@ export interface BrandCreateInput {
   url: String
 }
 
-export interface OrderUpdateOneWithoutRowsInput {
-  create?: OrderCreateWithoutRowsInput
-  connect?: OrderWhereUniqueInput
-  disconnect?: OrderWhereUniqueInput
-  delete?: OrderWhereUniqueInput
-  update?: OrderUpdateWithoutRowsInput
-  upsert?: OrderUpsertWithoutRowsInput
+export interface DiscountCodeUpdateManyInput {
+  create?: DiscountCodeCreateInput[] | DiscountCodeCreateInput
+  connect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+  disconnect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+  delete?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
+  update?: DiscountCodeUpdateWithWhereUniqueNestedInput[] | DiscountCodeUpdateWithWhereUniqueNestedInput
+  upsert?: DiscountCodeUpsertWithWhereUniqueNestedInput[] | DiscountCodeUpsertWithWhereUniqueNestedInput
 }
 
 export interface ProductCreateInput {
@@ -2890,39 +2893,6 @@ export interface ProductCreateInput {
   slug: String
   thumbnail: String
   brand: BrandCreateOneInput
-}
-
-export interface DiscountCodeUpsertNestedInput {
-  where: DiscountCodeWhereUniqueInput
-  update: DiscountCodeUpdateDataInput
-  create: DiscountCodeCreateInput
-}
-
-export interface BrandCreateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
-}
-
-export interface DiscountCodeUpdateNestedInput {
-  where: DiscountCodeWhereUniqueInput
-  data: DiscountCodeUpdateDataInput
-}
-
-export interface OrderCreateInput {
-  rows?: OrderRowCreateManyWithoutOrderInput
-  user?: UserCreateOneInput
-  discountCodes?: DiscountCodeCreateManyInput
-}
-
-export interface UserUpsertNestedInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateDataInput
-  create: UserCreateInput
-}
-
-export interface OrderRowCreateManyWithoutOrderInput {
-  create?: OrderRowCreateWithoutOrderInput[] | OrderRowCreateWithoutOrderInput
-  connect?: OrderRowWhereUniqueInput[] | OrderRowWhereUniqueInput
 }
 
 export interface DiscountCodeSubscriptionWhereInput {
@@ -2935,9 +2905,9 @@ export interface DiscountCodeSubscriptionWhereInput {
   node?: DiscountCodeWhereInput
 }
 
-export interface OrderRowCreateWithoutOrderInput {
-  quantity?: Int
-  product: ProductCreateOneInput
+export interface BrandCreateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
 }
 
 export interface DiscountCodeWhereInput {
@@ -3029,10 +2999,10 @@ export interface DiscountCodeWhereInput {
   amount_gte?: Float
 }
 
-export interface OrderUpdateInput {
-  rows?: OrderRowUpdateManyWithoutOrderInput
-  user?: UserUpdateOneInput
-  discountCodes?: DiscountCodeUpdateManyInput
+export interface OrderCreateInput {
+  rows?: OrderRowCreateManyWithoutOrderInput
+  user?: UserCreateOneInput
+  discountCodes?: DiscountCodeCreateManyInput
 }
 
 export interface ProductSubscriptionWhereInput {
@@ -3045,15 +3015,49 @@ export interface ProductSubscriptionWhereInput {
   node?: ProductWhereInput
 }
 
+export interface BrandUpdateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+  delete?: Boolean
+  update?: BrandUpdateDataInput
+  upsert?: BrandUpsertNestedInput
+}
+
+export interface OrderUpsertWithoutRowsInput {
+  update: OrderUpdateWithoutRowsDataInput
+  create: OrderCreateWithoutRowsInput
+}
+
+export interface OrderRowCreateWithoutOrderInput {
+  quantity?: Int
+  product: ProductCreateOneInput
+}
+
+export interface OrderWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ProductCreateOneInput {
+  create?: ProductCreateInput
+  connect?: ProductWhereUniqueInput
+}
+
+export interface OrderUpdateOneWithoutRowsInput {
+  create?: OrderCreateWithoutRowsInput
+  connect?: OrderWhereUniqueInput
+  delete?: Boolean
+  update?: OrderUpdateWithoutRowsDataInput
+  upsert?: OrderUpsertWithoutRowsInput
+}
+
 export interface UserCreateOneInput {
   create?: UserCreateInput
   connect?: UserWhereUniqueInput
 }
 
-export interface OrderUpsertWithoutRowsInput {
-  where: OrderWhereUniqueInput
-  update: OrderUpdateWithoutRowsDataInput
-  create: OrderCreateWithoutRowsInput
+export interface DiscountCodeUpdateWithWhereUniqueNestedInput {
+  where: DiscountCodeWhereUniqueInput
+  data: DiscountCodeUpdateDataInput
 }
 
 export interface DiscountCodeCreateManyInput {
@@ -3061,35 +3065,46 @@ export interface DiscountCodeCreateManyInput {
   connect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
 }
 
-export interface OrderWhereUniqueInput {
+export interface OrderWhereInput {
+  AND?: OrderWhereInput[] | OrderWhereInput
+  OR?: OrderWhereInput[] | OrderWhereInput
   id?: ID_Input
-}
-
-export interface DiscountCodeCreateInput {
-  code: String
-  name: String
-  description: String
-  type: DiscountCodeType
-  amount: Float
-}
-
-export interface OrderUpdateWithoutRowsInput {
-  where: OrderWhereUniqueInput
-  data: OrderUpdateWithoutRowsDataInput
-}
-
-export interface OrderRowCreateInput {
-  quantity?: Int
-  product: ProductCreateOneInput
-  order: OrderCreateOneWithoutRowsInput
-}
-
-export interface DiscountCodeUpdateDataInput {
-  code?: String
-  name?: String
-  description?: String
-  type?: DiscountCodeType
-  amount?: Float
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
+  rows_every?: OrderRowWhereInput
+  rows_some?: OrderRowWhereInput
+  rows_none?: OrderRowWhereInput
+  user?: UserWhereInput
+  discountCodes_every?: DiscountCodeWhereInput
+  discountCodes_some?: DiscountCodeWhereInput
+  discountCodes_none?: DiscountCodeWhereInput
 }
 
 export interface ProductWhereInput {
@@ -3178,7 +3193,34 @@ export interface ProductWhereInput {
   brand?: BrandWhereInput
 }
 
-export interface UserUpdateDataInput {
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface OrderRowCreateInput {
+  quantity?: Int
+  product: ProductCreateOneInput
+  order: OrderCreateOneWithoutRowsInput
+}
+
+export interface DiscountCodeWhereUniqueInput {
+  id?: ID_Input
+  code?: String
+}
+
+export interface BrandUpdateInput {
+  name?: String
+  slug?: String
+  url?: String
+}
+
+export interface UserUpdateInput {
   email?: String
   password?: String
   name?: String
@@ -3187,6 +3229,22 @@ export interface UserUpdateDataInput {
 export interface OrderCreateWithoutRowsInput {
   user?: UserCreateOneInput
   discountCodes?: DiscountCodeCreateManyInput
+}
+
+export interface OrderCreateOneWithoutRowsInput {
+  create?: OrderCreateWithoutRowsInput
+  connect?: OrderWhereUniqueInput
+}
+
+export interface DiscountCodeUpsertWithWhereUniqueNestedInput {
+  where: DiscountCodeWhereUniqueInput
+  update: DiscountCodeUpdateDataInput
+  create: DiscountCodeCreateInput
+}
+
+export interface BrandWhereUniqueInput {
+  id?: ID_Input
+  slug?: String
 }
 
 export interface OrderSubscriptionWhereInput {
@@ -3199,121 +3257,9 @@ export interface OrderSubscriptionWhereInput {
   node?: OrderWhereInput
 }
 
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  name?: String
-}
-
-export interface BrandWhereUniqueInput {
-  id?: ID_Input
-  slug?: String
-}
-
-export interface BrandUpdateInput {
-  name?: String
-  slug?: String
-  url?: String
-}
-
-export interface OrderRowUpdateInput {
-  quantity?: Int
-  product?: ProductUpdateOneInput
-  order?: OrderUpdateOneWithoutRowsInput
-}
-
-export interface BrandUpdateDataInput {
-  name?: String
-  slug?: String
-  url?: String
-}
-
-export interface BrandUpdateNestedInput {
-  where: BrandWhereUniqueInput
-  data: BrandUpdateDataInput
-}
-
-export interface BrandUpdateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
-  disconnect?: BrandWhereUniqueInput
-  delete?: BrandWhereUniqueInput
-  update?: BrandUpdateNestedInput
-  upsert?: BrandUpsertNestedInput
-}
-
-export interface ProductUpdateInput {
-  price?: Int
-  name?: String
-  slug?: String
-  thumbnail?: String
-  brand?: BrandUpdateOneInput
-}
-
-export interface DiscountCodeUpdateManyInput {
-  create?: DiscountCodeCreateInput[] | DiscountCodeCreateInput
-  connect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
-  disconnect?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
-  delete?: DiscountCodeWhereUniqueInput[] | DiscountCodeWhereUniqueInput
-  update?: DiscountCodeUpdateNestedInput[] | DiscountCodeUpdateNestedInput
-  upsert?: DiscountCodeUpsertNestedInput[] | DiscountCodeUpsertNestedInput
-}
-
-export interface DiscountCodeWhereUniqueInput {
-  id?: ID_Input
-  code?: String
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface OrderWhereInput {
-  AND?: OrderWhereInput[] | OrderWhereInput
-  OR?: OrderWhereInput[] | OrderWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
-  rows_every?: OrderRowWhereInput
-  rows_some?: OrderRowWhereInput
-  rows_none?: OrderRowWhereInput
-  user?: UserWhereInput
-  discountCodes_every?: DiscountCodeWhereInput
-  discountCodes_some?: DiscountCodeWhereInput
-  discountCodes_none?: DiscountCodeWhereInput
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput
+  create: UserCreateInput
 }
 
 /*
@@ -3712,18 +3658,18 @@ export type Mutation = {
   upsertOrder: (args: { where: OrderWhereUniqueInput, create: OrderCreateInput, update: OrderUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Order>
   upsertOrderRow: (args: { where: OrderRowWhereUniqueInput, create: OrderRowCreateInput, update: OrderRowUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow>
   upsertDiscountCode: (args: { where: DiscountCodeWhereUniqueInput, create: DiscountCodeCreateInput, update: DiscountCodeUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode>
-  updateManyUsers: (args: { data: UserUpdateInput, where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyBrands: (args: { data: BrandUpdateInput, where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyProducts: (args: { data: ProductUpdateInput, where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyOrders: (args: { data: OrderUpdateInput, where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyOrderRows: (args: { data: OrderRowUpdateInput, where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyDiscountCodes: (args: { data: DiscountCodeUpdateInput, where: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyUsers: (args: { where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyBrands: (args: { where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyProducts: (args: { where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyOrders: (args: { where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyOrderRows: (args: { where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyDiscountCodes: (args: { where: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyUsers: (args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyBrands: (args: { data: BrandUpdateInput, where?: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyProducts: (args: { data: ProductUpdateInput, where?: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyOrders: (args: { data: OrderUpdateInput, where?: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyOrderRows: (args: { data: OrderRowUpdateInput, where?: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyDiscountCodes: (args: { data: DiscountCodeUpdateInput, where?: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyUsers: (args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyBrands: (args: { where?: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyProducts: (args: { where?: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyOrders: (args: { where?: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyOrderRows: (args: { where?: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyDiscountCodes: (args: { where?: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
 }
 
 export type Subscription = {
