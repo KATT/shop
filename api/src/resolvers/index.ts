@@ -6,6 +6,11 @@ import { Context } from '../utils';
 import Mutation from './Mutation';
 import Query from './Query';
 
+export interface UpdateOrderRowResponseSource {
+  orderId: string;
+  rowId?: string;
+}
+
 export const resolvers = {
   Query,
   Mutation,
@@ -41,7 +46,12 @@ export const resolvers = {
   },
   UpdateOrderRowResponse: {
     order: {
-      resolve: async ({ orderId }, args, ctx: Context, info) => {
+      resolve: async (
+        { orderId }: UpdateOrderRowResponseSource,
+        args,
+        ctx: Context,
+        info,
+      ) => {
         return ctx.db.query.order(
           {
             where: {
@@ -53,7 +63,12 @@ export const resolvers = {
       },
     },
     row: {
-      resolve: async ({ rowId }, args, ctx: Context, info) => {
+      resolve: async (
+        { rowId }: UpdateOrderRowResponseSource,
+        args,
+        ctx: Context,
+        info,
+      ) => {
         return ctx.db.query.orderRow(
           {
             where: {
