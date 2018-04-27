@@ -37,7 +37,6 @@
     "graphql": "0.13.2",
     "graphql-yoga": "1.8.5",
     "jsonwebtoken": "8.2.1",
-    "now": "10.2.2",
     "prisma-binding": "1.5.18"
   },
   "devDependencies": {
