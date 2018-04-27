@@ -67,6 +67,9 @@
       "react-prisma-graphql-shopping-cart-api.kattcorp.com",
       "shop-api.kattcorp.co.uk",
       "shop-api.kattcorp.com"
+    ],
+    "regions": [
+      "bru"
     ]
   }
 }
