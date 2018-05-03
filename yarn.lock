@@ -1436,9 +1436,9 @@ babel-plugin-syntax-object-rest-spread@^6.13.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-object-rest-spread/-/babel-plugin-syntax-object-rest-spread-6.13.0.tgz#fd6536f2bce13836ffa3a5458c4903a597bb3bf5"
 
-babel-plugin-transform-inline-environment-variables@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.4.0.tgz#365a38c1f6547801398d23a6f56d2f464ab4062c"
+babel-plugin-transform-inline-environment-variables@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.4.1.tgz#93d36666de581ea9978b285418488f8714f70974"
 
 babel-plugin-transform-react-remove-prop-types@0.4.13:
   version "0.4.13"
