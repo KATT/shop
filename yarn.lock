@@ -6989,9 +6989,9 @@ pretty-format@^22.4.3:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
-prisma-binding@1.5.18:
-  version "1.5.18"
-  resolved "https://registry.yarnpkg.com/prisma-binding/-/prisma-binding-1.5.18.tgz#cbdfb7bb8c1599542fc83c84fef51621cba376ca"
+prisma-binding@1.5.19:
+  version "1.5.19"
+  resolved "https://registry.yarnpkg.com/prisma-binding/-/prisma-binding-1.5.19.tgz#4c6ba00dc6726fb62dc2cfe7050d47e0a60276c7"
   dependencies:
     apollo-link "1.2.1"
     apollo-link-error "1.0.7"
@@ -7002,7 +7002,7 @@ prisma-binding@1.5.18:
     graphql-tools "2.21.0"
     http-link-dataloader "^0.1.2"
     jsonwebtoken "^8.1.0"
-    subscriptions-transport-ws "0.9.6"
+    subscriptions-transport-ws "0.9.9"
 
 prisma-cli-core@1.0.35:
   version "1.0.35"
@@ -8486,9 +8486,9 @@ stylis@3.4.10:
   version "3.4.10"
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.4.10.tgz#a135cab4b9ff208e327fbb5a6fde3fa991c638ee"
 
-subscriptions-transport-ws@0.9.6:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.9.6.tgz#5ff86a0746316ca3eb2423b118b8bc74a6793e1b"
+subscriptions-transport-ws@0.9.9:
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.9.9.tgz#8a0bdc4c31df2e90e92901047fd8961deb138acc"
   dependencies:
     backo2 "^1.0.2"
     eventemitter3 "^2.0.3"
