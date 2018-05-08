@@ -44,7 +44,7 @@
     "@types/bcryptjs": "2.4.1",
     "@types/jest": "22.2.3",
     "@types/lodash": "4.14.108",
-    "@types/node": "9.6.12",
+    "@types/node": "9.6.13",
     "@types/progress": "2.0.1",
     "@types/supertest": "2.0.4",
     "dotenv-cli": "1.4.0",
