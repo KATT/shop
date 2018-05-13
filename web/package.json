@@ -23,7 +23,7 @@
     "graphql-anywhere": "4.1.10",
     "graphql-tag": "2.9.2",
     "isomorphic-fetch": "2.2.1",
-    "next": "6.0.1",
+    "next": "6.0.2",
     "react": "16.3.2",
     "react-apollo": "2.1.4",
     "react-dom": "16.3.2",
