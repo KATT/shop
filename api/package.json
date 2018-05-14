@@ -9,7 +9,7 @@
     "seed:dev": "dotenv -e .env.dev -- ts-node ./src/scripts/seed.ts",
     "delete:dev": "prisma delete -e .env.dev --force",
     "delete:local": "prisma delete --force",
-    "deploy:local": "prisma deploy && graphql prepare",
+    "deploy:local": "docker-compose -f database/docker-compose.yml up -d && prisma deploy && graphql prepare",
     "deploy:dev": "prisma deploy -e .env.dev && graphql prepare && dotenv -e .env.dev -- now -e PRISMA_STAGE -e PRISMA_ENDPOINT -e PRISMA_CLUSTER -e PRISMA_SECRET -e APP_SECRET",
     "alias": "now alias",
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
