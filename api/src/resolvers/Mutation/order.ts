@@ -163,7 +163,7 @@ export default {
         data: {
           discountCodes: {
             connect: {
-              code,
+              code: code.toUpperCase(),
             },
           },
         },
