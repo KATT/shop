@@ -16,7 +16,7 @@
     "apollo-client-preset": "1.0.8",
     "babel-plugin-inline-dotenv": "1.1.2",
     "babel-plugin-transform-inline-environment-variables": "0.4.2",
-    "body-parser": "1.18.2",
+    "body-parser": "1.18.3",
     "cookie-parser": "1.4.3",
     "express": "4.16.3",
     "graphql": "0.13.2",
