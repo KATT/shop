@@ -752,9 +752,9 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
-"@types/next@2.4.10":
-  version "2.4.10"
-  resolved "https://registry.yarnpkg.com/@types/next/-/next-2.4.10.tgz#9c74a66ae09462b0b6c2c66a2fab552fa61ed6c3"
+"@types/next@2.4.11":
+  version "2.4.11"
+  resolved "https://registry.yarnpkg.com/@types/next/-/next-2.4.11.tgz#da85e56cd0843a0a70c8b8d737920085b6a7ee63"
   dependencies:
     "@types/node" "*"
     "@types/react" "*"
