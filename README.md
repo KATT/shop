@@ -15,6 +15,7 @@ Attempt to create a great reference project with an amazing developer experience
   * `/web` - [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/)
   * `/e2e` - [Nightwatch.js](http://nightwatchjs.org/) E2E testing
 * [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
+* Automatic continuous deployments with [Travis CI](https://travis-ci.org) & [Now](https://zeit.co/now)
 
 ### `/web` features
 
