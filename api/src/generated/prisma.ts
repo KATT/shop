@@ -2383,18 +2383,18 @@ type Mutation {
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
   upsertDiscountCode(where: DiscountCodeWhereUniqueInput!, create: DiscountCodeCreateInput!, update: DiscountCodeUpdateInput!): DiscountCode!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput): BatchPayload!
-  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput): BatchPayload!
-  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput): BatchPayload!
-  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput): BatchPayload!
-  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyBrands(where: BrandWhereInput): BatchPayload!
-  deleteManyProducts(where: ProductWhereInput): BatchPayload!
-  deleteManyOrders(where: OrderWhereInput): BatchPayload!
-  deleteManyOrderRows(where: OrderRowWhereInput): BatchPayload!
-  deleteManyDiscountCodes(where: DiscountCodeWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
+  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
+  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
+  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
+  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
+  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput!): BatchPayload!
+  deleteManyUsers(where: UserWhereInput!): BatchPayload!
+  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
+  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
+  deleteManyOrders(where: OrderWhereInput!): BatchPayload!
+  deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
+  deleteManyDiscountCodes(where: DiscountCodeWhereInput!): BatchPayload!
 }
 
 type Query {
@@ -3658,18 +3658,18 @@ export type Mutation = {
   upsertOrder: (args: { where: OrderWhereUniqueInput, create: OrderCreateInput, update: OrderUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<Order>
   upsertOrderRow: (args: { where: OrderRowWhereUniqueInput, create: OrderRowCreateInput, update: OrderRowUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<OrderRow>
   upsertDiscountCode: (args: { where: DiscountCodeWhereUniqueInput, create: DiscountCodeCreateInput, update: DiscountCodeUpdateInput }, info?: GraphQLResolveInfo | string) => Promise<DiscountCode>
-  updateManyUsers: (args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyBrands: (args: { data: BrandUpdateInput, where?: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyProducts: (args: { data: ProductUpdateInput, where?: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyOrders: (args: { data: OrderUpdateInput, where?: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyOrderRows: (args: { data: OrderRowUpdateInput, where?: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  updateManyDiscountCodes: (args: { data: DiscountCodeUpdateInput, where?: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyUsers: (args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyBrands: (args: { where?: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyProducts: (args: { where?: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyOrders: (args: { where?: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyOrderRows: (args: { where?: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
-  deleteManyDiscountCodes: (args: { where?: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyUsers: (args: { data: UserUpdateInput, where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyBrands: (args: { data: BrandUpdateInput, where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyProducts: (args: { data: ProductUpdateInput, where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyOrders: (args: { data: OrderUpdateInput, where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyOrderRows: (args: { data: OrderRowUpdateInput, where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  updateManyDiscountCodes: (args: { data: DiscountCodeUpdateInput, where: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyUsers: (args: { where: UserWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyBrands: (args: { where: BrandWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyProducts: (args: { where: ProductWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyOrders: (args: { where: OrderWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyOrderRows: (args: { where: OrderRowWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
+  deleteManyDiscountCodes: (args: { where: DiscountCodeWhereInput }, info?: GraphQLResolveInfo | string) => Promise<BatchPayload>
 }
 
 export type Subscription = {

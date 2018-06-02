@@ -1015,18 +1015,18 @@ type Mutation {
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertOrderRow(where: OrderRowWhereUniqueInput!, create: OrderRowCreateInput!, update: OrderRowUpdateInput!): OrderRow!
   upsertDiscountCode(where: DiscountCodeWhereUniqueInput!, create: DiscountCodeCreateInput!, update: DiscountCodeUpdateInput!): DiscountCode!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput): BatchPayload!
-  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput): BatchPayload!
-  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput): BatchPayload!
-  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput): BatchPayload!
-  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyBrands(where: BrandWhereInput): BatchPayload!
-  deleteManyProducts(where: ProductWhereInput): BatchPayload!
-  deleteManyOrders(where: OrderWhereInput): BatchPayload!
-  deleteManyOrderRows(where: OrderRowWhereInput): BatchPayload!
-  deleteManyDiscountCodes(where: DiscountCodeWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput!): BatchPayload!
+  updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput!): BatchPayload!
+  updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput!): BatchPayload!
+  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput!): BatchPayload!
+  updateManyOrderRows(data: OrderRowUpdateInput!, where: OrderRowWhereInput!): BatchPayload!
+  updateManyDiscountCodes(data: DiscountCodeUpdateInput!, where: DiscountCodeWhereInput!): BatchPayload!
+  deleteManyUsers(where: UserWhereInput!): BatchPayload!
+  deleteManyBrands(where: BrandWhereInput!): BatchPayload!
+  deleteManyProducts(where: ProductWhereInput!): BatchPayload!
+  deleteManyOrders(where: OrderWhereInput!): BatchPayload!
+  deleteManyOrderRows(where: OrderRowWhereInput!): BatchPayload!
+  deleteManyDiscountCodes(where: DiscountCodeWhereInput!): BatchPayload!
 }
 
 enum MutationType {
