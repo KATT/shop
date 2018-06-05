@@ -4,29 +4,28 @@
 
 Attempt to create a great reference project with an amazing developer experience wherein a lot of common React/Prisma/GraphQL challenges are addressed.
 
-* [shop.kattcorp.co.uk](https://shop.kattcorp.co.uk)
-* [shop-api.kattcorp.co.uk](https://shop-api.kattcorp.co.uk)
+- [shop.kattcorp.co.uk](https://shop.kattcorp.co.uk)
+- [shop-api.kattcorp.co.uk](https://shop-api.kattcorp.co.uk)
 
 ## Tech
 
-* [TypeScript](typescriptlang.org) (we have `*.js` in `.gitignore`!)
-* Monorepo setup with a few different projects
-  * `/api` - [GraphQL](http://graphql.org/) API Gateway in front of [Prisma](https://prismagraphql.com)
-  * `/web` - [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/)
-  * `/e2e` - [Nightwatch.js](http://nightwatchjs.org/) E2E testing
-* [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
-* Automatic continuous deployments with [Travis CI](https://travis-ci.org) & [Now](https://zeit.co/now)
+- [TypeScript](typescriptlang.org) (we have `*.js` in `.gitignore`!)
+- Monorepo setup with a few different projects
+  - `/api` - [GraphQL](http://graphql.org/) API Gateway in front of [Prisma](https://prismagraphql.com)
+  - `/web` - [Next.js](https://github.com/zeit/next.js/) [React](https://reactjs.org/) App with [Apollo Client](https://www.apollographql.com/)
+  - `/e2e` - [Nightwatch.js](http://nightwatchjs.org/) E2E testing
+- [Travis CI](https://travis-ci.org) with [Sauce Labs](http://saucelabs.com/) for cross-browser testing
 
 ### `/web` features
 
-* Server-side rendered React app.
-* GraphQL using Apollo with optmistic updates.
-* Pessimistic™ updates - app works completely **without JS enabled** in the browser (and there's E2E tests for it).
-* Creates a shopping cart (`Order`) before page load, reference id saved to cookies
-* Add/edit products to/in cart
-* Product list from GraphQL
-* Open checkout route in modal
-* Discount code support (try code "`first`")
+- Server-side rendered React app.
+- GraphQL using Apollo with optmistic updates.
+- Pessimistic™ updates - app works completely **without JS enabled** in the browser (and there's E2E tests for it).
+- Creates a shopping cart (`Order`) before page load, reference id saved to cookies
+- Add/edit products to/in cart
+- Product list from GraphQL
+- Open checkout route in modal
+- Discount code support (try code "`first`")
 
 ## Setup
 
@@ -36,11 +35,11 @@ Attempt to create a great reference project with an amazing developer experience
 1.  Install yarn - `npm install -g yarn`
 1.  Start Docker
 1.  `yarn install`
-    * Installs deps for
-      * `/`
-      * `/api`
-      * `/web`
-      * `/e2e`
+    - Installs deps for
+      - `/`
+      - `/api`
+      - `/web`
+      - `/e2e`
 1.  Start Prisma + seed DB `yarn setup:prisma`
 
 ## Development
@@ -55,8 +54,8 @@ If you prefer separate output, navigate to `/api`, etc in separate shells and ru
 
 If everything goes smoothly you should be able to access the below:
 
-* API Gateway: http://localhost:4000
-* Web App: http://localhost:5000
+- API Gateway: http://localhost:4000
+- Web App: http://localhost:5000
 
 ## Tests
 
@@ -88,16 +87,16 @@ brew cask install java
 1.  Run selenium: `yarn selenium`
 1.  Setup + start apps: `yarn setup && yarn build && yarn dev`
 1.  Run tests: `yarn start:e2e`
-    * Will run E2E in Chrome with JS enabled
-    * To run without js: `yarn start:e2e -- --env chrome:nojs`
-    * See [nightwatch.ts](./e2e/src/nightwatch.ts) for all envs
+    - Will run E2E in Chrome with JS enabled
+    - To run without js: `yarn start:e2e -- --env chrome:nojs`
+    - See [nightwatch.ts](./e2e/src/nightwatch.ts) for all envs
 
 ### Conventions, how to write etc
 
 #### `/web`
 
-* `/mutations` and `/queries` exposes render prop components for easy handling of data loading / rendering
-* .. _TBC_
+- `/mutations` and `/queries` exposes render prop components for easy handling of data loading / rendering
+- .. _TBC_
 
 ## What's next / questions
 
