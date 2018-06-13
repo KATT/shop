@@ -1156,9 +1156,11 @@ apollo-utilities@^1.0.0, apollo-utilities@^1.0.1, apollo-utilities@^1.0.11:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.11.tgz#cd36bfa6e5c04eea2caf0c204a0f38a0ad550802"
 
-apollo-utilities@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.13.tgz#793c858bb42243f7254d3c2961c64a7158e51022"
+apollo-utilities@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.14.tgz#39dc94b6fe827ab2857167545c7dafc11c2b6174"
+  dependencies:
+    fast-json-stable-stringify "^2.0.0"
 
 app-root-path@^2.0.1:
   version "2.0.1"
@@ -3979,11 +3981,11 @@ graphcool-yml@0.4.15:
     scuid "^1.0.2"
     yaml-ast-parser "^0.0.40"
 
-graphql-anywhere@4.1.11:
-  version "4.1.11"
-  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.1.11.tgz#f91fa82e7e47275260957bb91f2fed5ecd508098"
+graphql-anywhere@4.1.12:
+  version "4.1.12"
+  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.1.12.tgz#1284ecce99d7bf060ad478b50970d9fbc53901d0"
   dependencies:
-    apollo-utilities "^1.0.13"
+    apollo-utilities "^1.0.14"
 
 graphql-anywhere@^4.1.8:
   version "4.1.8"
