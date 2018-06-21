@@ -6668,7 +6668,7 @@ npm-conf@^1.1.0:
     config-chain "^1.1.11"
     pify "^3.0.0"
 
-npm-path@^2.0.2, npm-path@^2.0.3, npm-path@^2.0.4:
+npm-path@^2.0.2, npm-path@^2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/npm-path/-/npm-path-2.0.4.tgz#c641347a5ff9d6a09e4d9bce5580c4f505278e64"
   dependencies:
@@ -6711,15 +6711,6 @@ npm-run@4.1.2:
     npm-which "^3.0.1"
     serializerr "^1.0.3"
     sync-exec "^0.6.2"
-
-npm-run@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/npm-run/-/npm-run-5.0.1.tgz#1baea93389b50ae25a32382c8ca322398e50cd16"
-  dependencies:
-    minimist "^1.2.0"
-    npm-path "^2.0.4"
-    npm-which "^3.0.1"
-    serializerr "^1.0.3"
 
 npm-which@^3.0.1:
   version "3.0.1"
@@ -7316,9 +7307,9 @@ prisma-binding@1.5.19:
     jsonwebtoken "^8.1.0"
     subscriptions-transport-ws "0.9.9"
 
-prisma-cli-core@1.0.42:
-  version "1.0.42"
-  resolved "https://registry.yarnpkg.com/prisma-cli-core/-/prisma-cli-core-1.0.42.tgz#895f08b9718930c9d5789c9e1e72ccc074d55736"
+prisma-cli-core@1.0.52:
+  version "1.0.52"
+  resolved "https://registry.yarnpkg.com/prisma-cli-core/-/prisma-cli-core-1.0.52.tgz#f11c1e03d20c59b6a0047a1802e75760e45179dd"
   dependencies:
     adm-zip "^0.4.7"
     archiver "^2.0.3"
@@ -7347,13 +7338,13 @@ prisma-cli-core@1.0.42:
     lodash.differenceby "^4.8.0"
     multimatch "^2.1.0"
     node-forge "^0.7.1"
-    npm-run "^5.0.1"
+    npm-run "4.1.2"
     opn "^5.1.0"
     pause "^0.1.0"
     portfinder "^1.0.13"
-    prisma-db-introspection "0.0.10"
+    prisma-db-introspection "0.0.21"
     prisma-json-schema "0.0.4"
-    prisma-yml "1.0.55"
+    prisma-yml "1.0.66"
     scuid "^1.0.2"
     semver "^5.4.1"
     sillyname "^0.1.0"
@@ -7362,9 +7353,9 @@ prisma-cli-core@1.0.42:
     util.promisify "^1.0.0"
     validator "^8.2.0"
 
-prisma-cli-engine@1.0.44:
-  version "1.0.44"
-  resolved "https://registry.yarnpkg.com/prisma-cli-engine/-/prisma-cli-engine-1.0.44.tgz#cfd7a100a99c996d8ec17ad6e349245deb898b00"
+prisma-cli-engine@1.0.55:
+  version "1.0.55"
+  resolved "https://registry.yarnpkg.com/prisma-cli-engine/-/prisma-cli-engine-1.0.55.tgz#16277d1db6ab75c432a9492108f771515bc2cd1f"
   dependencies:
     "@heroku/linewrap" "^1.0.0"
     ajv "5"
@@ -7406,7 +7397,7 @@ prisma-cli-engine@1.0.44:
     memfs "^2.5.3"
     opn "^5.1.0"
     prisma-json-schema "0.0.4"
-    prisma-yml "1.0.55"
+    prisma-yml "1.0.66"
     raven "2.3.0"
     replaceall "^0.1.6"
     rwlockfile "^1.4.8"
@@ -7421,9 +7412,9 @@ prisma-cli-engine@1.0.44:
     update-notifier "^2.3.0"
     validator "^8.2.0"
 
-prisma-db-introspection@0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/prisma-db-introspection/-/prisma-db-introspection-0.0.10.tgz#5ed8d3bf99ec0f128fddd84a7dcec360ed1e3f3a"
+prisma-db-introspection@0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/prisma-db-introspection/-/prisma-db-introspection-0.0.21.tgz#c20fff4c1b7ff9a476f32892a3ca906f48238015"
   dependencies:
     ajv "5"
     bluebird "^3.5.1"
@@ -7474,9 +7465,9 @@ prisma-yml@1.0.50:
     scuid "^1.0.2"
     yaml-ast-parser "^0.0.40"
 
-prisma-yml@1.0.55:
-  version "1.0.55"
-  resolved "https://registry.yarnpkg.com/prisma-yml/-/prisma-yml-1.0.55.tgz#726d1119fface263741929ee03aadec46ff792d5"
+prisma-yml@1.0.66:
+  version "1.0.66"
+  resolved "https://registry.yarnpkg.com/prisma-yml/-/prisma-yml-1.0.66.tgz#7bdb475194235dc8633f5209e5af92ee93ec6f2b"
   dependencies:
     ajv "5"
     bluebird "^3.5.1"
@@ -7497,13 +7488,13 @@ prisma-yml@1.0.55:
     scuid "^1.0.2"
     yaml-ast-parser "^0.0.40"
 
-prisma@1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/prisma/-/prisma-1.8.3.tgz#28eb3ce0c63732542988a2aaa1effa1d91b5c60f"
+prisma@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-1.10.2.tgz#115182aca8f7b8ef07bbaba2ffbd6c017442730f"
   dependencies:
     fs-extra "^5.0.0"
-    prisma-cli-core "1.0.42"
-    prisma-cli-engine "1.0.44"
+    prisma-cli-core "1.0.52"
+    prisma-cli-engine "1.0.55"
     semver "^5.4.1"
     source-map-support "^0.4.18"
 
