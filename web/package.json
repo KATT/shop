@@ -39,7 +39,7 @@
     "@types/isomorphic-fetch": "0.0.34",
     "@types/lodash": "4.14.110",
     "@types/lodash.flowright": "3.5.3",
-    "@types/next": "6.0.1",
+    "@types/next": "6.0.2",
     "@types/prop-types": "15.5.3",
     "@types/react": "16.4.1",
     "@types/react-modal": "3.1.2",
