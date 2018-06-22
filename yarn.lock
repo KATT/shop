@@ -9099,9 +9099,9 @@ ts-loader@3.3.1:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-ts-node@6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.1.2.tgz#3221ca727a84bc66db1de8b647896621e38e8eaf"
+ts-node@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.2.0.tgz#65a0ae2acce319ea4fd7ac8d7c9f1f90c5da6baf"
   dependencies:
     arrify "^1.0.0"
     buffer-from "^1.1.0"
