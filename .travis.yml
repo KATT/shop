@@ -12,8 +12,14 @@ cache:
   - node_modules
 install:
 - yarn install
-- yarn setup:prisma
 before_script:
+- docker-compose -f api/database/docker-compose.yml up -d
+- docker ps
+- sleep 20
+- cd api
+- yarn prisma deploy
+- yarn seed:local
+- cd ..
 - yarn build
 script:
 - yarn test:api

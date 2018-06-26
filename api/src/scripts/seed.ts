@@ -45,7 +45,9 @@ async function main() {
 
   const existingProducts = await prisma.query.products({});
   if (existingProducts.length) {
-    throw new Error('There are already products in the db.');
+    throw new Error(
+      `There are already ${existingProducts.length} products in the db.`,
+    );
   }
 
   const brands: BrandCreateInput[] = _(seed)
@@ -96,5 +98,6 @@ main()
   .catch(e => {
     console.error(e);
     console.error('\n❌  Seed failed. See above.');
+    console.error('PRISMA_ENDPOINT: ' + process.env.PRISMA_ENDPOINT);
     process.exit(1);
   });
