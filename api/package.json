@@ -42,7 +42,7 @@
   "devDependencies": {
     "@types/async-lock": "1.1.0",
     "@types/bcryptjs": "2.4.1",
-    "@types/jest": "23.1.1",
+    "@types/jest": "23.1.2",
     "@types/lodash": "4.14.110",
     "@types/node": "9.6.13",
     "@types/progress": "2.0.1",
