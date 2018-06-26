@@ -15,6 +15,7 @@ install:
 before_script:
 - docker-compose -f api/database/docker-compose.yml up -d
 - docker ps
+- sleep 20
 - cd api && yarn prisma deploy
 - cd api && yarn seed:dev
 - yarn build
