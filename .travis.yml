@@ -22,24 +22,24 @@ script:
 - yarn wait-port 4000
 - yarn wait-port 5000
 - cd e2e && yarn start -- --env chrome,chrome:nojs,edge,firefox
-# deploy:
-#   - provider: script # Run a custom deployment script which we will define below
-#     script:
-#       - cd api && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
-#       - cd web && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
-#     skip_cleanup: true
-#     on:
-#       all_branches: true
-#       master: false
-#   - provider: script # Run a custom deployment script which we will define below
-#     script:
-#       - cd api && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
-#       - cd web && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
-#       - cd api && yarn alias
-#       - cd web && yarn alias
-#     skip_cleanup: true
-#     on:
-#       master: true
+deploy:
+  - provider: script # Run a custom deployment script which we will define below
+    script:
+      - cd api && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
+      - cd web && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
+    skip_cleanup: true
+    on:
+      all_branches: true
+      master: false
+  - provider: script # Run a custom deployment script which we will define below
+    script:
+      - cd api && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
+      - cd web && yarn now --token $NOW_TOKEN -e PRISMA_STAGE=$DEV_PRISMA_STAGE -e PRISMA_ENDPOINT=$DEV_PRISMA_ENDPOINT -e PRISMA_CLUSTER=$DEV_PRISMA_CLUSTER -e PRISMA_SECRET=$DEV_PRISMA_SECRET -e APP_SECRET=$DEV_APP_SECRET -e GRAPHQL_URL=$DEV_GRAPHQL_URL
+      - cd api && yarn alias
+      - cd web && yarn alias
+    skip_cleanup: true
+    on:
+      master: true
 env:
   global:
   - SELENIUM_HOST="ondemand.saucelabs.com"
