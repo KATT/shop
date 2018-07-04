@@ -796,9 +796,9 @@
   version "15.5.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
 
-"@types/react-modal@3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.1.2.tgz#773223ffaa47783f99ae2fbdd658366db32d23f3"
+"@types/react-modal@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.2.0.tgz#745c0e93fae9b611a3255d6dc8516d75b80b8abe"
   dependencies:
     "@types/react" "*"
 
