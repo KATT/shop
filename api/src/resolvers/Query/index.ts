@@ -1,9 +1,9 @@
 import order from './order';
 import products from './products';
 
-export const Mutation = {
+export const Query = {
   ...order,
   ...products,
 };
 
-export default Mutation;
+export default Query;
