@@ -38,7 +38,7 @@
     "@types/graphql": "0.13.3",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/lodash": "4.14.113",
-    "@types/lodash.flowright": "3.5.3",
+    "@types/lodash.flowright": "3.5.4",
     "@types/next": "6.0.4",
     "@types/prop-types": "15.5.3",
     "@types/react": "16.4.6",
