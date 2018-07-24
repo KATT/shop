@@ -742,9 +742,9 @@
   version "23.3.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.0.tgz#5dd70033b616a6228042244ebd992f6426808810"
 
-"@types/lodash.flowright@3.5.3":
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/@types/lodash.flowright/-/lodash.flowright-3.5.3.tgz#60f8abe70c6656b945afaea1bee7d5297499197b"
+"@types/lodash.flowright@3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@types/lodash.flowright/-/lodash.flowright-3.5.4.tgz#3fab164f2755ddc12109dbb4b9c9b5f7c0436820"
   dependencies:
     "@types/lodash" "*"
 
