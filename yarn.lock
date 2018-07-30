@@ -760,9 +760,9 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
-"@types/next@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@types/next/-/next-6.1.0.tgz#fc5062c42e01570c4cac9c1d83294829bd0b2e2e"
+"@types/next@6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@types/next/-/next-6.1.1.tgz#fbf2c9217f5d029fb03d0607a8249c32995c7491"
   dependencies:
     "@types/node" "*"
     "@types/node-fetch" "*"
