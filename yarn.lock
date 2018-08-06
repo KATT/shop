@@ -798,9 +798,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-modal@3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.2.0.tgz#745c0e93fae9b611a3255d6dc8516d75b80b8abe"
+"@types/react-modal@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.2.1.tgz#48578bb362fd8be732d4e5c57c137b7e1dfd273d"
   dependencies:
     "@types/react" "*"
 
