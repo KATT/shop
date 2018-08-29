@@ -44,7 +44,7 @@
     "@types/react": "16.4.12",
     "@types/react-modal": "3.2.1",
     "@zeit/next-typescript": "0.1.1",
-    "concurrently": "3.6.1",
+    "concurrently": "4.0.1",
     "dotenv-cli": "1.4.0",
     "nodemon": "1.18.4",
     "ts-node": "7.0.1",
