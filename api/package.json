@@ -46,7 +46,7 @@
     "@types/lodash": "4.14.116",
     "@types/node": "9.6.13",
     "@types/progress": "2.0.1",
-    "@types/supertest": "2.0.5",
+    "@types/supertest": "2.0.6",
     "dotenv-cli": "1.4.0",
     "graphql-cli": "2.16.7",
     "jest": "23.5.0",
