@@ -18,7 +18,7 @@
     "babel-plugin-transform-inline-environment-variables": "0.4.3",
     "body-parser": "1.18.3",
     "cookie-parser": "1.4.3",
-    "express": "4.16.3",
+    "express": "4.16.4",
     "graphql": "0.13.2",
     "graphql-anywhere": "4.1.19",
     "graphql-tag": "2.10.0",
