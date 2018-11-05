@@ -46,7 +46,7 @@
     "@zeit/next-typescript": "0.1.1",
     "concurrently": "4.0.1",
     "dotenv-cli": "1.4.0",
-    "nodemon": "1.18.5",
+    "nodemon": "1.18.6",
     "ts-node": "7.0.1",
     "typescript": "3.1.6"
   },
