@@ -1,12 +1,13 @@
 version: '3'
 services:
   prisma:
+    # for production image, check https://hub.docker.com/r/prismagraphql/prisma-prod/tags/
     image: prismagraphql/prisma:1.26
     restart: always
     ports:
-    - "4466:4466"
+      - '4466:4466'
     depends_on:
-    - mysql
+      - mysql
     environment:
       PRISMA_CONFIG: |
         port: 4466
