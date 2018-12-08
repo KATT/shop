@@ -1,8 +1,20 @@
-dist
-package-lock.json
+# Dependencies
 node_modules
-.idea
-*.log
-.env.production
+
+# Testing
+coverage
+
+# Production
+build
+dist
+.cache
+
+# Misc.
 .DS_Store
+.env*
+*.log*
 *.js
+
+# IDE
+.idea
+.DS_Store
