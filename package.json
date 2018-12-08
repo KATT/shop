@@ -1,8 +1,22 @@
 {
   "name": "@katt/shop",
   "version": "0.0.1",
-  "description": "",
-  "author": "KATT",
+  "author": "Alex -KATT- Johansson <alexander@n1s.se> (http://kattcorp.co.uk)",
+  "contributors": ["Raphaël Morineau <raphael.morineau@gmail.com> (https://github.com/Sharlaan)"],
+  "description": "Full-stack React/Prisma/TS/GraphQL E-Commerce Example",
+  "keywords": [],
+  "homepage": "https://shop.kattcorp.co.uk/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KATT/shop.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "api",
+    "e2e",
+    "web"
+  ],
   "scripts": {
     "precommit": "lint-staged",
     "build:api": "cd api && yarn build",
@@ -25,12 +39,6 @@
     "selenium": "selenium-server -port 4444",
     "wait-ports": "yarn wait-port 4000 && yarn wait-port 5000"
   },
-  "workspaces": [
-    "api",
-    "e2e",
-    "web"
-  ],
-  "private": true,
   "lint-staged": {
     "*.{ts,tsx}!api/src/generated/*.ts": [
       "prettier --parser typescript --write",
