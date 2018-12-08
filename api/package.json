@@ -15,7 +15,7 @@
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
   },
   "engines": {
-    "node": "9.x.x"
+    "node": ">=9.x.x"
   },
   "jest": {
     "moduleFileExtensions": [
