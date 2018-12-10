@@ -27,7 +27,7 @@
     "react": "16.6.3",
     "react-apollo": "2.1.11",
     "react-dom": "16.6.3",
-    "react-modal": "3.6.1",
+    "react-modal": "3.7.1",
     "request": "2.88.0",
     "request-promise-native": "1.0.5"
   },
