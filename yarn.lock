@@ -2039,6 +2039,10 @@ camelcase@^4.0.0, camelcase@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
+camelcase@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.0.0.tgz#03295527d58bd3cd4aa75363f35b2e8d97be2f42"
+
 caniuse-lite@^1.0.30000830:
   version "1.0.30000832"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000832.tgz#22a277f1d623774cc9aea2f7c1a65cb1603c63b8"
@@ -2772,7 +2776,7 @@ debug@^4.0.1:
   dependencies:
     ms "^2.1.1"
 
-decamelize@^1.0.0, decamelize@^1.1.1:
+decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
@@ -4263,9 +4267,9 @@ graphql-cli-prepare@1.4.19:
     graphql-static-binding "0.9.3"
     lodash "4.17.5"
 
-graphql-cli@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/graphql-cli/-/graphql-cli-3.0.1.tgz#7d0daa8adcd08955953b00c97a2f2816edbb07ec"
+graphql-cli@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/graphql-cli/-/graphql-cli-3.0.3.tgz#f7007723099d22ad2465f30cb43bbf40b8813bb7"
   dependencies:
     adm-zip "0.4.13"
     apollo-codegen "^0.20.2"
@@ -4281,7 +4285,7 @@ graphql-cli@3.0.1:
     graphql-config "2.2.1"
     graphql-config-extension-graphcool "1.0.11"
     graphql-config-extension-prisma "0.2.5"
-    graphql-playground-middleware-express "1.7.7"
+    graphql-playground-middleware-express "1.7.8"
     graphql-schema-linter "0.1.6"
     inquirer "6.2.0"
     is-url-superb "2.0.0"
@@ -4299,7 +4303,7 @@ graphql-cli@3.0.1:
     source-map-support "^0.5.9"
     tmp-graphql-config-extension-openapi "^1.0.7"
     update-notifier "^2.5.0"
-    yargs "12.0.2"
+    yargs "12.0.5"
 
 graphql-config-extension-graphcool@1.0.11:
   version "1.0.11"
@@ -4400,9 +4404,9 @@ graphql-playground-html@1.6.0:
   dependencies:
     graphql-config "2.0.0"
 
-graphql-playground-html@1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.5.tgz#0de1a68db891f7356312cf03dcf371d67388e95a"
+graphql-playground-html@1.6.6:
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/graphql-playground-html/-/graphql-playground-html-1.6.6.tgz#f4efe0915a01dc79154b836fe3c980cebb7b56d2"
 
 graphql-playground-middleware-express@1.7.2:
   version "1.7.2"
@@ -4410,11 +4414,11 @@ graphql-playground-middleware-express@1.7.2:
   dependencies:
     graphql-playground-html "1.6.0"
 
-graphql-playground-middleware-express@1.7.7:
-  version "1.7.7"
-  resolved "https://registry.yarnpkg.com/graphql-playground-middleware-express/-/graphql-playground-middleware-express-1.7.7.tgz#554be59abae79566eb8a20d82d3c715ee0776097"
+graphql-playground-middleware-express@1.7.8:
+  version "1.7.8"
+  resolved "https://registry.yarnpkg.com/graphql-playground-middleware-express/-/graphql-playground-middleware-express-1.7.8.tgz#eb05f26f2b23084e4bb29ce41f2c5983ce870dfc"
   dependencies:
-    graphql-playground-html "1.6.5"
+    graphql-playground-html "1.6.6"
 
 graphql-playground-middleware-express@^1.6.2:
   version "1.7.0"
@@ -10369,6 +10373,13 @@ yargs-parser@^10.1.0:
   dependencies:
     camelcase "^4.1.0"
 
+yargs-parser@^11.1.1:
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-11.1.1.tgz#879a0865973bca9f6bab5cbdf3b1c67ec7d3bcf4"
+  dependencies:
+    camelcase "^5.0.0"
+    decamelize "^1.2.0"
+
 yargs-parser@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-7.0.0.tgz#8d0ac42f16ea55debd332caf4c4038b3e3f5dfd9"
@@ -10387,12 +10398,12 @@ yargs-parser@^9.0.2:
   dependencies:
     camelcase "^4.1.0"
 
-yargs@12.0.2:
-  version "12.0.2"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.2.tgz#fe58234369392af33ecbef53819171eff0f5aadc"
+yargs@12.0.5:
+  version "12.0.5"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.5.tgz#05f5997b609647b64f66b81e3b4b10a368e7ad13"
   dependencies:
     cliui "^4.0.0"
-    decamelize "^2.0.0"
+    decamelize "^1.2.0"
     find-up "^3.0.0"
     get-caller-file "^1.0.1"
     os-locale "^3.0.0"
@@ -10402,7 +10413,7 @@ yargs@12.0.2:
     string-width "^2.0.0"
     which-module "^2.0.0"
     y18n "^3.2.1 || ^4.0.0"
-    yargs-parser "^10.1.0"
+    yargs-parser "^11.1.1"
 
 yargs@^10.0.3:
   version "10.1.2"
