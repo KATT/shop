@@ -4270,9 +4270,9 @@ graphql-cli-prepare@1.4.19:
     graphql-static-binding "0.9.3"
     lodash "4.17.5"
 
-graphql-cli@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/graphql-cli/-/graphql-cli-3.0.3.tgz#f7007723099d22ad2465f30cb43bbf40b8813bb7"
+graphql-cli@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/graphql-cli/-/graphql-cli-3.0.4.tgz#1d72d61699aa236c4f1f829809d574664792014b"
   dependencies:
     adm-zip "0.4.13"
     apollo-codegen "^0.20.2"
@@ -4302,7 +4302,7 @@ graphql-cli@3.0.3:
     ora "^3.0.0"
     parse-github-url "^1.0.2"
     request "^2.88.0"
-    rimraf "2.6.2"
+    rimraf "2.6.3"
     source-map-support "^0.5.9"
     tmp-graphql-config-extension-openapi "^1.0.7"
     update-notifier "^2.5.0"
@@ -8585,7 +8585,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@2.6.2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
