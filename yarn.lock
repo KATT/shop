@@ -1276,6 +1276,10 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
+arg@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.0.tgz#583c518199419e0037abb74062c37f8519e575f0"
+
 argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
@@ -1916,10 +1920,6 @@ buffer-equal-constant-time@1.0.1:
 buffer-from@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.0.0.tgz#4cb8832d23612589b0406e9e2956c17f06fdf531"
-
-buffer-from@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.0.tgz#87fcaa3a298358e0ade6e442cfce840740d1ad04"
 
 buffer-writer@1.0.1:
   version "1.0.1"
@@ -9708,16 +9708,14 @@ ts-loader@3.3.1:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-ts-node@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-7.0.1.tgz#9562dc2d1e6d248d24bc55f773e3f614337d9baf"
+ts-node@8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.0.1.tgz#cad98e8d50f0474f0d763ca8dc4c1bf8b7554ae2"
   dependencies:
+    arg "^4.1.0"
     arrify "^1.0.0"
-    buffer-from "^1.1.0"
     diff "^3.1.0"
     make-error "^1.1.1"
-    minimist "^1.2.0"
-    mkdirp "^0.5.1"
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
