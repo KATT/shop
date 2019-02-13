@@ -757,9 +757,15 @@
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.35.tgz#c1c0d402daac324582b6186b91f8905340ea3361"
 
-"@types/jest@24.0.3":
-  version "24.0.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.3.tgz#df8dc56565bd2d27fcbd099434f04f9891e16ab7"
+"@types/jest-diff@*":
+  version "20.0.1"
+  resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
+
+"@types/jest@24.0.4":
+  version "24.0.4"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.4.tgz#9e91eeebd464536a2f57043fb50da29a91d1271d"
+  dependencies:
+    "@types/jest-diff" "*"
 
 "@types/lodash.flowright@3.5.4":
   version "3.5.4"
