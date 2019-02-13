@@ -767,9 +767,9 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/lodash.flowright@3.5.4":
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/@types/lodash.flowright/-/lodash.flowright-3.5.4.tgz#3fab164f2755ddc12109dbb4b9c9b5f7c0436820"
+"@types/lodash.flowright@3.5.5":
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/@types/lodash.flowright/-/lodash.flowright-3.5.5.tgz#30e930bbb8a5d77408902a8bfda7310f19f0c599"
   dependencies:
     "@types/lodash" "*"
 
