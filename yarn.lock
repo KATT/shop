@@ -793,9 +793,9 @@
     "@types/node-fetch" "*"
     "@types/react" "*"
 
-"@types/nightwatch@0.9.11":
-  version "0.9.11"
-  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.11.tgz#2d5e83359a453f58a662d462008cee3c6613018f"
+"@types/nightwatch@0.9.12":
+  version "0.9.12"
+  resolved "https://registry.yarnpkg.com/@types/nightwatch/-/nightwatch-0.9.12.tgz#c9e60b1257b9806cb1c3f6e8f4e4d170d8011a6b"
 
 "@types/node-fetch@*":
   version "2.1.1"
