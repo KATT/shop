@@ -29,7 +29,7 @@
     "react-dom": "16.8.2",
     "react-modal": "3.8.1",
     "request": "2.88.0",
-    "request-promise-native": "1.0.6"
+    "request-promise-native": "1.0.7"
   },
   "devDependencies": {
     "@types/body-parser": "1.17.0",
