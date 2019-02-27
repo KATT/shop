@@ -1240,9 +1240,9 @@ apollo-utilities@^1.0.0, apollo-utilities@^1.0.1, apollo-utilities@^1.0.11:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.11.tgz#cd36bfa6e5c04eea2caf0c204a0f38a0ad550802"
 
-apollo-utilities@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.2.0.tgz#ba5a1271c55e0d79069b1919c9d533164a70f9c3"
+apollo-utilities@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.2.1.tgz#1c3a1ebf5607d7c8efe7636daaf58e7463b41b3c"
   dependencies:
     fast-json-stable-stringify "^2.0.0"
     ts-invariant "^0.2.1"
@@ -4246,11 +4246,11 @@ graphcool-yml@0.4.15:
     scuid "^1.0.2"
     yaml-ast-parser "^0.0.40"
 
-graphql-anywhere@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.2.0.tgz#0e9a98efddc648f6eb8f01829ff9810a571ac34a"
+graphql-anywhere@4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.2.1.tgz#1f7c3a3d9004dbe81b1c553d7fd1ef2e16e14a85"
   dependencies:
-    apollo-utilities "^1.2.0"
+    apollo-utilities "^1.2.1"
     tslib "^1.9.3"
 
 graphql-anywhere@^4.1.8:
@@ -8183,11 +8183,11 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-apollo@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.5.0.tgz#e66e3763f15173026b63bcc4cb11a0e61f38e908"
+react-apollo@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.5.1.tgz#85934e1cf41ba88e2e96c921b44588f29d5daad6"
   dependencies:
-    apollo-utilities "^1.2.0"
+    apollo-utilities "^1.2.1"
     hoist-non-react-statics "^3.0.0"
     lodash.isequal "^4.5.0"
     prop-types "^15.6.0"
