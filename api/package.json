@@ -32,7 +32,7 @@
   },
   "private": true,
   "dependencies": {
-    "async-lock": "1.1.4",
+    "async-lock": "1.2.0",
     "bcryptjs": "2.4.3",
     "graphql": "0.13.2",
     "graphql-yoga": "1.16.2",
