@@ -56,7 +56,7 @@
     "prisma": "1.11.1",
     "progress": "2.0.3",
     "rimraf": "2.6.3",
-    "supertest": "3.4.2",
+    "supertest": "4.0.2",
     "ts-node": "8.0.3",
     "typescript": "3.3.3333"
   },
