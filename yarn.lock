@@ -3031,13 +3031,18 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
-dotenv-cli@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/dotenv-cli/-/dotenv-cli-1.4.0.tgz#e8e80830ed88b48a03b5eb7ec26147ca717f7409"
+dotenv-cli@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv-cli/-/dotenv-cli-2.0.0.tgz#2d519e06fd08bbd1bea82e60689e4a9947155d0e"
   dependencies:
     cross-spawn "^4.0.0"
-    dotenv "^4.0.0"
+    dotenv "^7.0.0"
+    dotenv-expand "^5.0.0"
     minimist "^1.1.3"
+
+dotenv-expand@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-5.0.0.tgz#3951d7ee2e35371fe6cb8e4bcdcc39db134d4a95"
 
 dotenv@^0.4.0:
   version "0.4.0"
