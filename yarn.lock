@@ -826,9 +826,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/react@16.8.10":
-  version "16.8.10"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.10.tgz#1ccb6fde17f71a62ef055382ec68bdc379d4d8d9"
+"@types/react@16.8.11":
+  version "16.8.11"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.11.tgz#2b13a7ab797b7ed1309e3cbf69994405d2391623"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
