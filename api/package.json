@@ -58,7 +58,7 @@
     "rimraf": "2.6.3",
     "supertest": "4.0.2",
     "ts-node": "8.0.3",
-    "typescript": "3.4.1"
+    "typescript": "3.4.2"
   },
   "now": {
     "alias": [
