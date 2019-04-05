@@ -105,3 +105,17 @@ This is a bit of a playground for web tech for me. I'm still developing it & I g
 If you have problems running it, ideas of things to add, things you want me to explain / elaborate on, or need help to build a product - [open an issue](https://github.com/KATT/shop/issues/new) or reach out to me [on Twitter](https://twitter.com/alexheartjs).
 
 Feel free to fork it and make a pull request of something cool!
+
+---
+
+```
+             / )
+ / )__/ )___/ /
+( @ . @ )     )
+ (           )
+ //"//""//"//
+
+ KATTCORP LTD.
+```
+
+by [kattcorp.com](https://kattcorp.com)
