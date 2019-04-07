@@ -1553,9 +1553,9 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-inline-dotenv@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.3.0.tgz#73e925103fe234e537c7557165d29d16d66e562d"
+babel-plugin-inline-dotenv@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.3.1.tgz#fba73608e28350dffac356aa686b8cf04313445f"
   dependencies:
     dotenv "^7.0.0"
 
