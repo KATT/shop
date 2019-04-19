@@ -41,7 +41,7 @@
     "@types/lodash.flowright": "3.5.6",
     "@types/next": "6.1.8",
     "@types/prop-types": "15.7.1",
-    "@types/react": "16.8.13",
+    "@types/react": "16.8.14",
     "@types/react-modal": "3.8.1",
     "@zeit/next-typescript": "0.1.1",
     "concurrently": "4.1.0",
