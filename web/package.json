@@ -20,7 +20,7 @@
     "cookie-parser": "1.4.4",
     "express": "4.17.0",
     "graphql": "0.13.2",
-    "graphql-anywhere": "4.2.1",
+    "graphql-anywhere": "4.2.2",
     "graphql-tag": "2.10.1",
     "isomorphic-fetch": "2.2.1",
     "next": "6.1.2",
