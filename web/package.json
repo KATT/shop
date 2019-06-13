@@ -48,7 +48,7 @@
     "dotenv-cli": "2.0.0",
     "nodemon": "1.19.1",
     "ts-node": "8.2.0",
-    "typescript": "3.5.1"
+    "typescript": "3.5.2"
   },
   "now": {
     "alias": [
