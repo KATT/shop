@@ -1454,11 +1454,9 @@ async-limiter@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
-async-lock@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/async-lock/-/async-lock-1.2.1.tgz#1bdfbb2f538aede775188877abd76919d7054bd6"
-  dependencies:
-    grunt-env "^0.4.4"
+async-lock@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/async-lock/-/async-lock-1.2.2.tgz#480bd51e4b7ffd4debbd4973763718ec9acb9a9e"
 
 async@^1.4.0, async@^1.5.2:
   version "1.5.2"
@@ -4711,13 +4709,6 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
 
-grunt-env@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/grunt-env/-/grunt-env-0.4.4.tgz#3b38843a8d737177ddc9f893879fb69ce1a0bc2f"
-  dependencies:
-    ini "~1.3.0"
-    lodash "~2.4.1"
-
 handlebars@^4.0.3:
   version "4.0.11"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.0.11.tgz#630a35dfe0294bc281edae6ffc5d329fc7982dcc"
@@ -6525,10 +6516,6 @@ lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.4, lodash@^4.17.10, 
 lodash@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
-
-lodash@~2.4.1:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
 
 log-symbols@^1.0.2:
   version "1.0.2"
