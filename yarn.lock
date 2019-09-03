@@ -7322,9 +7322,9 @@ node-request-by-swagger@^1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/node-request-by-swagger/-/node-request-by-swagger-1.0.7.tgz#c3367a40ea9226937c63ba7461c0ba45b5210dc7"
 
-nodemon@1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.19.1.tgz#576f0aad0f863aabf8c48517f6192ff987cd5071"
+nodemon@1.19.2:
+  version "1.19.2"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.19.2.tgz#b0975147dc99b3761ceb595b3f9277084931dcc0"
   dependencies:
     chokidar "^2.1.5"
     debug "^3.1.0"
