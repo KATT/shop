@@ -896,9 +896,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/prop-types@15.7.2":
-  version "15.7.2"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.2.tgz#0e58ae66773d7fd7c372a493aff740878ec9ceaa"
+"@types/prop-types@15.7.3":
+  version "15.7.3"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
 
 "@types/react-modal@3.8.1":
   version "3.8.1"
