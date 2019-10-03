@@ -912,9 +912,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/react@16.9.4":
-  version "16.9.4"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.4.tgz#de8cf5e5e2838659fb78fa93181078469eeb19fc"
+"@types/react@16.9.5":
+  version "16.9.5"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.5.tgz#079dabd918b19b32118c25fd00a786bb6d0d5e51"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
