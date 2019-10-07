@@ -2513,7 +2513,7 @@ commander@^2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
 
-commander@^3.0.0:
+commander@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.2.tgz#6837c3fb677ad9933d1cfba42dd14d5117d6b39e"
 
@@ -2915,7 +2915,7 @@ debug@3.1.0, debug@^3.0.0, debug@^3.1.0:
   dependencies:
     ms "2.0.0"
 
-debug@^4.1.0, debug@^4.1.1:
+debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   dependencies:
@@ -10644,13 +10644,13 @@ w3c-hr-time@^1.0.1:
   dependencies:
     browser-process-hrtime "^0.1.2"
 
-wait-port@0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.2.4.tgz#67619c0151ff7e3971dc39da3fce4c3ad4af1dbb"
+wait-port@0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.2.6.tgz#261e615adb2e10c8b91c836722c85919ccf081cc"
   dependencies:
-    chalk "^2.3.0"
-    commander "^3.0.0"
-    debug "^4.1.0"
+    chalk "^2.4.2"
+    commander "^3.0.2"
+    debug "^4.1.1"
 
 walk@2.3.9:
   version "2.3.9"
