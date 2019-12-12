@@ -41,6 +41,6 @@
     "prettier": "1.19.1",
     "tslint": "5.20.1",
     "typescript": "3.5.3",
-    "wait-port": "0.2.6"
+    "wait-port": "0.2.7"
   }
 }
