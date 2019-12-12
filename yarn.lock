@@ -10674,9 +10674,9 @@ w3c-hr-time@^1.0.1:
   dependencies:
     browser-process-hrtime "^0.1.2"
 
-wait-port@0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.2.6.tgz#261e615adb2e10c8b91c836722c85919ccf081cc"
+wait-port@0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.2.7.tgz#cdb4b78e662328099b187c7bb75fe0aa9cb6eb6c"
   dependencies:
     chalk "^2.4.2"
     commander "^3.0.2"
