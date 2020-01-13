@@ -47,7 +47,7 @@
     "concurrently": "5.0.0",
     "dotenv-cli": "3.1.0",
     "nodemon": "2.0.2",
-    "ts-node": "8.5.4",
+    "ts-node": "8.6.2",
     "typescript": "3.5.3"
   },
   "now": {
