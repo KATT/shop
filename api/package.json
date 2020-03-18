@@ -57,7 +57,7 @@
     "progress": "2.0.3",
     "rimraf": "3.0.2",
     "supertest": "4.0.2",
-    "ts-node": "8.6.2",
+    "ts-node": "8.7.0",
     "typescript": "3.5.3"
   },
   "now": {
