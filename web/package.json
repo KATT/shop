@@ -24,9 +24,9 @@
     "graphql-tag": "2.10.1",
     "isomorphic-fetch": "2.2.1",
     "next": "6.1.2",
-    "react": "16.13.0",
+    "react": "16.13.1",
     "react-apollo": "3.0.0",
-    "react-dom": "16.13.0",
+    "react-dom": "16.13.1",
     "react-modal": "3.8.1",
     "request": "2.88.2",
     "request-promise-native": "1.0.8"
