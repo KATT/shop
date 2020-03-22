@@ -10289,9 +10289,9 @@ ts-loader@3.3.1:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-ts-node@8.8.0:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.8.0.tgz#41a301811ac96174db75c24462ec7ebadfa9668b"
+ts-node@8.8.1:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.8.1.tgz#7c4d3e9ed33aa703b64b28d7f9d194768be5064d"
   dependencies:
     arg "^4.1.0"
     diff "^4.0.1"
