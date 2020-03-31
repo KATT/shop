@@ -15,7 +15,7 @@
     "test": "NODE_ENV=test PORT=4010 dotenv -- jest"
   },
   "engines": {
-    "node": "9.x.x"
+    "node": "12.x.x"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -32,11 +32,17 @@
   },
   "private": true,
   "dependencies": {
+    "@graphback/runtime-knex": "^0.11.4",
+    "apollo-server-express": "^2.11.0",
     "async-lock": "1.2.2",
     "bcryptjs": "2.4.3",
+    "express": "^4.17.1",
     "graphql": "0.13.2",
+    "graphql-config": "3.0.0-alpha.23",
+    "graphql-iso-date": "^3.6.1",
     "graphql-yoga": "1.16.2",
     "jsonwebtoken": "8.5.1",
+    "knex": "^0.20.13",
     "prisma-binding": "1.5.19"
   },
   "devDependencies": {

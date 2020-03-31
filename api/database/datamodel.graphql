@@ -1,61 +1,134 @@
+scalar DateTime
+
+"""
+@model
+"""
 type User {
-  id: ID! @unique
-  email: String! @unique
+  id: ID!
+  """
+  @db.unique
+  """
+  email: String!
   password: String!
   name: String!
+  """
+  @oneToMany field: 'user'
+  """
+  orders: [Order]
 }
 
+"""
+@model
+"""
 type Brand {
-  id: ID! @unique
+  id: ID!
+  """
+  @db.type: 'timestamp'
+  """
   createdAt: DateTime!
+  """
+  @db.type: 'timestamp'
+  """
   updatedAt: DateTime!
-
+  """
+  @db.unique
+  """
   name: String!
-  slug: String! @unique
+  slug: String!
   url: String!
+  """
+  @oneToMany field: 'brand'
+  """
+  products: [Product]
 }
 
+"""
+@model
+"""
 type Product {
-  id: ID! @unique
+  id: ID!
+  """
+  @db.type: 'timestamp'
+  """
   createdAt: DateTime!
+  """
+  @db.type: 'timestamp'
+  """
   updatedAt: DateTime!
 
   # price in pennies/ören
   price: Int!
-
-  brand: Brand!
   name: String!
-  slug: String! @unique
+  slug: String!
   thumbnail: String!
+
+  """
+  @oneToMany field: 'product'
+  """
+  orders: [OrderRow]
 }
 
+"""
+@model
+"""
 type Order {
-  id: ID! @unique
+  id: ID!
+  """
+  @db.type: 'timestamp'
+  """
   createdAt: DateTime!
+  """
+  @db.type: 'timestamp'
+  """
   updatedAt: DateTime!
-
-  rows: [OrderRow!]! @relation(name: "OrderRow")
-  user: User
-
+  """
+  @oneToMany field: 'order'
+  """
+  rows: [OrderRow!]!
+  """
+  @oneToMany field: 'order'
+  """
   discountCodes: [DiscountCode!]!
+  user: User!
 }
 
+"""
+@model
+"""
 type OrderRow {
-  id: ID! @unique
+  id: ID!
+  """
+  @db.type: 'timestamp'
+  """
   createdAt: DateTime!
+  """
+  @db.type: 'timestamp'
+  """
   updatedAt: DateTime!
 
-  quantity: Int! @default(value: "1")
+  """
+  @db.default: 1
+  """
+  quantity: Int!
+  order: Order!
   product: Product!
-  order: Order! @relation(name: "OrderRow")
 }
 
+"""
+@model
+"""
 type DiscountCode {
-  id: ID! @unique
+  id: ID!
+  """
+  @db.type: 'timestamp'
+  """
   createdAt: DateTime!
+  """
+  @db.type: 'timestamp'
+  """
   updatedAt: DateTime!
 
-  code: String! @unique
+  code: String!
   name: String!
   description: String!
 

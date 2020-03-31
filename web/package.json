@@ -10,7 +10,7 @@
     "alias": "now alias"
   },
   "engines": {
-    "node": "9.x.x"
+    "node": "12.x.x"
   },
   "dependencies": {
     "apollo-client-preset": "1.0.8",

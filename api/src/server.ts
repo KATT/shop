@@ -1,25 +1,28 @@
-import { GraphQLServer } from 'graphql-yoga';
-import { Prisma } from './generated/prisma';
-import { fragmentReplacements, resolvers } from './resolvers';
+import { ApolloServer, PubSub } from 'apollo-server-express';
+import { createKnexPGCRUDRuntimeServices } from '@graphback/runtime-knex';
+import { models } from './resolvers/models';
+import resolvers from './resolvers/resolvers';
+import { getProjectConfig } from './utils';
+import * as Knex from 'knex';
 
 export interface ServerOptions {
-  PRISMA_ENDPOINT: string;
-  PRISMA_SECRET: string;
-  PRISMA_DEBUG: boolean;
+  dbConfig: Knex.Config
 }
 
-export default ({PRISMA_ENDPOINT, PRISMA_SECRET, PRISMA_DEBUG}: ServerOptions) => {
-  const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
+export default async ({ dbConfig }: ServerOptions) => {
+  const projectConfig = await getProjectConfig();
+  const typeDefs = await projectConfig.getSchema('DocumentNode');
+  const schema = await projectConfig.getSchema();
+  const db = Knex(dbConfig);
+  const pubSub = new PubSub();
+  const services = createKnexPGCRUDRuntimeServices(models, schema, db, pubSub)
+
+  const server = new ApolloServer({
+    typeDefs,
     resolvers,
-    context: req => ({
-      ...req,
-      db: new Prisma({
-        fragmentReplacements,
-        endpoint: PRISMA_ENDPOINT, // the endpoint of the Prisma DB service (value is set in .env)
-        secret: PRISMA_SECRET, // taken from database/prisma.yml (value is set in .env)
-        debug: PRISMA_DEBUG, // log all GraphQL queries & mutations
-      }),
+    context: context => ({
+      ...context,
+      ...services
     }),
   });
 
