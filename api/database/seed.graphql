@@ -1,13 +1,92 @@
-mutation {
-  createDiscountCode(
-    data: {
-      code: "FIRST"
-      name: "10% discount on your order"
-      description: "As a first time shopper you get discount on your first order."
-      type: Percentage
-      amount: 10
-    }
-  ) {
+mutation createBrand {
+  createBrand (input:{
+    createdAt:"2020-03-31T15:53:21+00:00", 
+    updatedAt:"2020-03-31T15:53:21+00:00", 
+    name:"GUCCI", 
+    slug:"gucci", 
+    url:"http://www.chanel.com"
+  })
+  {
     id
+  }
+}
+
+mutation createUser {
+  createUser(input:{email: "joe@example.com", password: "23-e02302398r349", name:"Joe Example"}) {
+    id
+    email
+    name
+  }
+}
+
+mutation createProduct {
+  createProduct(input:{
+    createdAt:"2020-03-31T15:53:21+00:00",
+    updatedAt:"2020-03-31T15:53:21+00:00",
+    price: 1000
+    name: "Crazy handbag",
+    slug: "chanel/chanel-handbag",
+    thumbnail:"http://www.irishconsumer.com/wp-content/uploads/2020/01/Chanel_used_bag-759x500.jpg"
+    brandId: 1
+  }) {
+    id
+    name
+    price
+    brand {
+      id
+    }
+  }
+}
+
+mutation createOrder {
+  createOrder(input:{
+    createdAt:"2020-03-31T15:53:21+00:00",
+    updatedAt:"2020-03-31T15:53:21+00:00",
+    userId: 1
+  }) {
+    id
+    user {
+      id
+      name
+    }
+  }
+}
+
+mutation createOrderRow {
+  createOrderRow(input:{
+    createdAt:"2020-03-31T15:53:21+00:00",
+    updatedAt:"2020-03-31T15:53:21+00:00",
+    orderId: 1,
+    quantity: 100,
+    productId: 1
+  }) {
+    id
+    quantity
+    order{
+      id
+    }
+    product {
+      id
+      price
+      name
+    }
+  }
+}
+
+query findOrdersForProduct {
+  findOrderRows(fields:{id:1}) {
+    id
+    quantity
+    order{
+      id
+      user {
+        id
+      }
+    }
+    product {
+      id
+      price
+      name
+    }
   }
 }
