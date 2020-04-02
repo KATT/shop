@@ -116,11 +116,17 @@ export default {
     updateUser: (parent, args, context) => {
       return context.User.update(args.input, context)
     },
+    deleteUser: (parent, args, context) => {
+      return context.User.delete(args.input, context)
+    },
     createOrder: (parent, args, context) => {
       return context.Order.create(args.input, context)
     },
     updateOrder: (parent, args, context) => {
       return context.Order.update(args.input, context)
+    },
+    deleteOrder: (parent, args, context) => {
+      return context.Order.delete(args.input, context)
     },
     createOrderRow: (parent, args, context) => {
       return context.OrderRow.create(args.input, context)
@@ -128,11 +134,17 @@ export default {
     updateOrderRow: (parent, args, context) => {
       return context.OrderRow.update(args.input, context)
     },
+    deleteOrderRow: (parent, args, context) => {
+      return context.OrderRow.delete(args.input, context)
+    },
     createProduct: (parent, args, context) => {
       return context.Product.create(args.input, context)
     },
     updateProduct: (parent, args, context) => {
       return context.Product.update(args.input, context)
+    },
+    deleteProduct: (parent, args, context) => {
+      return context.Product.delete(args.input, context)
     },
     createBrand: (parent, args, context) => {
       return context.Brand.create(args.input, context)
@@ -140,11 +152,17 @@ export default {
     updateBrand: (parent, args, context) => {
       return context.Brand.update(args.input, context)
     },
+    deleteBrand: (parent, args, context) => {
+      return context.Brand.delete(args.input, context)
+    },
     createDiscountCode: (parent, args, context) => {
       return context.DiscountCode.create(args.input, context)
     },
     updateDiscountCode: (parent, args, context) => {
       return context.DiscountCode.update(args.input, context)
+    },
+    deleteDiscountCode: (parent, args, context) => {
+      return context.DiscountCode.delete(args.input, context)
     },
   },
 }

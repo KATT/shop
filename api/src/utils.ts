@@ -1,6 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { loadConfig, GraphQLConfig } from 'graphql-config'
-import { Prisma } from './generated/prisma';
+import { loadConfig } from 'graphql-config'
 import { CRUDService } from '@graphback/runtime-knex';
 import Knex = require('knex');
 

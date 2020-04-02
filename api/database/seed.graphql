@@ -72,21 +72,3 @@ mutation createOrderRow {
     }
   }
 }
-
-query findOrdersForProduct {
-  findOrderRows(fields:{id:1}) {
-    id
-    quantity
-    order{
-      id
-      user {
-        id
-      }
-    }
-    product {
-      id
-      price
-      name
-    }
-  }
-}

@@ -68,16 +68,22 @@ enum DiscountCodeType {
 type Mutation {
   createUser(input: UserInput): User!
   updateUser(input: UserInput): User!
+  deleteUser(input: UserInput): User!
   createOrder(input: OrderInput): Order!
   updateOrder(input: OrderInput): Order!
+  deleteOrder(input: OrderInput): Order!
   createOrderRow(input: OrderRowInput): OrderRow!
   updateOrderRow(input: OrderRowInput): OrderRow!
+  deleteOrderRow(input: OrderRowInput): OrderRow!
   createProduct(input: ProductInput): Product!
   updateProduct(input: ProductInput): Product!
+  deleteProduct(input: ProductInput): Product!
   createDiscountCode(input: DiscountCodeInput): DiscountCode!
   updateDiscountCode(input: DiscountCodeInput): DiscountCode!
+  deleteDiscountCode(input: DiscountCodeInput): DiscountCode!
   createBrand(input: BrandInput): Brand!
   updateBrand(input: BrandInput): Brand!
+  deleteBrand(input: BrandInput): Brand!
 }
 
 """@model"""
