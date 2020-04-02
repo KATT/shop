@@ -9,7 +9,7 @@ extensions:
       update: true
       findAll: true
       find: true
-      delete: false
+      delete: true
       subCreate: false
       subUpdate: false
       subDelete: false
@@ -20,6 +20,9 @@ extensions:
       graphback-resolvers:
         format: ts
         outputPath: ./api/src/resolvers
+      graphback-client:
+        format: graphql
+        outputPath: ./web/graphql
   dbmigrations:
     ## See knex.js for db specific config format
     client: pg
