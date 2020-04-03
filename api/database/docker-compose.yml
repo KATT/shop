@@ -7,5 +7,5 @@ services:
       - "55432:5432"
     environment:
       POSTGRES_PASSWORD: secret
-      POSTGRES_USER: testuser
+      POSTGRES_USER: postgres
       POSTGRES_DB: shop
