@@ -40,7 +40,7 @@
     "prisma-binding": "1.5.19"
   },
   "devDependencies": {
-    "@types/async-lock": "1.1.1",
+    "@types/async-lock": "1.1.2",
     "@types/bcryptjs": "2.4.2",
     "@types/jest": "25.2.1",
     "@types/lodash": "4.14.149",

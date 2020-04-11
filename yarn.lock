@@ -730,9 +730,9 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@types/async-lock@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@types/async-lock/-/async-lock-1.1.1.tgz#81f218213bebcc5f740efe9648272c774a2e4b4b"
+"@types/async-lock@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/async-lock/-/async-lock-1.1.2.tgz#cbc26a34b11b83b28f7783a843c393b443ef8bef"
 
 "@types/async@2.0.47":
   version "2.0.47"
