@@ -34,7 +34,7 @@
   "dependencies": {
     "async-lock": "1.2.2",
     "bcryptjs": "2.4.3",
-    "graphql": "0.13.2",
+    "graphql": "15.5.0",
     "graphql-yoga": "1.16.2",
     "jsonwebtoken": "8.5.1",
     "prisma-binding": "1.5.19"
