@@ -53,7 +53,7 @@
     "lodash": "4.17.15",
     "nodemon": "2.0.3",
     "npm-run-all": "4.1.5",
-    "prisma": "1.11.1",
+    "prisma": "1.34.12",
     "progress": "2.0.3",
     "rimraf": "3.0.2",
     "supertest": "4.0.2",
