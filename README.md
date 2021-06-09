@@ -1,3 +1,5 @@
+> **Archived:** This is using Prisma **1** which has been discontinued.
+
 # React/Prisma/TS/GraphQL E-Commerce Example
 
 [![Build Status](https://travis-ci.org/KATT/shop.svg?branch=master)](https://travis-ci.org/KATT/shop) [![Maintainability](https://api.codeclimate.com/v1/badges/073d5e009a2b0cd2d0b9/maintainability)](https://codeclimate.com/github/KATT/shop/maintainability)
